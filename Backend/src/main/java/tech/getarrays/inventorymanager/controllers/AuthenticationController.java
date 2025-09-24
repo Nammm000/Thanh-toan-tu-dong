@@ -69,7 +69,8 @@ public class AuthenticationController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         final User.Role role = userRepo.findFirstByEmail(email).getRole();// doi sau
 
-        System.out.println("userDetails.getAuthorities() " + userDetails.getAuthorities());
+//        System.out.println("userDetails.getAuthorities() " + userDetails.getAuthorities());
+//        System.out.println("userDetails.getUsername() " + userDetails.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails.getUsername(), role); //userDetails.getAuthorities()
 
         return new AuthenticationResponse(jwt);

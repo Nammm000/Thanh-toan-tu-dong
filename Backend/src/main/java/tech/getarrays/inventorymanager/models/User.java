@@ -3,7 +3,9 @@ package tech.getarrays.inventorymanager.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@NamedQuery(name = "User.getAllUser" , query = "select new tech.getarrays.inventorymanager.wrapper.UserWrapper(u.id, u.name, u.email, u.phone, u.status) from User u where u.role = 'user'")
+import java.time.LocalDateTime;
+
+@NamedQuery(name = "User.getAllUser" , query = "select new tech.getarrays.inventorymanager.wrapper.UserWrapper(u.id, u.name, u.email, u.phone, u.status, u.createdTime, u.role) from User u")
 
 @NamedQuery(name = "User.updateStatus" , query = "update User u set u.status=:status where u.id =:id")
 
@@ -38,6 +40,9 @@ public class User {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "createdTime")
+    private LocalDateTime createdTime;
+
     public String getStatus() {
         return status;
     }
@@ -64,6 +69,14 @@ public class User {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
     }
 
 }

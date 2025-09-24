@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -20,9 +22,10 @@ public class AuthServiceImpl implements AuthService {
         user.setName(signupDTO.getName());
         user.setEmail(signupDTO.getEmail());
         user.setPhone(signupDTO.getPhone());
-        user.setRole(User.Role.ADMIN); // chu y
+        user.setRole(User.Role.USER); // chu y
         user.setStatus("true");
         user.setPassword(new BCryptPasswordEncoder().encode(signupDTO.getPassword()));
+        user.setCreatedTime(LocalDateTime.now());
         User createdUser = userRepo.save(user);
 //        System.out.println("HELLO " + User.Role.ADMIN);
 

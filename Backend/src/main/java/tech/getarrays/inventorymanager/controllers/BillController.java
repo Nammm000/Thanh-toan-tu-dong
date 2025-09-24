@@ -173,7 +173,7 @@ public class BillController {
             bill.setPaymentMethod((String) requestMap.get("paymentMethod"));
             bill.setTotal(Integer.parseInt((String) requestMap.get("totalAmount")));
             bill.setProductDetails((String) requestMap.get("productDetails"));
-            bill.setCreatedBy(jwtRequestFilter.getCurrentUsername());
+            bill.setCreatedBy(jwtRequestFilter.getCurrentUsername()); // email
             bill.setCreatedTime(LocalDateTime.now());
             billRepo.save(bill);
         } catch (Exception ex) {
