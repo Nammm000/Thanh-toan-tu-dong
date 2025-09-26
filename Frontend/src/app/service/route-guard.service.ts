@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { SnackbarService } from './snackbar.service';
 import { jwtDecode } from 'jwt-decode';
 import { GlobalConstants } from '../shared/global-constants';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class RouteGuardService {
 
   constructor(public auth: AuthService,
     public router: Router,
+    private location: Location, 
     private snacBarService: SnackbarService) { }
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
@@ -38,11 +40,16 @@ export class RouteGuardService {
 
     if (tokenPayload.role == 'USER' || tokenPayload.role == 'ADMIN') {
       if (this.auth.isAuthenticated() && tokenPayload.role == expectedRole) {
+        // if (this.location.path().includes('auth/')) {
+        //   this.router.navigate(['/cafe/dashboard']);
+        //   return false;
+        // }
+        
         return true;
       }
-      console.log("this.auth.isAuthenticated(): " + this.auth.isAuthenticated());
-      console.log("tokenPayload.role: " + tokenPayload.role);
-      console.log("expectedRole: " + expectedRole);
+      // console.log("this.auth.isAuthenticated(): " + this.auth.isAuthenticated());
+      // console.log("tokenPayload.role: " + tokenPayload.role);
+      // console.log("expectedRole: " + expectedRole);
       this.snacBarService.openSnackBar(GlobalConstants.unauthorized, GlobalConstants.error);
       this.router.navigate(['/cafe/dashboard']);
       return false;

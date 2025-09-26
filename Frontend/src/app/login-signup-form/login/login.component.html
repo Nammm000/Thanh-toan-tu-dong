@@ -1,0 +1,145 @@
+<!-- <mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span>Login</span>
+        <span class="spacer"></span>
+        <button class="mat-dialog-close" mat-icon-button mat-dialog-close>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="loginForm">
+        <div fxFlex fxLayout="column">
+            <mat-form-field appearrance="standard" fxFlex>
+               <mat-label>Email</mat-label>
+               <input matInput formControlName="email" required>
+               <mat-error *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
+                  <span *ngIf="loginForm.controls.email.errors.required">This field is mandatory.</span>
+                  <span *ngIf="loginForm.controls.email.errors.pattern">This field is invalid.</span>
+               </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearrance="standard" fxFlex>
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" required [type]="hide ? 'password':'text'">
+                <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ?'visibility_off':'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid">
+                   <span *ngIf="loginForm.controls.password.errors.required">This fiel is mandatory.</span>
+                </mat-error>
+             </mat-form-field>
+             
+        </div>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()" [disabled]="!(loginForm.valid && loginForm.dirty)">
+        <mat-icon>login</mat-icon> Login
+    </button>
+    <button mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>cancel</mat-icon> Close
+    </button>
+</mat-dialog-actions> -->
+
+<div
+  class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
+>
+  <div
+    class="rounded-lg border bg-card text-card-foreground shadow-sm w-full max-w-md"
+  >
+    <div class="flex flex-col space-y-1.5 p-6 text-center">
+      <div class="tracking-tight text-2xl font-bold">Đăng nhập</div>
+      <div class="text-sm text-muted-foreground">
+        Đăng nhập vào tài khoản của bạn để tiếp tục
+      </div>
+    </div>
+    <div class="p-6 pt-0">
+      <form class="space-y-4" [formGroup]="loginForm">
+        <div class="space-y-2">
+          <label
+            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="email"
+            >Email</label
+          ><input
+            matInput formControlName="email"
+            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+            id="email"
+            placeholder="Nhập địa chỉ email"
+            type="email"
+            value=""
+            name="email"
+            required
+          />
+        </div>
+        <div class="space-y-2">
+          <label
+            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="password"
+            >Mật khẩu</label
+          >
+          <div class="relative">
+            <input
+              matInput formControlName="password" [type]="hide ? 'password':'text'"
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+              id="password"
+              placeholder="Nhập mật khẩu"
+              type="password"
+              value=""
+              name="password"
+              required
+            /><button
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:text-accent-foreground rounded-md absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+              type="button"
+              (click)="hide = !hide"
+            >
+              <i class="icon-18 eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="text-sm">
+            <a
+              class="text-blue-600 hover:text-blue-500"
+              href="/auth/forgot-password"
+              >Quên mật khẩu?</a
+            >
+          </div>
+        </div>
+        <button
+          class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
+          type="submit"
+          (click)="handleSubmit()" [disabled]="!(loginForm.valid && loginForm.dirty)"
+        >
+          Đăng nhập
+        </button>
+      </form>
+      <div class="mt-6 text-center">
+        <p class="text-sm text-gray-600">
+          Chưa có tài khoản?
+          <a
+            class="font-medium text-blue-600 hover:text-blue-500"
+            href="/auth/signup"
+            >Đăng ký ngay</a
+          >
+        </p>
+      </div>
+      <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+        <p class="text-sm font-medium text-gray-700 mb-2">Tài khoản demo:</p>
+        <div class="text-xs text-gray-600 space-y-1">
+          <p><strong>Admin:</strong> admin@stockadvisor.vn / admin123</p>
+          <p><strong>User:</strong> user@example.com / user123</p>
+        </div>
+      </div>
+      <div class="mt-4 text-center">
+        <a
+          class="text-xs text-blue-600 hover:text-blue-500 underline"
+          href="/auth/debug"
+          >🔧 Debug Database Connection</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

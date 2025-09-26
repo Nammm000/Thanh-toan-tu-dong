@@ -1,11 +1,9 @@
 <body>
-    <mat-card>
+  <!-- <mat-card>
         <b><span>Dashboard</span></b>
     </mat-card>
-    <br>
-    <div class="row">
-
-        <!-- Total category -->
+    <br> -->
+  <!-- <div class="row">
         <div class="column">
             <div class="card">
                 <div class="container">
@@ -16,7 +14,6 @@
             </div>
         </div>
 
-        <!-- Total product -->
         <div class="column">
             <div class="card">
                 <div class="container">
@@ -27,7 +24,6 @@
             </div>
         </div>
 
-        <!-- Total Bill -->
         <div class="column">
             <div class="card">
                 <div class="container">
@@ -37,6 +33,72 @@
                 </div>
             </div>
         </div>
-
+    </div> -->
+  <div class="space-y-6 p-6">
+    <div>
+      <h2 class="text-3xl font-bold text-gray-900">Dashboard</h2>
+      <p class="text-gray-600">Tổng quan hệ thống</p>
     </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <div class="text-2xl font-semibold leading-none tracking-tight">
+            Hoạt động gần đây
+          </div>
+          <div class="text-sm text-muted-foreground">
+            Các hoạt động mới nhất trên hệ thống
+          </div>
+        </div>
+        <div class="p-6 pt-0">
+          <div class="space-y-4">
+            <div class="flex items-center space-x-4">
+              <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+              <div class="flex-1">
+                <p class="text-sm font-medium">Người dùng mới đăng ký</p>
+                <p class="text-xs text-gray-500">2 phút trước</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <div class="flex-1">
+                <p class="text-sm font-medium">Bài viết mới được đăng</p>
+                <p class="text-xs text-gray-500">15 phút trước</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+              <div class="flex-1">
+                <p class="text-sm font-medium">Thanh toán thành công</p>
+                <p class="text-xs text-gray-500">1 giờ trước</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <div class="text-2xl font-semibold leading-none tracking-tight">
+            Thống kê nhanh
+          </div>
+          <div class="text-sm text-muted-foreground">Các chỉ số quan trọng</div>
+        </div>
+        <div class="p-6 pt-0">
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-gray-600">Người dùng hoạt động</span
+              ><span class="text-sm font-medium">85%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-gray-600">Tỷ lệ chuyển đổi</span
+              ><span class="text-sm font-medium">12.5%</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-gray-600">Doanh thu tháng này</span
+              ><span class="text-sm font-medium">+23%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>

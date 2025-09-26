@@ -1,0 +1,121 @@
+<!-- <mat-card>
+  <b><span>Manage Users</span></b>
+</mat-card>
+<hr />
+<mat-card>
+  <mat-form-field appearance="standard">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input />
+  </mat-form-field>
+</mat-card>
+<hr />
+
+<div class="responsive_table">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef>Contact Number</th>
+      <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let element" class="action-link">
+        <mat-slide-toggle
+          (change)="onChange($event.checked, element.id)"
+          matTooltip="Activate or Deactivate User"
+          [checked]="element.status"
+        ></mat-slide-toggle>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div> -->
+
+<div class="flex justify-between items-center">
+  <div>
+    <h2 class="text-3xl font-bold text-gray-900">Quản lý người dùng</h2>
+    <p class="text-gray-600">Quản lý tất cả tài khoản người dùng</p>
+  </div>
+  
+  <!-- <a href="/admin/users/new"
+      ><button
+        class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      >
+        <i class="icon-16 plus"></i>Thêm người dùng
+      </button></a
+    > -->
+</div>
+<div
+    class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm mt-4"
+  >
+    <div class="flex flex-col space-y-1.5 p-6">
+      <div class="text-2xl font-semibold leading-none tracking-tight">
+        Danh sách người dùng
+      </div>
+      <div class="text-sm text-muted-foreground">Tổng cộng {{listUser.length}} người dùng</div>
+      <div class="flex items-center space-x-2">
+        <i class="icon-16 search"></i>
+        <input
+          class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm max-w-sm"
+          placeholder="Tìm kiếm theo email hoặc tên..."
+          value=""
+        />
+      </div>
+    </div>
+    <div class="p-6 pt-0">
+      <div class="space-y-4">
+        <div
+          class="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
+          *ngFor="let user of listUser"
+        >
+          <div class="flex-1">
+            <div class="flex items-center space-x-4">
+              <div>
+                <h3 class="font-medium">{{ user.name }}</h3>
+                <p class="text-sm text-gray-600">
+                  {{ user.email }} - {{ user.phone }}
+                </p>
+                <p class="text-xs text-gray-500">
+                  Ngày tạo: {{ user.createdTime ? user.createdTime : "null" }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div
+              class="text-white items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80"
+            >
+              {{ user.role }}
+            </div>
+            <div
+              class="text-white inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80"
+            >
+              Hoạt động
+            </div>
+            <a
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
+               [routerLink]="['../user/' + user.id]"
+            >
+              <i class="icon-16 edit"></i></a
+            ><button  (click)="deleteAction(user.id)"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
+            >
+              <i class="icon-16 trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

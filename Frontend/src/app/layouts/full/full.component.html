@@ -1,5 +1,5 @@
 <div class="main-container">
-    <mat-toolbar color="primary" class="topbar telative">
+    <!-- <mat-toolbar color="primary" class="topbar telative">
         <div class="navbar-header">
             <button mat-icon-button (click)="snav.toggle()" value="sidebarclosed" style="vertical-align: bottom;">
                 <mat-icon>menu</mat-icon>
@@ -13,17 +13,61 @@
             </span>
         </div>
         <span fxFlex></span>
-        <app-header></app-header>
-    </mat-toolbar>
+        <app-items></app-items>
+    </mat-toolbar> -->
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
         <mat-sidenav #snav id="snav" class="dark-sidebar pl-xs" [mode]="mobileQuery.matches ? 'side' : 'over'"
-            fixedTopGap="0" [opened]="mobileQuery.matches" [disableClose]="mobileQuery.matches">
+            fixedTopGap="0" [opened]="mobileQuery.matches" [disableClose]="mobileQuery.matches" style="display: inline-block;">
             <app-sidebar></app-sidebar>
+            <div class="bg-white shadow-lg">
+      <nav class="mt-3 col-sm-3 nav-items">
+        <a
+          class="flex items-center px-6 py-3 transition-colors"
+          href="/admin"
+          ><i class="icon-18 mr-3 layout-dashboard"></i> Dashboard</a
+        ><a
+          class="flex items-center px-6 py-3 transition-colors text-gray-700"
+
+          ><i class="icon-18 mr-3 users"></i>Người dùng</a
+        ><a
+          class="flex items-center px-6 py-3 transition-colors text-gray-700"
+          href="/admin/news"
+          ><i class="icon-18 mr-3 file-text"></i>Tin tức</a
+        ><a
+          class="flex items-center px-6 py-3 transition-colors text-gray-700"
+          href="/admin/contacts"
+          ><i class="icon-18 mr-3 message-square"></i>Liên hệ</a
+        ><a
+          class="flex items-center px-6 py-3 transition-colors text-gray-700"
+          href="/admin/plans"
+          ><i class="icon-18 mr-3 package"></i>Gói dịch vụ</a
+        ><a
+          class="flex items-center px-6 py-3 transition-colors text-gray-700"
+          href="/admin/subscriptions"
+          ><i class="icon-18 mr-3 credit-card"></i>Gói đăng ký</a
+        ><a
+          class="flex items-center px-6 py-3 transition-colors text-gray-700"
+          href="/admin/payments"
+          ><i class="icon-18 mr-3 trending-up"></i>Thanh toán</a
+        ><a
+          class="flex items-center px-6 py-3 transition-colors text-gray-700"
+          href="/admin/settings"
+          ><i class="icon-18 mr-3 settings"></i>Cài đặt</a
+        >
+      </nav>
+            </div>
+            <!-- <app-left-sidebar [isLeftSidebarCollapsed]="isLeftSidebarCollapsed"
+             (changeIsLeftSidebarCollapsed)="changeIsLeftSidebarCollapsed($event)"></app-left-sidebar> -->
         </mat-sidenav>
+        
+        
         <mat-sidenav-content class="page-wrapper">
             <div class="page-content">
                 <router-outlet></router-outlet>
             </div>
         </mat-sidenav-content>
+        
     </mat-sidenav-container>
+    
+    <!-- <app-footer></app-footer> -->
 </div>

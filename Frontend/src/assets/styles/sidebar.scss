@@ -75,6 +75,16 @@ mat-sidenav {
             font-weight: 500;               
         }
     }
+    .nav-items {
+        padding-left: 20px;
+        a{
+            &:hover {
+                color:rgb(37 99 235);
+                border-color: rgb(37 99 235);
+                background-color: rgb(239 246 255);
+            }
+        }
+    }
 }
 /*******************
 use profile section

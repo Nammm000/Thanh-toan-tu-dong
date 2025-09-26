@@ -48,5 +48,11 @@ export class UserService {
       + "/user/update", data, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     })
-  }  
+  }
+
+  delete(id: any) {
+    return this.httpClient.delete(this.url + "/user/delete/" + id, {
+      headers: new HttpHeaders().set('content-Type', "application/json")
+   })
+  }
 }

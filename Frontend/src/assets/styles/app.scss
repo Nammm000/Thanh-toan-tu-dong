@@ -603,6 +603,15 @@ Background Colors
 .bg-danger {
   background-color: $danger !important;
 }
+
+.bg-muted {
+  background-color: hsl(var(--muted));
+}
+
+.bg-destructive {
+  background-color: hsl(var(--destructive));
+}
+
 html body {
   .bg-megna {
     background-color: $megna;

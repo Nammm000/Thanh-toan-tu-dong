@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
-import { LoginComponent } from '../login/login.component';
+import { ForgotPasswordComponent } from '../login-signup-form/forgot-password/forgot-password.component';
+import { LoginComponent } from '../login-signup-form/login/login.component';
 import { UserService } from '../service/user.service';
-import { SignupComponent } from '../signup/signup.component';
+import { SignupComponent } from '../login-signup-form/signup/signup.component';
 
 @Component({
   selector: 'app-home',

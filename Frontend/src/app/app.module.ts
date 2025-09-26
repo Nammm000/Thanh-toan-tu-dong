@@ -13,11 +13,15 @@ import { SharedModule } from './shared/shared.module';
 import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
-import { SignupComponent } from './signup/signup.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, SPINNER } from 'ngx-ui-loader';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { LoginComponent } from './login/login.component';
+
+import { SignupComponent } from './login-signup-form/signup/signup.component';
+import { ForgotPasswordComponent } from './login-signup-form/forgot-password/forgot-password.component';
+import { LoginComponent } from './login-signup-form/login/login.component';
+
+import { ManageUserComponent } from './admin-panel/manage-user/manage-user.component';
+
 import { TokenInterceptorInterceptor } from './service/token-interceptor.interceptor';
 import { ConfirmationComponent } from './material-component/dialog/confirmation/confirmation.component';
 import { ChangePasswordComponent } from './material-component/dialog/change-password/change-password.component';
@@ -35,7 +39,16 @@ import { ManageWarehouseComponent } from './material-component/manage-warehouse/
 import { ManageProviderComponent } from './material-component/manage-provider/manage-provider.component';
 import { ManageLocationComponent } from './material-component/manage-location/manage-location.component';
 import { ViewBillComponent } from './material-component/view-bill/view-bill.component';
-import { ManageUserComponent } from './material-component/manage-user/manage-user.component';
+
+import { FooterComponent } from './layouts/full/footer/footer.component';
+import { ItemsComponent } from './layouts/full/header/items/items.component';
+import { AboutComponent } from './unauthenticated/about/about.component';
+import { ContactComponent } from './unauthenticated/contact/contact.component';
+import { SupportComponent } from './unauthenticated/support/support.component';
+import { PricingComponent } from './unauthenticated/pricing/pricing.component';
+import { LeftSidebarComponent } from './layouts/full/left-sidebar/left-sidebar.component';
+import { NewsComponent } from './unauthenticated/news/news.component';
+import { NgxEditorModule } from "ngx-editor";
 
 const ngxUiloaderConfig: NgxUiLoaderConfig = {
   text: "Loading...",
@@ -76,7 +89,7 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     CustomerComponent, 
     WarehouseComponent,
     ProviderComponent, 
-    LocationComponent,
+    LocationComponent, FooterComponent, ItemsComponent, AboutComponent, ContactComponent, SupportComponent, PricingComponent, LeftSidebarComponent, NewsComponent,
    ],
   imports: [
     BrowserModule,
@@ -88,6 +101,7 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     FlexLayoutModule,
     SharedModule,
     HttpClientModule,
+    NgxEditorModule,
     NgxUiLoaderModule.forRoot(ngxUiloaderConfig)
   ],
   providers: [HttpClientModule, {provide:HTTP_INTERCEPTORS, useClass:TokenInterceptorInterceptor, multi:true}],

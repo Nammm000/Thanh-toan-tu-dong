@@ -7,7 +7,7 @@ import { ManageCustomerComponent } from './manage-customer/manage-customer.compo
 import { ManageWarehouseComponent } from './manage-warehouse/manage-warehouse.component';
 import { ManageProviderComponent } from './manage-provider/manage-provider.component';
 import { ManageProductComponent } from './manage-product/manage-product.component';
-import { ManageUserComponent } from './manage-user/manage-user.component';
+
 import { ViewBillComponent } from './view-bill/view-bill.component';
 import { ManageLocationComponent } from './manage-location/manage-location.component';
 
@@ -43,14 +43,6 @@ export const MaterialRoutes: Routes = [
         canActivate: [RouteGuardService],
         data: {
             expectedRole: ['ADMIN', 'USER']
-        }
-    },
-    {
-        path: 'user',
-        component: ManageUserComponent,
-        canActivate: [RouteGuardService],
-        data: {
-            expectedRole: ['ADMIN']
         }
     },
     {

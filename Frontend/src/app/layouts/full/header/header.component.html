@@ -1,12 +1,114 @@
-<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
-    <mat-icon>account_circle</mat-icon>
-</button>
-<mat-menu #profile="matMenu" class="mymegamenu">
-<button mat-menu-item (click)="changePassword()">
-    <mat-icon>password</mat-icon> Change Password
-</button>
+<div
+  class="wrapper sticky z-10"
+  style="box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px 0px"
+>
+  <!-- <nav class="navbar-fixed-top">
+    <a href="#" class="logo">
+      <mat-icon>home</mat-icon> Inventory Management System
+    </a>
+    <ul>
+      <li>
+        <a (click)="handleLoginAction()">Login</a>
+        <a (click)="handleSignUpAction()">Sign up</a>
+        <a (click)="handleForgotPasswordAction()">Forgort Password</a>
+      </li>
+    </ul>
+  </nav> -->
+  <nav class="bg-white opacity-75 shadow-sm border-b" style="width: 100%">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+        <a class="flex items-center space-x-2" href="/"
+          ><img
+            src="https://thongnx.com/cdn/news/1756093396361-photo_2025-08-25_10-35-36.png"
+            class="h-[50px]"
+        /></a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/"
+            >Trang chủ</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/news"
+            >Tin tức</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/pricing"
+            >Gói dịch vụ</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/about"
+            >Giới thiệu</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/contact"
+            >Liên hệ</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/support"
+            >Hỗ trợ</a
+          >
+        </div>
+        <div class="hidden md:flex items-center space-x-4">
+          <div class="flex items-center space-x-4" *ngIf="!isLoggedIn()">
+            <a
+              class="text-black borderHover inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+              href="/auth/login"
+              style="color: black"
+              >Đăng nhập</a
+            ><a
+              class="borderHover text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+              href="/auth/signup"
+              >Đăng ký</a
+            >
+          </div>
 
-<button mat-menu-item (click)="logout()">
-    <mat-icon>exit_to_app</mat-icon> Logout
-</button>
-</mat-menu>
+          <div class="flex items-center space-x-4" *ngIf="isLoggedIn()">
+            <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
+              <mat-icon>account_circle</mat-icon>
+            </button>
+            <mat-menu #profile="matMenu" class="mymegamenu">
+              <button mat-menu-item [routerLink]="['/dashboard']">
+                <mat-icon>insert_chart_outlined</mat-icon>  Dashboard
+              </button>
+
+              <button mat-menu-item (click)="changePassword()">
+                <mat-icon>password</mat-icon> Change Password
+              </button>
+
+              <button mat-menu-item [routerLink]="['/admin']">
+                <mat-icon>settings</mat-icon>  Admin Panel
+              </button>
+
+              <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon> Logout
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+        <!-- <div class="md:hidden">
+          <button
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-menu h-6 w-6"
+            >
+              <line x1="4" x2="20" y1="12" y2="12"></line>
+              <line x1="4" x2="20" y1="6" y2="6"></line>
+              <line x1="4" x2="20" y1="18" y2="18"></line>
+            </svg>
+          </button>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</div>

@@ -1,105 +1,69 @@
 <!-- <div class="bg-image"></div> -->
- <div class="bg-image sticky" 
-  style="background-image:url(&quot;https://thongnx.com/cdn/news/1756096790573-photo_2025-08-25_11-05-43.jpg&quot;);
-  background-size:cover;background-position:center center"></div>
-<app-best-seller></app-best-seller>
+<div
+  class="bg-image fixed"
+  style="
+    background-image: url('https://thongnx.com/cdn/news/1756096790573-photo_2025-08-25_11-05-43.jpg');
+    background-size: cover;
+    background-position: center center;
+  "
+></div>
 
-<div class="wrapper sticky">
-  <!-- <nav class="navbar-fixed-top">
-    <a href="#" class="logo">
-      <mat-icon>home</mat-icon> Inventory Management System
-    </a>
-    <ul>
-      <li>
-        <a (click)="handleLoginAction()">Login</a>
-        <a (click)="handleSignUpAction()">Sign up</a>
-        <a (click)="handleForgotPasswordAction()">Forgort Password</a>
-      </li>
-    </ul>
-  </nav> -->
-  <nav class="bg-white shadow-sm border-b" style="width: 100%;">
+
+
+<div class="relative z-3">
+  <div class="bg-orange-100 border-b border-orange-200 py-3 backdrop-blur-sm">
     <div class="container mx-auto px-4">
-      <div class="flex justify-between items-center h-16">
-        <a class="flex items-center space-x-2" href="/"
-          ><img
-            src="https://thongnx.com/cdn/news/1756093396361-photo_2025-08-25_10-35-36.png"
-            class="h-[50px]"
-        /></a>
-        <div class="hidden md:flex items-center space-x-8">
-          <a
-            class="text-gray-600 hover:text-blue-600 transition-colors"
-            href="/"
-            >Trang chủ</a
-          ><a
-            class="text-gray-600 hover:text-blue-600 transition-colors"
-            href="/news"
-            >Tin tức</a
-          ><a
-            class="text-gray-600 hover:text-blue-600 transition-colors"
-            href="/pricing"
-            >Gói dịch vụ</a
-          ><a
-            class="text-gray-600 hover:text-blue-600 transition-colors"
-            href="/about"
-            >Giới thiệu</a
-          ><a
-            class="text-gray-600 hover:text-blue-600 transition-colors"
-            href="/contact"
-            >Liên hệ</a
-          ><a
-            class="text-gray-600 hover:text-blue-600 transition-colors"
-            href="/support"
-            >Hỗ trợ</a
-          >
-        </div>
-        <div class="hidden md:flex items-center space-x-4">
-          <div class="flex items-center space-x-4">
-            <a
-              class="borderHover inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
-              href="/auth/login" style="color: black;"
-              >Đăng nhập</a
-            ><a
-              class="borderHover text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors  bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-              href="/auth/signup"
-              >Đăng ký</a
-            >
-          </div>
-        </div>
-        <div class="md:hidden">
-          <button
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-menu h-6 w-6"
-            >
-              <line x1="4" x2="20" y1="12" y2="12"></line>
-              <line x1="4" x2="20" y1="6" y2="6"></line>
-              <line x1="4" x2="20" y1="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
+      <div class="flex items-center justify-center space-x-4 text-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-triangle-alert h-5 w-5 text-orange-600"
+        >
+          <path
+            d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"
+          ></path>
+          <path d="M12 9v4"></path>
+          <path d="M12 17h.01"></path></svg><span class="text-orange-800 font-medium"
+          >Thay đổi biểu phí – hiệu lực từ 01/09/2025</span
+        ><a
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border hover:text-accent-foreground h-9 rounded-md px-3 border-orange-300 text-orange-700 hover:bg-orange-50 bg-transparent"
+          href="/thong-bao-chinh-thuc"
+          >Xem thông báo chính thức</a
+        >
       </div>
     </div>
-  </nav>
-</div>
-<!-- <div class="footer" id="signup">
-  <h2>All right reserved @Fabrice Marcel</h2>
-</div> -->
-<footer class="bg-gray-900 text-white opacity-80">
-  <div class="container mx-auto px-4 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <div class="space-y-4">
-        <a class="flex items-center space-x-2" href="/"
-          ><svg
+  </div>
+
+  <section
+    class="bg-gradient-to-br from-blue-50/95 to-indigo-100/95 py-20 backdrop-blur-sm"
+  >
+    <div class="container mx-auto px-4 text-center">
+      <div
+        class="bg-white inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 mb-4"
+      >
+        🚀 Nền tảng tư vấn đầu tư hàng đầu Việt Nam
+      </div>
+      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+        <span class="text-blue-600">ThongNX</span> – Đầu tư tỉnh táo, dựa trên
+        dữ liệu.
+      </h1>
+      <p class="text-xl text-gray-600 mb-8 mx-auto">
+        Nhìn xa vĩ mô, vào lệnh đúng lúc – Tín hiệu rõ ràng. Rủi ro kiểm soát –
+        Giải mã TTCK Việt Nam, mỗi sáng – Từ dữ liệu đến quyết định sinh lời.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          class="borderHover text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8"
+          href="/pricing"
+          >Bắt đầu ngay
+          <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -109,123 +73,95 @@
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="lucide lucide-chart-column h-8 w-8 text-blue-400"
+            class="lucide lucide-arrow-right ml-2 h-4 w-4"
           >
-            <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
-            <path d="M18 17V9"></path>
-            <path d="M13 17V5"></path>
-            <path d="M8 17v-3"></path>
-          </svg>
-          <span class="text-xl font-bold">ThongNX</span>
-        </a>
-        <p class="text-gray-400 text-sm">
-          Nền tảng tư vấn đầu tư chứng khoán hàng đầu Việt Nam, kết hợp AI và
-          chuyên gia để mang lại hiệu quả đầu tư tối ưu.
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path></svg></a
+        ><a
+          class="bg-white text-black inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-11 rounded-md px-8"
+          href="/about"
+          >Tìm hiểu thêm</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-blue-50/95 backdrop-blur-sm">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Hỗ trợ chuyển đổi</h2>
+        <p class="text-lg text-gray-600">
+          Cam kết dịch vụ tốt nhất cho khách hàng
         </p>
-        <div class="flex space-x-4">
-          <a href="#" class="text-gray-400 hover:text-white transition-colors"
-            >Facebook</a
-          ><a href="#" class="text-gray-400 hover:text-white transition-colors"
-            >Twitter</a
-          ><a href="#" class="text-gray-400 hover:text-white transition-colors"
-            >LinkedIn</a
-          >
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
+            <div
+              class="text-2xl font-semibold leading-none tracking-tight text-blue-600"
+            >
+              Tư vấn chuyển đổi miễn phí
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">
+              Hỗ trợ khách hàng chuyển đổi gói dịch vụ hoàn toàn miễn phí
+            </p>
+          </div>
+        </div>
+        <div
+          class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
+            <div
+              class="text-2xl font-semibold leading-none tracking-tight text-green-600"
+            >
+              Ưu đãi khách hàng thân thiết
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">
+              Chương trình ưu đãi đặc biệt dành cho khách hàng lâu năm
+            </p>
+          </div>
+        </div>
+        <div
+          class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
+            <div
+              class="text-2xl font-semibold leading-none tracking-tight text-purple-600"
+            >
+              Hỗ trợ 24/7
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">
+              Phản hồi trong 24 giờ - Đội ngũ liên hệ trước 15/08/2025
+            </p>
+          </div>
         </div>
       </div>
-      <div>
-        <h3 class="text-lg font-semibold mb-4">Liên kết nhanh</h3>
-        <ul class="block space-y-2" style="display: block">
-          <li>
-            <a
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              href="/about"
-              >Giới thiệu</a
-            >
-          </li>
-          <li>
-            <a
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              href="/pricing"
-              >Gói dịch vụ</a
-            >
-          </li>
-          <li>
-            <a
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              href="/news"
-              >Tin tức</a
-            >
-          </li>
-          <li>
-            <a
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              href="/contact"
-              >Liên hệ</a
-            >
-          </li>
-          <li>
-            <a
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              href="/news/thong-bao-bieu-phi-01092025"
-              >Thông báo biểu phí</a
-            >
-          </li>
-          <li>
-            <a
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              href="/chinh-sach-phi"
-              >Chính sách phí</a
-            >
-          </li>
-        </ul>
+    </div>
+  </section>
+
+  <section class="py-20 bg-white/95 backdrop-blur-sm">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Tại sao chọn chúng tôi?
+        </h2>
+        <p class="text-xl text-gray-600 mx-auto">
+          Kết hợp công nghệ AI tiên tiến với kinh nghiệm thực tế của các chuyên gia
+        </p>
       </div>
-      <div>
-        <h3 class="text-lg font-semibold mb-4">Dịch vụ</h3>
-        <ul class="block space-y-2" style="display: block">
-          <li>
-            <a
-              href="#"
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              >Khuyến nghị AI</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              >Phân tích kỹ thuật</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              >Tư vấn 1-1</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="ml-0 text-gray-400 hover:text-white transition-colors"
-              style="margin-left: 0"
-              >Báo cáo thị trường</a
-            >
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h3 class="text-lg font-semibold mb-4">Liên hệ</h3>
-        <ul class="block space-y-3" style="display: block">
-          <li class="flex items-center space-x-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -236,14 +172,26 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-mail h-4 w-4 text-blue-400"
+              class="lucide lucide-trending-up h-12 w-12 text-blue-600 mx-auto mb-4"
             >
-              <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+              <polyline points="16 7 22 7 22 13"></polyline>
             </svg>
-            <span class="text-gray-400">xuanthongvtc@gmail.com</span>
-          </li>
-          <li class="flex items-center space-x-3">
+            <div class="text-2xl font-semibold leading-none tracking-tight">
+              AI Phân tích
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">
+              Thuật toán AI phân tích hàng nghìn dữ liệu thị trường để đưa ra
+              khuyến nghị chính xác
+            </p>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -254,56 +202,324 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-phone h-4 w-4 text-blue-400"
+              class="lucide lucide-shield h-12 w-12 text-green-600 mx-auto mb-4"
             >
               <path
-                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-              ></path></svg><span class="text-gray-400">0971485455</span>
-          </li>
-          <li class="flex items-start space-x-3">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-map-pin h-4 w-4 text-blue-400 mt-1"
-            >
-              <path
-                d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+                d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
               ></path>
-              <circle cx="12" cy="10" r="3"></circle></svg><span class="text-gray-400"
-              >123 Nguyễn Huệ, Quận 1<br />TP. Hồ Chí Minh, Việt Nam</span
+            </svg>
+            <div class="text-2xl font-semibold leading-none tracking-tight">
+              An toàn &amp; Bảo mật
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">
+              Dữ liệu được mã hóa và bảo vệ theo tiêu chuẩn ngân hàng quốc tế
+            </p>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-users h-12 w-12 text-purple-600 mx-auto mb-4"
             >
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="border-t border-gray-800 mt-8 pt-8">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-400 text-sm">
-          © 2025 ThongNX. Tất cả quyền được bảo lưu.
-        </p>
-        <div class="flex space-x-6 mt-4 md:mt-0">
-          <a
-            class="text-gray-400 hover:text-white text-sm transition-colors"
-            href="/terms"
-            >Điều khoản dịch vụ</a
-          ><a
-            class="text-gray-400 hover:text-white text-sm transition-colors"
-            href="/privacy"
-            >Chính sách bảo mật</a
-          ><a
-            class="text-gray-400 hover:text-white text-sm transition-colors"
-            href="/cookies"
-            >Chính sách Cookie</a
-          ><span class="text-gray-400 text-sm">THONGNX.COM | EVFP.COM.VN</span>
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <div class="text-2xl font-semibold leading-none tracking-tight">
+              Chuyên gia 1-1
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">
+              Tư vấn trực tiếp với các chuyên gia có hơn 10 năm kinh nghiệm
+            </p>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-zap h-12 w-12 text-orange-600 mx-auto mb-4"
+            >
+              <path
+                d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"
+              ></path>
+            </svg>
+            <div class="text-2xl font-semibold leading-none tracking-tight">
+              Cập nhật 24/7
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">
+              Nhận thông tin thị trường và khuyến nghị mới nhất mọi lúc mọi nơi
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </section>
+
+  <section class="bg-gray-50/95 py-20 backdrop-blur-sm">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Thành quả đạt được
+        </h2>
+        <p class="text-xl text-gray-600">
+          Những con số ấn tượng từ khách hàng của chúng tôi
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div
+          class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
+            <div class="text-4xl font-bold text-blue-600 mb-2">3%+</div>
+            <div class="text-2xl font-semibold leading-none tracking-tight">
+              Lợi nhuận/tháng
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">
+              Lợi nhuận trung bình hàng tháng của khách hàng
+            </p>
+          </div>
+        </div>
+        <div
+          class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
+            <div class="text-4xl font-bold text-green-600 mb-2">42%</div>
+            <div class="text-2xl font-semibold leading-none tracking-tight">
+              Tăng trưởng danh mục/năm
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">
+              Tăng trưởng danh mục đầu tư trung bình hàng năm
+            </p>
+          </div>
+        </div>
+        <div
+          class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm text-center"
+        >
+          <div class="flex flex-col space-y-1.5 p-6">
+            <div class="text-4xl font-bold text-purple-600 mb-2">95%</div>
+            <div class="text-2xl font-semibold leading-none tracking-tight">
+              Khách hàng hài lòng
+            </div>
+          </div>
+          <div class="p-6 pt-0">
+            <p class="text-gray-600">Tỷ lệ khách hàng hài lòng với dịch vụ</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-8 text-center">
+        <p class="text-sm text-gray-500 italic">
+          * Kết quả quá khứ không đảm bảo cho tương lai; số liệu minh hoạ.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-gray-50/95 py-20 backdrop-blur-sm">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Gói dịch vụ phù hợp với bạn
+        </h2>
+        <p class="text-xl text-gray-600">
+          Khám phá các gói dịch vụ được thiết kế riêng cho từng nhu cầu đầu tư
+        </p>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <div
+          class="rounded-lg border bg-card text-card-foreground shadow-sm bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200"
+        >
+          <div class="p-12 text-center">
+            <div class="mb-8">
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">
+                Đa dạng gói dịch vụ cho mọi nhà đầu tư
+              </h3>
+              <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Từ gói cơ bản dành cho người mới bắt đầu đến gói VIP Elite cho
+                nhà đầu tư chuyên nghiệp, chúng tôi có giải pháp phù hợp với mọi
+                mục tiêu tài chính.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div class="text-center">
+                <div
+                  class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-trending-up h-8 w-8 text-blue-600"
+                  >
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                    <polyline points="16 7 22 7 22 13"></polyline>
+                  </svg>
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-2">Gói Cơ Bản</h4>
+                <p class="text-sm text-gray-600">
+                  Khuyến nghị hàng ngày và báo cáo thị trường
+                </p>
+              </div>
+              <div class="text-center">
+                <div
+                  class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-users h-8 w-8 text-green-600"
+                  >
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-2">
+                  Gói Chuyên Nghiệp
+                </h4>
+                <p class="text-sm text-gray-600">
+                  Tư vấn 1-1 và phân tích kỹ thuật chuyên sâu
+                </p>
+              </div>
+              <div class="text-center">
+                <div
+                  class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-shield h-8 w-8 text-purple-600"
+                  >
+                    <path
+                      d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+                    ></path>
+                  </svg>
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-2">Gói VIP Elite</h4>
+                <p class="text-sm text-gray-600">
+                  Dịch vụ cao cấp với ưu tiên hỗ trợ tối đa
+                </p>
+              </div>
+            </div>
+            <div class="bg-white rounded-lg p-6 mb-8 border border-blue-100">
+              <div
+                class="flex items-center justify-center space-x-8 text-sm text-gray-600"
+              >
+                <div class="flex items-center">
+                  <div class="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                  Phân tích AI thông minh
+                </div>
+                <div class="flex items-center">
+                  <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                  Hỗ trợ chuyên gia 24/7
+                </div>
+                <div class="flex items-center">
+                  <div class="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
+                  Báo cáo thị trường độc quyền
+                </div>
+              </div>
+            </div>
+            <a
+              class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground h-11 rounded-md px-8 bg-blue-600 hover:bg-blue-700"
+              href="/pricing"
+              >Khám phá tất cả gói dịch vụ
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-arrow-right ml-2 h-4 w-4"
+              >
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white/60 text-black py-20 backdrop-blur-sm">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Sẵn sàng bắt đầu hành trình đầu tư thông minh?
+      </h2>
+      <p class="text-xl mb-8 opacity-90">
+        Tham gia cùng hàng nghìn nhà đầu tư đã tin tưởng chúng tôi
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          class="bg-white z-10 inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-11 rounded-md px-8"
+          href="/auth/signup"
+          >Đăng ký miễn phí</a
+        ><a
+          class="inline-flex z-10 items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border h-11 rounded-md px-8 text-black border-white hover:bg-white hover:text-blue-600 bg-transparent"
+          href="/contact"
+          >Liên hệ tư vấn</a
+        >
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- <app-best-seller></app-best-seller> -->
+<!-- <div class="footer" id="signup">
+  <h2>All right reserved @Fabrice Marcel</h2>
+</div> -->
+

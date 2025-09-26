@@ -1,0 +1,78 @@
+<div class="space-y-6">
+  <div class="flex justify-between items-center">
+    <div>
+      <h2 class="text-3xl font-bold text-gray-900">Quản lý tin tức</h2>
+      <p class="text-gray-600">Quản lý tất cả bài viết tin tức</p>
+    </div>
+    <a href="/admin/news/add"
+      ><button
+        class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      >
+        <i class="icon-16 plus"></i>Tạo bài viết
+      </button></a
+    >
+  </div>
+  <div class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm">
+    <div class="flex flex-col space-y-1.5 p-6">
+      <div class="text-2xl font-semibold leading-none tracking-tight">
+        Danh sách bài viết
+      </div>
+      <div class="text-sm text-muted-foreground">Tổng cộng {{listNews.length}} bài viết</div>
+      <div class="flex items-center space-x-2">
+        <i class="icon-16 search"></i>
+          <input
+          class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm max-w-sm"
+          placeholder="Tìm kiếm bài viết..."
+          value=""
+        />
+      </div>
+    </div>
+    <div class="p-6 pt-0">
+      <div class="space-y-4">
+        <div *ngFor="let news of listNews"
+          class="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
+        >
+          <div class="flex-1">
+            <div class="flex items-start space-x-4">
+              <div class="flex-1">
+                <h3 class="font-medium">{{news.title}}</h3>
+                <p class="text-sm text-gray-600 mt-1 line-clamp-2">
+                  {{news.description.length > 80 ? (news.description | slice:0:80) + '...' : news.description}}
+                </p>
+                <div class="flex items-center space-x-4 mt-2">
+                  <p class="text-xs text-gray-500" style="margin-bottom: 0;">Tác giả: {{news.author}}</p>
+                  <p class="text-xs text-gray-500" style="margin-bottom: 0;">Tạo: {{news.createdTime}}</p>
+                  <div class="flex items-center space-x-1">
+                    <i class="icon-12 eye"></i><span class="text-xs text-gray-500">{{news.view}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div
+              class="text-white inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80"
+            >
+              Đã xuất bản
+            </div>
+            <div
+              class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground"
+            >
+              Nổi bật
+            </div>
+            <a [routerLink]="['../news/' + news.id]"
+              ><button
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
+              >
+                <i class="icon-16 edit"></i></button></a
+            ><button (click)="deleteAction(news.id)"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
+            >
+              <i class="icon-16 trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
