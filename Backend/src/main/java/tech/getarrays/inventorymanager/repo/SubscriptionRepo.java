@@ -6,14 +6,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import tech.getarrays.inventorymanager.models.POJO.Plan;
-import tech.getarrays.inventorymanager.wrapper.PlanCodeWrapper;
-import tech.getarrays.inventorymanager.wrapper.PlanWrapper;
+import tech.getarrays.inventorymanager.models.POJO.Subscription;
+import tech.getarrays.inventorymanager.wrapper.SubscriptionWrapper;
 
 import java.util.List;
 
-public interface SubscriptionRepo extends JpaRepository<Plan, Long> {
+public interface SubscriptionRepo extends JpaRepository<Subscription, Long> {
 
-    Plan findFirstById(@Param("id") Long id);
+    Subscription findFirstById(@Param("id") Long id);
+
+//    @Query("select new tech.getarrays.inventorymanager.wrapper.SubscriptionWrapper(u.name , u.code) from Subscription u")
+//    List<SubscriptionWrapper> getAllSubscriptionWrapper();
 
 }

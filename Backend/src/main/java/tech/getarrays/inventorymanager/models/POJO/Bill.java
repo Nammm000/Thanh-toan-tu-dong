@@ -26,7 +26,7 @@ public class Bill implements Serializable {
     private Long id;
 
     @Column(name = "uuid")
-    private String uuid;
+    private String uuid; // Universally Unique IDentifier
 
     @Column(name = "name")
     private String name;

@@ -2,6 +2,7 @@ package tech.getarrays.inventorymanager.configuration;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.core.context.SecurityContextHolder;
 import tech.getarrays.inventorymanager.filters.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +37,12 @@ public class WebSecurityConfiguration {
                 )
                 .sessionManagement( (sess) -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(requestFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout((logout) ->
+                        logout.logoutUrl("/api/logout")
+                                .logoutSuccessUrl("/")
+                                .invalidateHttpSession(true)
+                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                )
                 .build();
     }
 

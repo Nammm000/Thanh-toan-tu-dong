@@ -10,16 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import tech.getarrays.inventorymanager.constents.InventoryConstants;
 import tech.getarrays.inventorymanager.filters.JwtRequestFilter;
 import tech.getarrays.inventorymanager.models.POJO.Plan;
+import tech.getarrays.inventorymanager.models.POJO.Subscription;
+import tech.getarrays.inventorymanager.models.User;
 import tech.getarrays.inventorymanager.repo.PlanRepo;
+import tech.getarrays.inventorymanager.repo.SubscriptionRepo;
+import tech.getarrays.inventorymanager.repo.UserRepo;
 import tech.getarrays.inventorymanager.util.InventoryUtils;
 import tech.getarrays.inventorymanager.wrapper.PlanCodeWrapper;
 import tech.getarrays.inventorymanager.wrapper.PlanWrapper;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -27,19 +28,29 @@ import java.util.Optional;
 public class SubscriptionController {
 
     @Autowired
+    SubscriptionRepo subscriptionRepo;
+
+    @Autowired
     PlanRepo planRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Autowired
     JwtRequestFilter jwtRequestFilter;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addPlan(@RequestBody(required = true) Map<String, String> requestMap) {
-        log.info("Inside addPlan{}", requestMap);
+    public ResponseEntity<String> addSubscription(@RequestBody(required = true) Map<String, String> requestMap) {
+        log.info("Inside addSubscription{}", requestMap);
         try {
             if (jwtRequestFilter.isAdmin()) {
                 if (validatePlanMap(requestMap, false)) {
-                    planRepo.save(getPlanFromMap(requestMap , false));
-                    return InventoryUtils.getResponseEntity("Plan Added Successfully", HttpStatus.OK);
+                    Subscription sub = getSubscriptionFromMap(requestMap);
+                    if (sub==null) {
+                        return InventoryUtils.getResponseEntity("User is admin.", HttpStatus.UNAUTHORIZED);
+                    }
+                    subscriptionRepo.save(sub);
+                    return InventoryUtils.getResponseEntity("Subscription Added Successfully", HttpStatus.OK);
                 }
             } else {
                 return InventoryUtils.getResponseEntity(InventoryConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
@@ -47,12 +58,12 @@ public class SubscriptionController {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        System.out.println(InventoryConstants.SOMETHING_WENT_WRONG);
+//        System.out.println(InventoryConstants.SOMETHING_WENT_WRONG);
         return InventoryUtils.getResponseEntity(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private boolean validatePlanMap(Map<String, String> requestMap, boolean validateId) {
-        if (requestMap.containsKey("name")) {
+        if (requestMap.containsKey("email")) {
             if (requestMap.containsKey("id") && validateId) {
                 return true;
             } else if(!validateId) {
@@ -62,46 +73,51 @@ public class SubscriptionController {
         return false;
     }
 
-    private Plan getPlanFromMap(Map<String, String> requestMap, boolean isAdd) {
-        Plan plan = new Plan();
+    private Subscription getSubscriptionFromMap(Map<String, String> requestMap) {
+        Subscription subscription = new Subscription();
         LocalDateTime now = LocalDateTime.now();
-        if (isAdd) {
-            Long id = Long.parseLong(requestMap.get("id"));
-            plan.setId(id);
-            plan.setCreatedTime(planRepo.findFirstById(id).getCreatedTime());
-        } else {
-            plan.setCreatedTime(now);
+//        if (isAdd) {
+//            Long id = Long.parseLong(requestMap.get("id"));
+//            plan.setId(id);
+//            plan.setCreatedTime(planRepo.findFirstById(id).getCreatedTime());
+//        } else {
+//            plan.setCreatedTime(now);
+//        }
+
+        String em = requestMap.get("email");
+        User.Role uR = userRepo.findFirstByEmail(em).getRole();
+        if (User.Role.ADMIN.equals(uR)) {
+            return null;
         }
-        plan.setName(requestMap.get("name"));
-        plan.setDescription(requestMap.get("description"));
-        plan.setCreatedBy(jwtRequestFilter.getCurrentUsername());
-
-        plan.setUpdatedTime(now);
-        plan.setCode(requestMap.get("code"));
-        plan.setPrice(Float.parseFloat(requestMap.get("price")));
-        plan.setDuration(Integer.parseInt(requestMap.get("duration")));
-
-        String sta = requestMap.get("status");
-        if (sta != null && !sta.isEmpty()) {
-            plan.setStatus(sta);
+        subscription.setSubscriber(em);
+        String plc = requestMap.get("plan_code");
+        subscription.setPlan_code(plc);
+        if (Objects.equals(plc, "ALL") || plc.isEmpty()) {
+            subscription.setPrice((float) 0);
         } else {
-            plan.setStatus("true");
+            subscription.setPrice(planRepo.findFirstByCode(plc).getPrice());
+            System.out.println("subscription planRepo.findFirstByCode(plc).getPrice(): "+planRepo.findFirstByCode(plc).getPrice());
         }
 
-        return plan;
+        subscription.setStartDate(now);
+        subscription.setExpirationDate(now.plusDays(30));
+
+        subscription.setStatus("true");
+
+        return subscription;
     }
 
     @GetMapping("/get")
-    public ResponseEntity<List<Plan>> getAllPlans(@RequestParam(required = false) String Value) {
+    public ResponseEntity<List<Subscription>> getAllSubscriptions(@RequestParam(required = false) String Value) {
         try {
             if(!Strings.isNullOrEmpty(Value) && Value.equalsIgnoreCase("true")) {
-                return new ResponseEntity<List<Plan>>(new ArrayList<>(), HttpStatus.OK);
+                return new ResponseEntity<List<Subscription>>(new ArrayList<>(), HttpStatus.OK);
             }
-            return new ResponseEntity<>(planRepo.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(subscriptionRepo.findAll(), HttpStatus.OK);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new ResponseEntity<List<Plan>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<List<Subscription>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/getAllPlanCode")
@@ -131,31 +147,31 @@ public class SubscriptionController {
         return new ResponseEntity<PlanWrapper>(new PlanWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<String> update(@RequestBody(required = true) Map<String, String> requestMap) {
-        try {
-            if (jwtRequestFilter.isAdmin()) {
-                if (validatePlanMap(requestMap , true)) {
-
-                    Optional optional = planRepo.findById(Long.parseLong(requestMap.get("id")));
-
-                    if (!optional.isEmpty()) {
-                        planRepo.save(getPlanFromMap(requestMap,true));
-                        return InventoryUtils.getResponseEntity("Plan is updated successfully", HttpStatus.OK);
-
-                    } else {
-                        return InventoryUtils.getResponseEntity("Plan id doesn't exist", HttpStatus.OK);
-                    }
-                }
-                return InventoryUtils.getResponseEntity(InventoryConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
-            } else {
-                return InventoryUtils.getResponseEntity(InventoryConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return InventoryUtils.getResponseEntity(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @PostMapping("/update")
+//    public ResponseEntity<String> update(@RequestBody(required = true) Map<String, String> requestMap) {
+//        try {
+//            if (jwtRequestFilter.isAdmin()) {
+//                if (validatePlanMap(requestMap , true)) {
+//
+//                    Optional optional = planRepo.findById(Long.parseLong(requestMap.get("id")));
+//
+//                    if (!optional.isEmpty()) {
+//                        planRepo.save(getPlanFromMap(requestMap,true));
+//                        return InventoryUtils.getResponseEntity("Plan is updated successfully", HttpStatus.OK);
+//
+//                    } else {
+//                        return InventoryUtils.getResponseEntity("Plan id doesn't exist", HttpStatus.OK);
+//                    }
+//                }
+//                return InventoryUtils.getResponseEntity(InventoryConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
+//            } else {
+//                return InventoryUtils.getResponseEntity(InventoryConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        return InventoryUtils.getResponseEntity(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
     @PostMapping("/updateStatus")
     public ResponseEntity<String> updateStatus(@RequestBody(required = true) Map<String, String> requestMap) {

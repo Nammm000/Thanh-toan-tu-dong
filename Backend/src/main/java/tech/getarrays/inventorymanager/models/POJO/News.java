@@ -48,6 +48,17 @@ public class News implements Serializable {
     @Column(name = "plan_code")
     private String plan_code;
 
+    @Column(name = "price")
+    private Float price;
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
     public String getPlan_code() {
         return plan_code;
     }

@@ -11,13 +11,13 @@ import tech.getarrays.inventorymanager.constents.InventoryConstants;
 import tech.getarrays.inventorymanager.filters.JwtRequestFilter;
 import tech.getarrays.inventorymanager.models.POJO.News;
 import tech.getarrays.inventorymanager.repo.NewsRepo;
+import tech.getarrays.inventorymanager.repo.PlanRepo;
 import tech.getarrays.inventorymanager.util.InventoryUtils;
+import tech.getarrays.inventorymanager.wrapper.NewsWrapper;
+import tech.getarrays.inventorymanager.wrapper.PlanWrapper;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -26,6 +26,9 @@ public class NewsController {
 
     @Autowired
     NewsRepo newsRepo;
+
+    @Autowired
+    PlanRepo planRepo;
 
     @Autowired
     JwtRequestFilter jwtRequestFilter;
@@ -50,7 +53,7 @@ public class NewsController {
     }
 
     private boolean validateNewsMap(Map<String, String> requestMap, boolean validateId) {
-        if (requestMap.containsKey("name")) {
+        if (requestMap.containsKey("title")) {
             if (requestMap.containsKey("id") && validateId) {
                 return true;
             } else if(!validateId) {
@@ -62,17 +65,30 @@ public class NewsController {
 
     private News getNewsFromMap(Map<String, String> requestMap, boolean isAdd) {
         News news = new News();
+        LocalDateTime now = LocalDateTime.now();
         if (isAdd) {
-            news.setId(Long.parseLong(requestMap.get("id")));
+            Long id = Long.parseLong(requestMap.get("id"));
+            news.setId(id);
+            news.setCreatedTime(LocalDateTime.parse(requestMap.get("createdTime")));
+        } else {
+            news.setCreatedTime(now);
         }
         news.setTitle(requestMap.get("title"));
         news.setDescription(requestMap.get("description"));
         news.setContent(requestMap.get("content"));
-        news.setPlan_code(requestMap.get("plan_code"));
+        String plc = requestMap.get("plan_code");
+        news.setPlan_code(plc);
+        if (Objects.equals(plc, "ALL") || plc.isEmpty()) {
+            news.setPrice((float) 0);
+        } else {
+            news.setPrice(planRepo.findFirstByCode(plc).getPrice());
+            System.out.println("news planRepo.findFirstByCode(plc).getPrice(): "+planRepo.findFirstByCode(plc).getPrice());
+        }
+
+        System.out.println("jwtRequestFilter.getCurrentUsername(): "+jwtRequestFilter.getCurrentUsername());
         news.setAuthor(jwtRequestFilter.getCurrentUsername());
 
-        LocalDateTime now = LocalDateTime.now();
-        news.setCreatedTime(now);
+
         news.setUpdatedTime(now);
         news.setStatus("true");
         news.setView(0);
@@ -90,6 +106,20 @@ public class NewsController {
             ex.printStackTrace();
         }
         return new ResponseEntity<List<News>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping("/getNewsById/{id}")
+    public ResponseEntity<NewsWrapper> getNewsById(@PathVariable Long id) {
+        try {
+            if (jwtRequestFilter.isAdmin()) {
+                return new ResponseEntity<>(newsRepo.getNewsById(id), HttpStatus.OK);
+            }
+            new ResponseEntity<NewsWrapper>(new NewsWrapper(), HttpStatus.UNAUTHORIZED);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<NewsWrapper>(new NewsWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping("/update")
@@ -146,7 +176,7 @@ public class NewsController {
                 Optional optional = newsRepo.findById(id);
                 if (!optional.isEmpty()) {
                     newsRepo.deleteById(id);
-                    return InventoryUtils.getResponseEntity("News is updated successfully", HttpStatus.OK);
+                    return InventoryUtils.getResponseEntity("News is deleted successfully", HttpStatus.OK);
                 }
                 return InventoryUtils.getResponseEntity("News id doesn't exist", HttpStatus.OK);
             } else {

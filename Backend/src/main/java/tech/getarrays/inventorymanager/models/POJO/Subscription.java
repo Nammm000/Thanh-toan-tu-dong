@@ -25,9 +25,8 @@ public class Subscription implements Serializable {
     @Column(name = "subscriber")
     private String subscriber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "plan", nullable = false)
-    private Plan plan;
+    @Column(name = "plan_code", unique=true)
+    private String plan_code;
 
     @Column(name = "price")
     private Float price;
@@ -41,4 +40,59 @@ public class Subscription implements Serializable {
     @Column(name = "status")
     private String status;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSubscriber() {
+        return subscriber;
+    }
+
+    public void setSubscriber(String subscriber) {
+        this.subscriber = subscriber;
+    }
+
+    public String getPlan_code() {
+        return plan_code;
+    }
+
+    public void setPlan_code(String plan_code) {
+        this.plan_code = plan_code;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

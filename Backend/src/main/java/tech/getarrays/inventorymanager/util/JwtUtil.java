@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.io.Decoders;
 import java.security.Key;
-import java.util.*;
+import java.util.Calendar;
 import java.util.function.Function;
 import io.jsonwebtoken.security.Keys;
 import tech.getarrays.inventorymanager.models.User;
@@ -64,11 +64,15 @@ public class JwtUtil {
 
     private String createToken(Map<String, Object> claims, String userName) {
 //        System.out.println(claims);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+//        System.out.println("calendar.getTime(): "+calendar.getTime());
+//        System.out.println("new Date(System.currentTimeMillis() + 1000*60*60*24): "+(new Date(System.currentTimeMillis() + 1000*60*60*24)));
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*30))
+                .setExpiration(calendar.getTime()) // new Date(System.currentTimeMillis() + 1000*60*60*24)
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 

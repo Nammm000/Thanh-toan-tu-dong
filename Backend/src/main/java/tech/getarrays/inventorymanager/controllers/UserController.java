@@ -64,4 +64,23 @@ public class UserController {
         }
         return InventoryUtils.getResponseEntity(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        try {
+            if (jwtRequestFilter.isAdmin()) {
+                Optional optional = userRepo.findById(id);
+                if (!optional.isEmpty()) {
+                    userRepo.deleteById(id);
+                    return InventoryUtils.getResponseEntity("User is deleted successfully", HttpStatus.OK);
+                }
+                return InventoryUtils.getResponseEntity("User id doesn't exist", HttpStatus.OK);
+            } else {
+                return InventoryUtils.getResponseEntity(InventoryConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return InventoryUtils.getResponseEntity(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

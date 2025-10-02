@@ -37,7 +37,7 @@ public class LogoutController {
     JwtRequestFilter jwtRequestFilter;
 
     @PostMapping("/logout")
-    public LogoutResponse deleteAuthenticationToken() {
+    public LogoutResponse deleteAuthenticationToken(@RequestBody Map<String, String> requestMap) {
         SecurityContextHolder.clearContext();
 //        System.out.println("ok ok ok");
         return new LogoutResponse("Logout OK");

@@ -68,7 +68,8 @@ public class PlanController {
         if (isAdd) {
             Long id = Long.parseLong(requestMap.get("id"));
             plan.setId(id);
-            plan.setCreatedTime(planRepo.findFirstById(id).getCreatedTime());
+            plan.setCreatedTime(LocalDateTime.parse(requestMap.get("createdTime")));
+            // LocalDateTime.parse(requestMap.get("createdTime")) planRepo.findFirstById(id).getCreatedTime()
         } else {
             plan.setCreatedTime(now);
         }
@@ -185,7 +186,7 @@ public class PlanController {
                 Optional optional = planRepo.findById(id);
                 if (!optional.isEmpty()) {
                     planRepo.deleteById(id);
-                    return InventoryUtils.getResponseEntity("Plan is updated successfully", HttpStatus.OK);
+                    return InventoryUtils.getResponseEntity("Plan is deleted successfully", HttpStatus.OK);
                 }
                 return InventoryUtils.getResponseEntity("Plan id doesn't exist", HttpStatus.OK);
             } else {
