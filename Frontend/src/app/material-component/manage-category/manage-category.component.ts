@@ -92,7 +92,7 @@ export class ManageCategoryComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       message: 'delete ' + values.name + ' category',
-      condirmation: true
+      confirmation: true
     };
 
     //dialogConfig.width = "850px";

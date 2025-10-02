@@ -8,7 +8,7 @@
       <div class="text-2xl font-semibold leading-none tracking-tight">
         Danh sách gói đăng ký
       </div>
-      <div class="text-sm text-muted-foreground">Tổng cộng 25 gói đăng ký</div>
+      <div class="text-sm text-muted-foreground">Tổng cộng {{listSubscription.length}} gói đăng ký</div>
       <div class="flex items-center space-x-2">
         <i class="icon-16 search"></i>
         <input
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="p-6 pt-0">
-      <div class="space-y-4">
+      <div class="space-y-4" *ngFor="let subscription of listSubscription">
         <div
           class="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
         >
@@ -31,9 +31,9 @@
                 <div
                   class="flex items-center space-x-4 mt-2 text-xs text-gray-500"
                 >
-                  <span>Bắt đầu: 15/9/2025</span
-                  ><span>Kết thúc: 15/10/2025</span
-                  ><span>Giá: 5.000.000 VNĐ</span>
+                  <span>Bắt đầu: {{subscription.startDate}}</span
+                  ><span>Kết thúc: {{subscription.expirationDate}}</span
+                  ><span>Giá: {{subscription.price}} VNĐ</span>
                 </div>
               </div>
             </div>

@@ -1,1 +1,24 @@
-<p>user works!</p>
+<div class="bg-card text-card-foreground shadow-sm">
+  <div class="flex flex-col space-y-1.5 p-6">
+    <div class="text-2xl font-semibold leading-none tracking-tight">
+      Cập nhật gói
+    </div>
+  </div>
+  <div class="p-6 pt-0 space-y-4">
+    <div>
+      <label for="plan" class="block text-sm font-medium mb-2">Chọn gói</label
+      ><select id="plan" name="plan" [(ngModel)]="planCode"
+        class="border rounded px-3 py-2 w-full">
+        <option value="" disabled selected hidden>Chọn đối tượng đọc</option>
+        <option value="ALL">Tất cả người dùng</option>
+        <option *ngFor="let code of listPlanCode;" value="{{code.code}}">{{code.name}}</option>
+      </select>
+    </div>
+    <button (click)="handleChangeAction()"
+      class="text-white float-right items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      type="button"
+    >
+      Lưu gói
+    </button>
+  </div>
+</div>

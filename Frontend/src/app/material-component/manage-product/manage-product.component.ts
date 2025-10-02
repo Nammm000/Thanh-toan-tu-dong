@@ -7,7 +7,7 @@ import { SnackbarService } from 'src/app/service/snackbar.service';
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalConstants } from 'src/app/shared/global-constants';
-import { ProductComponent } from '../dialog/product/product.component';
+// import { ProductComponent } from '../dialog/product/product.component';
 import { ConfirmationComponent } from '../dialog/confirmation/confirmation.component';
 
 @Component({
@@ -65,13 +65,13 @@ export class ManageProductComponent implements OnInit {
       action: 'Add'
     };
     dialogConfig.width = "850px";
-    const dialogRef = this.dialog.open(ProductComponent, dialogConfig);
-    this.router.events.subscribe(() => {
-      dialogRef.close();
-    });
-    const sub = dialogRef.componentInstance.onAddProduct.subscribe((response: any) => {
-      this.tableData();
-    })
+    // const dialogRef = this.dialog.open(ProductComponent, dialogConfig);
+    // this.router.events.subscribe(() => {
+    //   dialogRef.close();
+    // });
+    // const sub = dialogRef.componentInstance.onAddProduct.subscribe((response: any) => {
+    //   this.tableData();
+    // })
   }
 
   handleEditAction(values: any) {
@@ -81,20 +81,20 @@ export class ManageProductComponent implements OnInit {
       data: values
     };
     dialogConfig.width = "850px";
-    const dialogRef = this.dialog.open(ProductComponent, dialogConfig);
-    this.router.events.subscribe(() => {
-      dialogRef.close();
-    });
-    const sub = dialogRef.componentInstance.onEditProduct.subscribe((response: any) => {
-      this.tableData();
-    })
+    // const dialogRef = this.dialog.open(ProductComponent, dialogConfig);
+    // this.router.events.subscribe(() => {
+    //   dialogRef.close();
+    // });
+    // const sub = dialogRef.componentInstance.onEditProduct.subscribe((response: any) => {
+    //   this.tableData();
+    // })
   }
 
   handleDeleteAction(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       message: 'delete' + values.name + ' product',
-      condirmation: true
+      confirmation: true
     };
 
     //dialogConfig.width = "850px";

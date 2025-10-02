@@ -16,7 +16,10 @@ export class ConfirmationComponent implements OnInit {
   ngOnInit(): void {
       if (this.dialogData && this.dialogData.confirmation) {
         this.details = this.dialogData;
+        // console.log("this.details: "+this.details);
       }
+      // console.log("this.dialogData: "+this.dialogData);
+      // console.log("this.dialogData.confirmation: "+this.dialogData.confirmation);
   }
 
   handleChangeAction() {

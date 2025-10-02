@@ -58,7 +58,7 @@ export class ManagePlanComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       message: 'delete ' + id + ' plan',
-      condirmation: true
+      confirmation: true
     };
     const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
     const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe(

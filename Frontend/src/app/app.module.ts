@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/material-module';
 import { HomeComponent } from './home/home.component';
-import { BestSellerComponent } from './best-seller/best-seller.component';
+// import { BestSellerComponent } from './best-seller/best-seller.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from './shared/shared.module';
@@ -28,10 +28,10 @@ import { ChangePasswordComponent } from './material-component/dialog/change-pass
 import { ManageCategoryComponent } from './material-component/manage-category/manage-category.component';
 import { CategoryComponent } from './material-component/dialog/category/category.component';
 import { ManageProductComponent } from './material-component/manage-product/manage-product.component';
-import { ProductComponent } from './material-component/dialog/product/product.component';
-import { CustomerComponent } from './material-component/dialog/customer/customer.component';
-import { WarehouseComponent } from './material-component/dialog/warehouse/warehouse.component';
-import { ProviderComponent } from './material-component/dialog/provider/provider.component';
+// import { ProductComponent } from './material-component/dialog/product/product.component';
+// import { CustomerComponent } from './material-component/dialog/customer/customer.component';
+// import { WarehouseComponent } from './material-component/dialog/warehouse/warehouse.component';
+// import { ProviderComponent } from './material-component/dialog/provider/provider.component';
 import { LocationComponent } from './material-component/dialog/location/location.component';
 import { ManageOrderComponent } from './material-component/manage-order/manage-order.component';
 import { ManageCustomerComponent } from './material-component/manage-customer/manage-customer.component';
@@ -66,7 +66,7 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
   declarations: [	
     AppComponent,
     HomeComponent,
-    BestSellerComponent,
+    // BestSellerComponent,
     FullComponent,
     AppHeaderComponent,
     AppSidebarComponent,
@@ -85,10 +85,10 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     ManageLocationComponent,
     ViewBillComponent,
     ManageUserComponent,
-    ProductComponent, 
-    CustomerComponent, 
-    WarehouseComponent,
-    ProviderComponent, 
+    // ProductComponent, 
+    // CustomerComponent, 
+    // WarehouseComponent,
+    // ProviderComponent, 
     LocationComponent, FooterComponent, ItemsComponent, AboutComponent, ContactComponent, SupportComponent, PricingComponent, LeftSidebarComponent, NewsComponent,
    ],
   imports: [

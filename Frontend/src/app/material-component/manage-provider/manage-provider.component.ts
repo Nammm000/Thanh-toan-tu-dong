@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ConfirmationComponent } from '../dialog/confirmation/confirmation.component';
-import { ProviderComponent } from '../dialog/provider/provider.component';
+// import { ProviderComponent } from '../dialog/provider/provider.component';
 
 @Component({
   selector: 'app-manage-provider',
@@ -65,13 +65,13 @@ export class ManageProviderComponent implements OnInit {
       action: 'Add'
     };
     dialogConfig.width = "850px";
-    const dialogRef = this.dialog.open(ProviderComponent, dialogConfig);
-    this.router.events.subscribe(() => {
-      dialogRef.close();
-    });
-    const sub = dialogRef.componentInstance.onAddProvider.subscribe((response: any) => {
-      this.tableData();
-    })
+    // const dialogRef = this.dialog.open(ProviderComponent, dialogConfig);
+    // this.router.events.subscribe(() => {
+    //   dialogRef.close();
+    // });
+    // const sub = dialogRef.componentInstance.onAddProvider.subscribe((response: any) => {
+    //   this.tableData();
+    // })
   }
 
   handleEditAction(values: any) {
@@ -81,20 +81,20 @@ export class ManageProviderComponent implements OnInit {
       data: values
     };
     dialogConfig.width = "850px";
-    const dialogRef = this.dialog.open(ProviderComponent, dialogConfig);
-    this.router.events.subscribe(() => {
-      dialogRef.close();
-    });
-    const sub = dialogRef.componentInstance.onEditProvider.subscribe((response: any) => {
-      this.tableData();
-    })
+    // const dialogRef = this.dialog.open(ProviderComponent, dialogConfig);
+    // this.router.events.subscribe(() => {
+    //   dialogRef.close();
+    // });
+    // const sub = dialogRef.componentInstance.onEditProvider.subscribe((response: any) => {
+    //   this.tableData();
+    // })
   }
 
   handleDeleteAction(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       message: 'delete' + values.name + ' provider',
-      condirmation: true
+      confirmation: true
     };
 
     //dialogConfig.width = "850px";

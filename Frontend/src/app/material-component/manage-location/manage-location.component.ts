@@ -94,7 +94,7 @@ export class ManageLocationComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       message: 'delete ' + values.name + ' location',
-      condirmation: true
+      confirmation: true
     };
 
     //dialogConfig.width = "850px";

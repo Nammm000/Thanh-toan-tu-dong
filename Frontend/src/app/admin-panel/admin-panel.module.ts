@@ -18,6 +18,7 @@ import { UserComponent } from './manage-user/user/user.component';
 import { ManageSubscriptionComponent } from './manage-subscription/manage-subscription.component';
 // import { ViewBillProductsComponent } from './dialog/view-bill-products/view-bill-products.component';
 import { NgxEditorModule } from "ngx-editor";
+import { ManagePaymentComponent } from './manage-payment/manage-payment.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { NgxEditorModule } from "ngx-editor";
     NewsComponent,
     PlanComponent,
     UserComponent,
-    ManageSubscriptionComponent
+    ManageSubscriptionComponent,
+    ManagePaymentComponent
   ]
 })
 

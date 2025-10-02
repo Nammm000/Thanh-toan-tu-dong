@@ -26,10 +26,12 @@ export class ManageNewsComponent {
       private router: Router) { }
   
     ngOnInit(): void {
+      this.ngxService.start();
       this.setListNews();
     }
   
     setListNews() {
+      this.ngxService.stop();
       this.newsService.getNews().subscribe((response:any) => {
         // this.dataSource = new MatTableDataSource(response);
         this.listNews = response;
@@ -48,7 +50,7 @@ export class ManageNewsComponent {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = {
           message: 'delete ' + id + ' news',
-          condirmation: true
+          confirmation: true
         };
         const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
         const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe(

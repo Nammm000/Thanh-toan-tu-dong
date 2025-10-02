@@ -13,6 +13,7 @@ import { ManagePlanComponent } from './manage-plan/manage-plan.component';
 import { PlanComponent } from './manage-plan/plan/plan.component';
 
 import { ManageSubscriptionComponent } from './manage-subscription/manage-subscription.component';
+import { ManagePaymentComponent } from './manage-payment/manage-payment.component';
 
 export const AdminPanelRoutes: Routes = [
   {
@@ -23,6 +24,14 @@ export const AdminPanelRoutes: Routes = [
   {
     path: 'user',
     component: ManageUserComponent,
+    canActivate: [RouteGuardService],
+    data: {
+      expectedRole: ['ADMIN'],
+    },
+  },
+  {
+    path: 'payment',
+    component: ManagePaymentComponent,
     canActivate: [RouteGuardService],
     data: {
       expectedRole: ['ADMIN'],

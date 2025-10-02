@@ -28,6 +28,12 @@ export class UserService {
     return this.httpClient.post(this.url + "/auth/login", data);
   }
 
+  logout(): Observable<any> {
+    return this.httpClient.post(this.url + "/api/logout", {}, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+  });
+  }
+
   // checkToken() {
   //   return this.httpClient.get(this.url + "/user/checkToken");
   // }

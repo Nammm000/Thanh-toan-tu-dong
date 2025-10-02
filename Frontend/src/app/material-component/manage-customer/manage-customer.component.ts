@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ConfirmationComponent } from '../dialog/confirmation/confirmation.component';
-import { CustomerComponent } from '../dialog/customer/customer.component';
+// import { CustomerComponent } from '../dialog/customer/customer.component';
 
 // import { CommonModule } from '@angular/common';
 
@@ -67,13 +67,13 @@ export class ManageCustomerComponent implements OnInit {
       action: 'Add'
     };
     dialogConfig.width = "850px";
-    const dialogRef = this.dialog.open(CustomerComponent, dialogConfig);
-    this.router.events.subscribe(() => {
-      dialogRef.close();
-    });
-    const sub = dialogRef.componentInstance.onAddCustomer.subscribe((response: any) => {
-      this.tableData();
-    })
+    // const dialogRef = this.dialog.open(CustomerComponent, dialogConfig);
+    // this.router.events.subscribe(() => {
+    //   dialogRef.close();
+    // });
+    // const sub = dialogRef.componentInstance.onAddCustomer.subscribe((response: any) => {
+    //   this.tableData();
+    // })
   }
 
   handleEditAction(values: any) {
@@ -83,20 +83,20 @@ export class ManageCustomerComponent implements OnInit {
       data: values
     };
     dialogConfig.width = "850px";
-    const dialogRef = this.dialog.open(CustomerComponent, dialogConfig);
-    this.router.events.subscribe(() => {
-      dialogRef.close();
-    });
-    const sub = dialogRef.componentInstance.onEditCustomer.subscribe((response: any) => {
-      this.tableData();
-    })
+    // const dialogRef = this.dialog.open(CustomerComponent, dialogConfig);
+    // this.router.events.subscribe(() => {
+    //   dialogRef.close();
+    // });
+    // const sub = dialogRef.componentInstance.onEditCustomer.subscribe((response: any) => {
+    //   this.tableData();
+    // })
   }
 
   handleDeleteAction(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       message: 'delete' + values.name + ' customer',
-      condirmation: true
+      confirmation: true
     };
 
     //dialogConfig.width = "850px";

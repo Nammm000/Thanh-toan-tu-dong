@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { ConfirmationComponent } from '../dialog/confirmation/confirmation.component';
-import { WarehouseComponent } from '../dialog/warehouse/warehouse.component';
+// import { WarehouseComponent } from '../dialog/warehouse/warehouse.component';
 
 @Component({
   selector: 'app-manage-warehouse',
@@ -64,13 +64,13 @@ export class ManageWarehouseComponent implements OnInit {
       action: 'Add'
     };
     dialogConfig.width = "850px";
-    const dialogRef = this.dialog.open(WarehouseComponent, dialogConfig);
-    this.router.events.subscribe(() => {
-      dialogRef.close();
-    });
-    const sub = dialogRef.componentInstance.onAddWarehouse.subscribe((response: any) => {
-      this.tableData();
-    })
+    // const dialogRef = this.dialog.open(WarehouseComponent, dialogConfig);
+    // this.router.events.subscribe(() => {
+    //   dialogRef.close();
+    // });
+    // const sub = dialogRef.componentInstance.onAddWarehouse.subscribe((response: any) => {
+    //   this.tableData();
+    // })
   }
 
   handleEditAction(values: any) {
@@ -80,20 +80,20 @@ export class ManageWarehouseComponent implements OnInit {
       data: values
     };
     dialogConfig.width = "850px";
-    const dialogRef = this.dialog.open(WarehouseComponent, dialogConfig);
-    this.router.events.subscribe(() => {
-      dialogRef.close();
-    });
-    const sub = dialogRef.componentInstance.onEditWarehouse.subscribe((response: any) => {
-      this.tableData();
-    })
+    // const dialogRef = this.dialog.open(WarehouseComponent, dialogConfig);
+    // this.router.events.subscribe(() => {
+    //   dialogRef.close();
+    // });
+    // const sub = dialogRef.componentInstance.onEditWarehouse.subscribe((response: any) => {
+    //   this.tableData();
+    // })
   }
 
   handleDeleteAction(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       message: 'delete' + values.name + ' warehouse',
-      condirmation: true
+      confirmation: true
     };
 
     //dialogConfig.width = "850px";
