@@ -15,6 +15,9 @@ public interface SubscriptionRepo extends JpaRepository<Subscription, Long> {
 
     Subscription findFirstById(@Param("id") Long id);
 
+    @Query("select su from Subscription su where (su.subscriber=:email and su.price > 0) order by su.expirationDate desc")
+    List<Subscription> findAllByEmail(@Param("email") String email);
+
 //    @Query("select new tech.getarrays.inventorymanager.wrapper.SubscriptionWrapper(u.name , u.code) from Subscription u")
 //    List<SubscriptionWrapper> getAllSubscriptionWrapper();
 

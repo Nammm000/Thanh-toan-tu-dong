@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.getarrays.inventorymanager.constents.InventoryConstants;
 import tech.getarrays.inventorymanager.filters.JwtRequestFilter;
+import tech.getarrays.inventorymanager.models.POJO.News;
 import tech.getarrays.inventorymanager.models.POJO.Plan;
 import tech.getarrays.inventorymanager.models.POJO.Subscription;
 import tech.getarrays.inventorymanager.models.User;
@@ -147,31 +148,30 @@ public class SubscriptionController {
         return new ResponseEntity<PlanWrapper>(new PlanWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    @PostMapping("/update")
-//    public ResponseEntity<String> update(@RequestBody(required = true) Map<String, String> requestMap) {
-//        try {
-//            if (jwtRequestFilter.isAdmin()) {
-//                if (validatePlanMap(requestMap , true)) {
-//
-//                    Optional optional = planRepo.findById(Long.parseLong(requestMap.get("id")));
-//
-//                    if (!optional.isEmpty()) {
-//                        planRepo.save(getPlanFromMap(requestMap,true));
-//                        return InventoryUtils.getResponseEntity("Plan is updated successfully", HttpStatus.OK);
-//
-//                    } else {
-//                        return InventoryUtils.getResponseEntity("Plan id doesn't exist", HttpStatus.OK);
-//                    }
-//                }
-//                return InventoryUtils.getResponseEntity(InventoryConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
-//            } else {
-//                return InventoryUtils.getResponseEntity(InventoryConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//        return InventoryUtils.getResponseEntity(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @GetMapping("/getUserSub")
+    public ResponseEntity<String> getUserSub() {
+        log.info("Inside /news/getUserSubNews()");
+        try {
+
+            if (jwtRequestFilter.isUser()) {
+                List<Subscription> listUserSub = subscriptionRepo.findAllByEmail(jwtRequestFilter.getCurrentUsername());
+                if (!listUserSub.isEmpty()) {
+                    Subscription subNow = listUserSub.get(0);
+                    LocalDateTime now = LocalDateTime.now();
+                    if ( subNow.getExpirationDate().compareTo(now) < 0 ) {
+                        return InventoryUtils.getResponseEntity(subNow.getPlan_code(), HttpStatus.OK);
+                    } else {
+                        return new ResponseEntity<>("Gói đăng ký hết hạn vào ngày " + subNow.getExpirationDate(), HttpStatus.OK);
+                    }
+                } else {
+                    return new ResponseEntity<>("Người dùng không đăng ký", HttpStatus.OK);
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @PostMapping("/updateStatus")
     public ResponseEntity<String> updateStatus(@RequestBody(required = true) Map<String, String> requestMap) {
