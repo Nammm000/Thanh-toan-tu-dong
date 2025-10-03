@@ -5,7 +5,9 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { SnackbarService } from 'src/app/service/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Editor } from "ngx-editor";
+import { Validators, Editor, Toolbar } from "ngx-editor";
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import jsonDoc from 'src/app/model/doc';
 
 @Component({
   selector: 'app-news',
@@ -27,7 +29,29 @@ export class NewsComponent implements OnInit, OnDestroy {
   };
   page = "add";
 
+  editordoc = jsonDoc;
   editor: Editor = new Editor();
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
+
+  form = new FormGroup({
+    editorContent: new FormControl(
+      { value: jsonDoc, disabled: false },
+      Validators.required()
+    ),
+  });
+
+  // get doc(): AbstractControl {
+  //   return this.form.get('editorContent')!;
+  // }
   // html: string = "";
 
   constructor(
@@ -40,6 +64,7 @@ export class NewsComponent implements OnInit, OnDestroy {
   ) {}
   
   ngOnInit(): void {
+     this.editor = new Editor();
     this.planService.getAllPlanCode().subscribe(
       (response: any) => {
         this.listPlanCode = response;
@@ -73,6 +98,7 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   addEditNews() {
     this.ngxService.start();
+    // this.data.content = JSON.stringify(this.form.get('editorContent')?.value ?? '');
     if (this.page == 'add') {
       this.newsService.add(this.data).subscribe(
         (response: any) => {

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://evfp.com.vn/'
+  apiUrl: 'http://103.1.236.200:8081'
 };

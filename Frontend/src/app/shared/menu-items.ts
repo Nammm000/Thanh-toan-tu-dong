@@ -20,7 +20,7 @@ const MENUITEMS = [
     {state: 'plans', name: 'Manage Plan', type: 'link', icon: 'layers', role: 'ADMIN'},
     {state: 'news', name: 'Manage News', type: 'link', icon: 'view_compact', role: 'ADMIN'},
     {state: 'subscriptions', name: 'Manage Subscriptions', type: 'link', icon: 'plus_one', role: 'ADMIN'},
-    {state: 'payment', name: 'Manage Payments', type: 'link', icon: 'plus_one', role: 'ADMIN'},
+    {state: 'payment', name: 'Manage Payments', type: 'link', icon: 'category', role: 'ADMIN'},
     // {state: 'customer', name: 'Manage Customer', type: 'link', icon: 'face', role: 'ADMIN'},
     // {state: 'provider', name: 'Manage Provider', type: 'link', icon: 'home', role: 'ADMIN'},
     // {state: 'warehouse', name: 'Manage Warehouse', type: 'link', icon: 'store_mall_directory', role: 'ADMIN'},

@@ -34,6 +34,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: black !important;
   }
 
+  .mat-mdc-snack-bar-container {
+  &.success-snackbar {
+    --mdc-snackbar-container-color: #00ff7f; /* Background color */
+    --mdc-snackbar-supporting-text-color: black; /* Text color */
+    --mat-mdc-snack-bar-button-color: black; /* Action button color */
+  }
+
+  &.error-snackbar {
+    --mdc-snackbar-container-color: black;
+    --mdc-snackbar-supporting-text-color: white;
+    --mat-mdc-snack-bar-button-color: white;
+  }
+}
+
   .mat-snack-bar-container {
     margin-right: auto !important;
     margin-left: auto !important;

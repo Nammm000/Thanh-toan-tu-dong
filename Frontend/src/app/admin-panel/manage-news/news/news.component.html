@@ -28,7 +28,8 @@
               >Tiêu đề *</label
             ><input
               class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-              id="title" name="title"
+              id="title"
+              name="title"
               [(ngModel)]="data.title"
               placeholder="Nhập tiêu đề bài viết..."
               required=""
@@ -54,15 +55,20 @@
               for="target_audience"
               >Đối tượng đọc</label
             ><select
-              id="target_audience" name="target_audience"
+              id="target_audience"
+              name="target_audience"
               [(ngModel)]="data.plan_code"
               class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="" disabled selected hidden>Chọn đối tượng đọc</option>
+              <option value="" disabled selected hidden>
+                Chọn đối tượng đọc
+              </option>
               <option value="ALL">Tất cả người dùng</option>
-              <option *ngFor="let code of listPlanCode;" value="{{code.code}}">{{code.name}}</option>
+              <option *ngFor="let code of listPlanCode" value="{{ code.code }}">
+                {{ code.name }}
+              </option>
             </select>
-            <p class="text-sm text-gray-500 mt-1" style="margin-top: 9px;">
+            <p class="text-sm text-gray-500 mt-1" style="margin-top: 9px">
               Chọn gói subscription cần thiết để đọc bài viết này
             </p>
           </div>
@@ -73,7 +79,8 @@
               >Tóm tắt</label
             ><textarea
               class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-              id="excerpt" name="excerpt"
+              id="excerpt"
+              name="excerpt"
               [(ngModel)]="data.description"
               placeholder="Nhập tóm tắt ngắn gọn về bài viết..."
               rows="3"
@@ -757,30 +764,34 @@
                 </div>
               </div>
             </div> -->
-                <div class="NgxEditor__Wrapper">
-                  <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
-                  <ngx-editor
-                    [editor]="editor"
-                    [(ngModel)]="data.content"
-                    [placeholder]="'Type here...'"
-                    style="width: 100%; min-height: 300px;display: block;"
-                  ></ngx-editor>
-                </div>
-                <div class="flex items-center space-x-2 mt-3">
-        <mat-slide-toggle (change)="onChange($event.checked)"
-                    matTooltip="Activate or Deactivate News" [checked]='true'>
-                </mat-slide-toggle>
-        <span>Hoạt động</span>
-      </div>
-                <button
-        class="mt-3 text-white items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background 
-        transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring 
-        focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 
-        bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-        type="submit" (click)="addEditNews()"
-      >
-        {{ page==="add" ? "Tạo mới" : "Cập nhật" }}
-      </button>
+            <div class="NgxEditor__Wrapper">
+              <ngx-editor-menu
+                [editor]="editor"
+                [toolbar]="toolbar"
+              ></ngx-editor-menu>
+              <ngx-editor
+                [editor]="editor"
+                [(ngModel)]="data.content"
+                [placeholder]="'Nhập nội dung ...'"
+                style="width: 100%; min-height: 300px; display: block"
+              ></ngx-editor>
+            </div>
+            <div class="flex items-center space-x-2 mt-3">
+              <mat-slide-toggle
+                (change)="onChange($event.checked)"
+                matTooltip="Activate or Deactivate News"
+                [checked]="true"
+              >
+              </mat-slide-toggle>
+              <span>Hoạt động</span>
+            </div>
+            <button
+              class="mt-3 text-white items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+              type="submit"
+              (click)="addEditNews()"
+            >
+              {{ page === "add" ? "Tạo mới" : "Cập nhật" }}
+            </button>
           </div>
         </div>
       </div>

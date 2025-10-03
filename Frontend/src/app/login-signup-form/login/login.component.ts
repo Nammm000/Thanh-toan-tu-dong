@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
       // console.log("response: " + response);
       // console.log("ok " + response.jwtToken);
       localStorage.setItem('token', response.jwtToken);
-      this.router.navigate(['/cafe/dashboard']);
+      this.router.navigate(['/admin/dashboard']);
     }, (error) => {
       this.ngxService.stop();
       if (error.error?.message) {

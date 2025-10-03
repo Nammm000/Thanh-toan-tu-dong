@@ -49,7 +49,7 @@ export class ManageNewsComponent {
     deleteAction(id: any) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = {
-          message: 'delete ' + id + ' news',
+          message: 'delete news ' + id,
           confirmation: true
         };
         const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);

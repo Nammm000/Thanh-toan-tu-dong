@@ -18,8 +18,16 @@ import { ManagePaymentComponent } from './manage-payment/manage-payment.componen
 export const AdminPanelRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/cafe/dashboard',
+    redirectTo: '/admin/dashboard',
     pathMatch: 'full',
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [RouteGuardService],
+    data: {
+      expectedRole: ['ADMIN'],
+    },
   },
   {
     path: 'user',

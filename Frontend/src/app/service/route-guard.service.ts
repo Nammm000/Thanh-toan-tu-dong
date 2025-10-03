@@ -51,7 +51,7 @@ export class RouteGuardService {
       // console.log("tokenPayload.role: " + tokenPayload.role);
       // console.log("expectedRole: " + expectedRole);
       this.snacBarService.openSnackBar(GlobalConstants.unauthorized, GlobalConstants.error);
-      this.router.navigate(['/cafe/dashboard']);
+      this.router.navigate(['/admin/dashboard']);
       return false;
     } else {
       this.router.navigate(['/']);

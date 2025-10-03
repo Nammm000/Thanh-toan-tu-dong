@@ -4,14 +4,14 @@ Author: Themedesigner
 Email: niravjoshi87@gmail.com
 File: scss
 */
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 // Variables
 // @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700');
 
 $bodyfont: 'Poppins', sans-serif;
 $headingfont: 'Poppins', sans-serif;
 
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 
 /*Material Theme Colors*/
 
@@ -52,7 +52,7 @@ $custom-typography: mat.define-typography-config(
 );
 
 // Override the typography in the core CSS.
-@include mat.core($custom-typography);
+@include mat.core();
 
 // Default Theme
 @include mat.all-component-themes($theme);
