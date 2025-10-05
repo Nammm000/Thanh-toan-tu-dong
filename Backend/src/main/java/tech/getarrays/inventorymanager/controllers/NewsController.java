@@ -6,20 +6,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tech.getarrays.inventorymanager.constents.InventoryConstants;
 import tech.getarrays.inventorymanager.filters.JwtRequestFilter;
+
 import tech.getarrays.inventorymanager.models.POJO.Image;
 import tech.getarrays.inventorymanager.models.POJO.News;
 import tech.getarrays.inventorymanager.models.POJO.Subscription;
+import tech.getarrays.inventorymanager.repo.ImageRepo;
 import tech.getarrays.inventorymanager.repo.NewsRepo;
 import tech.getarrays.inventorymanager.repo.PlanRepo;
 import tech.getarrays.inventorymanager.repo.SubscriptionRepo;
 import tech.getarrays.inventorymanager.util.InventoryUtils;
+import tech.getarrays.inventorymanager.wrapper.NewsImgWrapper;
 import tech.getarrays.inventorymanager.wrapper.NewsWrapper;
 import tech.getarrays.inventorymanager.wrapper.PlanWrapper;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -35,18 +41,23 @@ public class NewsController {
     PlanRepo planRepo;
 
     @Autowired
+    ImageRepo imageRepo;
+
+    @Autowired
     SubscriptionRepo subscriptionRepo;
 
     @Autowired
     JwtRequestFilter jwtRequestFilter;
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addNews(@RequestBody(required = true) Map<String, String> requestMap) {
-        log.info("Inside addNews{}", requestMap);
+    @PostMapping(value = {"/add"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<String> addNews(@RequestPart("imageFile") MultipartFile[] file,
+                                          @RequestPart("attachedTo") String attachedTo,
+                                          @RequestPart("data") Map<String, String> data) {
+        log.info("Inside addNews{}", data);
         try {
             if (jwtRequestFilter.isAdmin()) {
-                if (validateNewsMap(requestMap, false)) {
-                    newsRepo.save(getNewsFromMap(requestMap , false));
+                if (validateNewsMap(data, false)) {
+                    newsRepo.save(getNewsFromMap(data , false, file, attachedTo));
                     return InventoryUtils.getResponseEntity("News Added Successfully", HttpStatus.OK);
                 }
             } else {
@@ -60,6 +71,7 @@ public class NewsController {
     }
 
     private boolean validateNewsMap(Map<String, String> requestMap, boolean validateId) {
+        System.out.println(requestMap);
         if (requestMap.containsKey("title")) {
             if (requestMap.containsKey("id") && validateId) {
                 return true;
@@ -70,16 +82,33 @@ public class NewsController {
         return false;
     }
 
-    private News getNewsFromMap(Map<String, String> requestMap, boolean isAdd) {
+    private News getNewsFromMap(Map<String, String> requestMap,
+                                boolean isAdd, MultipartFile[] file,
+                                String attachedTo) throws IOException {
+        Image image = new Image();
+        image.setType(file[0].getContentType());
+        image.setName(file[0].getOriginalFilename());
+        image.setPicByte(file[0].getBytes());
+        image.setAttachedTo(attachedTo);
+
+
         News news = new News();
         LocalDateTime now = LocalDateTime.now();
         if (isAdd) {
             Long id = Long.parseLong(requestMap.get("id"));
             news.setId(id);
             news.setCreatedTime(LocalDateTime.parse(requestMap.get("createdTime")));
+            image.setId(Long.parseLong(requestMap.get("idImg")));
         } else {
             news.setCreatedTime(now);
         }
+
+        Image saved = imageRepo.save(image);
+        Long imgId = saved.getId();
+        Image imageSaved = new Image();
+        imageSaved.setId(imgId);
+        news.setImage(imageSaved);
+
         news.setTitle(requestMap.get("title"));
         news.setDescription(requestMap.get("description"));
         news.setContent(requestMap.get("content"));
@@ -92,13 +121,6 @@ public class NewsController {
             System.out.println("news planRepo.findFirstByCode(plc).getPrice(): "+planRepo.findFirstByCode(plc).getPrice());
         }
 
-        Image image = new Image();
-//        image.setType(file[0].getContentType());
-//        image.setName(file[0].getOriginalFilename());
-//        image.setPicByte(file[0].getBytes());
-//        image.setAttachedTo(attachedTo);
-//        imageRepo.save(image);
-
         System.out.println("jwtRequestFilter.getCurrentUsername(): "+jwtRequestFilter.getCurrentUsername());
         news.setAuthor(jwtRequestFilter.getCurrentUsername());
 
@@ -110,41 +132,42 @@ public class NewsController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<List<News>> getAllNews(@RequestParam(required = false) String Value) {
+    public ResponseEntity<List<NewsWrapper>> getAllNews(@RequestParam(required = false) String Value) {
         try {
             if(!Strings.isNullOrEmpty(Value) && Value.equalsIgnoreCase("true")) {
-                return new ResponseEntity<List<News>>(new ArrayList<>(), HttpStatus.OK);
+                return new ResponseEntity<List<NewsWrapper>>(new ArrayList<>(), HttpStatus.OK);
             }
-            return new ResponseEntity<>(newsRepo.findAll(Sort.by("updatedTime").descending()), HttpStatus.OK);
+            return new ResponseEntity<>(newsRepo.getAllNews(), HttpStatus.OK);
+            // findAll(Sort.by("updatedTime").descending())
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new ResponseEntity<List<News>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<List<NewsWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/getNewsById/{id}")
-    public ResponseEntity<NewsWrapper> getNewsById(@PathVariable Long id) {
+    public ResponseEntity<NewsImgWrapper> getNewsById(@PathVariable Long id) {
         try {
             if (jwtRequestFilter.isAdmin()) {
                 return new ResponseEntity<>(newsRepo.getNewsById(id), HttpStatus.OK);
             }
-            new ResponseEntity<NewsWrapper>(new NewsWrapper(), HttpStatus.UNAUTHORIZED);
+            new ResponseEntity<NewsImgWrapper>(new NewsImgWrapper(), HttpStatus.UNAUTHORIZED);
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new ResponseEntity<NewsWrapper>(new NewsWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<NewsImgWrapper>(new NewsImgWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/getPublicNews")
-    public ResponseEntity<List<News>> getPublicNews() {
+    public ResponseEntity<List<NewsImgWrapper>> getPublicNews() {
         try {
             return new ResponseEntity<>(newsRepo.getPublicNews(), HttpStatus.OK);
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new ResponseEntity<List<News>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<List<NewsImgWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/getUserSubNews")
@@ -152,7 +175,7 @@ public class NewsController {
         log.info("Inside /news/getUserSubNews()");
         try {
             if (jwtRequestFilter.isAdmin()) {
-                List<News> listNews = newsRepo.getNewsAdmin();
+                List<NewsImgWrapper> listNews = newsRepo.getNewsAdmin();
                 return new ResponseEntity<>(listNews, HttpStatus.OK);
             }
 
@@ -165,7 +188,7 @@ public class NewsController {
                 System.out.println(subNow.getExpirationDate().compareTo(now) < 0);
                 if ( subNow.getExpirationDate().compareTo(now) > 0 ) {
                     System.out.println("subNow.getPrice()" + subNow.getPrice());
-                    List<News> listNews = newsRepo.getUserSubNews(subNow.getPrice());
+                    List<NewsImgWrapper> listNews = newsRepo.getUserSubNews(subNow.getPrice());
                     return new ResponseEntity<>(listNews, HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>("Gói đăng ký hết hạn vào ngày " + subNow.getExpirationDate(), HttpStatus.OK);
@@ -180,16 +203,18 @@ public class NewsController {
         return new ResponseEntity<>(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<String> update(@RequestBody(required = true) Map<String, String> requestMap) {
+    @PostMapping(value = {"/update"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<String> update(@RequestPart("imageFile") MultipartFile[] file,
+                                         @RequestPart("attachedTo") String attachedTo,
+                                         @RequestPart("data") Map<String, String> data) {
         try {
             if (jwtRequestFilter.isAdmin()) {
-                if (validateNewsMap(requestMap , true)) {
+                if (validateNewsMap(data , true)) {
 
-                    Optional optional = newsRepo.findById(Long.parseLong(requestMap.get("id")));
+                    Optional optional = newsRepo.findById(Long.parseLong(data.get("id")));
 
                     if (!optional.isEmpty()) {
-                        newsRepo.save(getNewsFromMap(requestMap,true));
+                        newsRepo.save(getNewsFromMap(data,true, file, attachedTo));
                         return InventoryUtils.getResponseEntity("News is updated successfully", HttpStatus.OK);
 
                     } else {
@@ -219,6 +244,24 @@ public class NewsController {
                 }
             } else {
                 InventoryUtils.getResponseEntity(InventoryConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return InventoryUtils.getResponseEntity(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+    @GetMapping("/updateViews/{id}")
+    public ResponseEntity<String> updateViews(@PathVariable Long id) {
+        try {
+            Optional<News> optionalNews = newsRepo.findById(id);
+            int views = optionalNews.get().getView() + 1;
+            if (!optionalNews.isEmpty()) {
+                newsRepo.updateNewsViews(views, id);
+                return InventoryUtils.getResponseEntity("News views updated successfully. ", HttpStatus.OK);
+            } else {
+                return InventoryUtils.getResponseEntity("News id doesn't exist", HttpStatus.OK);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

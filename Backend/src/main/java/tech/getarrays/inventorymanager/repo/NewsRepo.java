@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tech.getarrays.inventorymanager.models.POJO.News;
+import tech.getarrays.inventorymanager.wrapper.NewsImgWrapper;
 import tech.getarrays.inventorymanager.wrapper.NewsWrapper;
 
 import java.util.List;
@@ -14,20 +15,45 @@ public interface NewsRepo extends JpaRepository<News, Long> {
 
     News findFirstById(@Param("id") Long id);
 
-    @Query("select n from News n where n.price=0 order by n.updatedTime desc")
-    List<News> getPublicNews();
+    @Query("select new tech.getarrays.inventorymanager.wrapper.NewsWrapper(u.id , u.title , " +
+            "u.description , u.content , " +
+            "u.plan_code , u.status , u.createdTime , u.updatedTime , u.view) " +
+            "from News u order by u.updatedTime desc")
+    List<NewsWrapper> getAllNews();
 
-    @Query("select n from News n where n.price > 0 order by n.updatedTime desc")
-    List<News> getNewsAdmin();
+    @Query("select new tech.getarrays.inventorymanager.wrapper.NewsImgWrapper(n.id , n.title , " +
+            "n.description , n.content , " +
+            "n.plan_code , n.status , n.createdTime , n.updatedTime , n.view , " +
+            "n.image.id , n.image.name , n.image.type , n.image.picByte) from News n where n.price=0 order by n.updatedTime desc")
+    List<NewsImgWrapper> getPublicNews();
 
-    @Query("select n from News n where (n.price <= :price and n.price > 0) order by n.updatedTime desc")
-    List<News> getUserSubNews(@Param("price") Float price);
+    @Query("select new tech.getarrays.inventorymanager.wrapper.NewsImgWrapper(n.id , n.title , " +
+            "n.description , n.content , " +
+            "n.plan_code , n.status , n.createdTime , n.updatedTime , n.view , " +
+            "n.image.id , n.image.name , n.image.type , n.image.picByte) " +
+            "from News n where n.price > 0 order by n.updatedTime desc")
+    List<NewsImgWrapper> getNewsAdmin();
 
-    @Query("select new tech.getarrays.inventorymanager.wrapper.NewsWrapper(u.title , u.description , u.content , u.plan_code , u.status , u.createdTime) from News u where u.id=:id")
-    NewsWrapper getNewsById(@Param("id") Long id);
+    @Query("select new tech.getarrays.inventorymanager.wrapper.NewsImgWrapper(n.id , n.title , " +
+            "n.description , n.content , " +
+            "n.plan_code , n.status , n.createdTime , n.updatedTime , n.view , " +
+            "n.image.id , n.image.name , n.image.type , n.image.picByte) " +
+            "from News n where (n.price <= :price and n.price > 0) order by n.updatedTime desc")
+    List<NewsImgWrapper> getUserSubNews(@Param("price") Float price);
+
+    @Query("select new tech.getarrays.inventorymanager.wrapper.NewsImgWrapper(u.id , u.title , " +
+            "u.description , u.content , " +
+            "u.plan_code , u.status , u.createdTime , u.updatedTime , u.view , " +
+            "u.image.id , u.image.name , u.image.type , u.image.picByte) from News u where u.id=:id")
+    NewsImgWrapper getNewsById(@Param("id") Long id);
 
     @Modifying
     @Transactional
     @Query("update News n set n.status =:status where n.id=:id")
     Integer updateNewsStatus(@Param("status") String status, @Param("id") Long id);
+
+    @Modifying
+    @Transactional
+    @Query("update News n set n.view =:views where n.id=:id")
+    Integer updateNewsViews(@Param("views") Integer views, @Param("id") Long id);
 }

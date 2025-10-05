@@ -27,7 +27,8 @@ public class News implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "content")
+    @Lob
+    @Column(name = "content", columnDefinition = "LONGTEXT")
     private String content;
 
     @Column(name = "author")
@@ -44,6 +45,18 @@ public class News implements Serializable {
 
     @Column(name = "view")
     private Integer view;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_fk", nullable = false)
+    private Image image;
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
 
     @Column(name = "plan_code")
     private String plan_code;

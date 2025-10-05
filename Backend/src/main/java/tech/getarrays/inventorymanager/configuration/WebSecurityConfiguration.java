@@ -41,6 +41,7 @@ public class WebSecurityConfiguration {
                         logout.logoutUrl("/api/logout")
                                 .logoutSuccessUrl("/")
                                 .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
                 .build();

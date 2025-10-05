@@ -46,6 +46,7 @@ public class SubscriptionController {
         try {
             if (jwtRequestFilter.isAdmin()) {
                 if (validatePlanMap(requestMap, false)) {
+                    System.out.println("getSubscriptionFromMap(requestMap)");
                     Subscription sub = getSubscriptionFromMap(requestMap);
                     if (sub==null) {
                         return InventoryUtils.getResponseEntity("User is admin.", HttpStatus.UNAUTHORIZED);
@@ -90,6 +91,7 @@ public class SubscriptionController {
         if (User.Role.ADMIN.equals(uR)) {
             return null;
         }
+        System.out.println("em"+em);
         subscription.setSubscriber(em);
         String plc = requestMap.get("plan_code");
         subscription.setPlan_code(plc);

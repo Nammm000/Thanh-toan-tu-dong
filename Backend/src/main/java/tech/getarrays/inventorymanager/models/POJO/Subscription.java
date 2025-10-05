@@ -25,7 +25,7 @@ public class Subscription implements Serializable {
     @Column(name = "subscriber")
     private String subscriber;
 
-    @Column(name = "plan_code", unique=true)
+    @Column(name = "plan_code")
     private String plan_code;
 
     @Column(name = "price")

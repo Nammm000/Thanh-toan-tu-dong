@@ -110,7 +110,7 @@ public class ImagePaymentController {
             if(!Strings.isNullOrEmpty(Value) && Value.equalsIgnoreCase("true")) {
                 return new ResponseEntity<List<Image>>(new ArrayList<>(), HttpStatus.OK);
             }
-            return new ResponseEntity<>(imageRepo.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(imageRepo.findAllPayment(), HttpStatus.OK);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
