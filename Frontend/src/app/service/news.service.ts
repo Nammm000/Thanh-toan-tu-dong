@@ -10,16 +10,12 @@ export class NewsService {
   url = environment.apiUrl;
   constructor(private httpClient: HttpClient) {}
 
-  add(data: any) {
-    return this.httpClient.post(this.url + '/news/add', data, {
-      headers: new HttpHeaders().set('content-Type', 'application/json'),
-    });
+  add(data: FormData) {
+    return this.httpClient.post(this.url + '/news/add', data);
   }
 
-  update(data: any) {
-    return this.httpClient.post(this.url + '/news/update', data, {
-      headers: new HttpHeaders().set('content-Type', 'application/json'),
-    });
+  update(data: FormData) {
+    return this.httpClient.post(this.url + '/news/update', data);
   }
 
   delete(id: any) {
@@ -42,6 +38,10 @@ export class NewsService {
 
   getNewsById(id: any): Observable<any> {
     return this.httpClient.get(this.url + '/news/getNewsById/' + id);
+  }
+
+  updateViews(id: any) {
+    return this.httpClient.get(this.url + '/news/updateViews/' + id);
   }
 
   // getFilteredCategorys() {

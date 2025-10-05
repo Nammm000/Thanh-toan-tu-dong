@@ -29,9 +29,7 @@ export class UserService {
   }
 
   logout(): Observable<any> {
-    return this.httpClient.post(this.url + "/api/logout", {}, {
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
-  });
+    return this.httpClient.post(this.url + "/api/logout", {});
   }
 
   // checkToken() {

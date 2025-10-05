@@ -40,15 +40,17 @@ export class AppHeaderComponent {
         const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
         const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe(
           (response: any) => {
-            this.logout();
-            
             dialogRef.close();
+            this.logout();
           }
         );
       }
     
       logout() {
         this.ngxService.start();
+        // localStorage.clear();
+        // this.ngxService.stop();
+        // this.router.navigate(['/']);
         this.userService.logout().subscribe((response: any) => {
           localStorage.clear();
           this.ngxService.stop();

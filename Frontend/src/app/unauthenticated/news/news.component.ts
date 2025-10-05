@@ -74,6 +74,7 @@ export class NewsComponent {
         this.listNews = response;
       },
       (error: any) => {
+        this.listNews = [];
         this.ngxService.stop();
         if (error.error?.message) {
           this.responseMessage = error.error?.message;

@@ -49,6 +49,9 @@ import { PricingComponent } from './unauthenticated/pricing/pricing.component';
 import { LeftSidebarComponent } from './layouts/full/left-sidebar/left-sidebar.component';
 import { NewsComponent } from './unauthenticated/news/news.component';
 import { NgxEditorModule } from "ngx-editor";
+import { ItemComponent } from './unauthenticated/news/item/item.component';
+import { NewsCardComponent } from './unauthenticated/news/news-card/news-card.component';
+import { HeadNewsCardComponent } from './unauthenticated/news/head-news-card/head-news-card.component';
 
 const ngxUiloaderConfig: NgxUiLoaderConfig = {
   text: "Loading...",
@@ -89,7 +92,7 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     // CustomerComponent, 
     // WarehouseComponent,
     // ProviderComponent, 
-    LocationComponent, FooterComponent, ItemsComponent, AboutComponent, ContactComponent, SupportComponent, PricingComponent, LeftSidebarComponent, NewsComponent,
+    LocationComponent, FooterComponent, ItemsComponent, AboutComponent, ContactComponent, SupportComponent, PricingComponent, LeftSidebarComponent, NewsComponent, ItemComponent, NewsCardComponent, HeadNewsCardComponent,
    ],
   imports: [
     BrowserModule,

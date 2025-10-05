@@ -77,11 +77,11 @@
                 <mat-icon>password</mat-icon> Change Password
               </button>
 
-              <button mat-menu-item [routerLink]="['/admin']">
+              <button mat-menu-item [routerLink]="['/admin']" *ngIf="userRole === 'ADMIN'">
                 <mat-icon>settings</mat-icon>  Admin Panel
               </button>
 
-              <button mat-menu-item (click)="logout()">
+              <button mat-menu-item (click)="logoutAction()">
                 <mat-icon>exit_to_app</mat-icon> Logout
               </button>
             </mat-menu>

@@ -1,0 +1,215 @@
+<div class="max-w-4xl mx-auto">
+  <div class="mb-8">
+    <!-- <div class="flex flex-wrap gap-2 mb-4">
+      <div
+        class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-red-100 text-red-800 hover:bg-red-200"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-star w-3 h-3 mr-1"
+        >
+          <path
+            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"
+          ></path></svg>Tin nổi bật
+      </div>
+    </div> -->
+    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+      {{data.title}}
+    </h1>
+    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+      {{data.description}}
+    </p>
+    <div
+      class="flex flex-wrap items-center gap-6 text-sm text-gray-500 mb-8 p-4 bg-white rounded-lg shadow-sm"
+    >
+      <div class="flex items-center gap-2">
+        <i class="icon-16 calendar"></i>
+        <span>{{data.createdTime}}</span>
+      </div>
+      <!-- <div class="flex items-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-clock w-4 h-4"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline></svg><span>4 phút đọc</span>
+      </div> -->
+      <div class="flex items-center gap-2">
+        <i class="icon-16 eye"></i>
+          <span>{{data.view}} lượt xem</span>
+      </div>
+    </div>
+    <!-- <div class="flex gap-4 mb-8">
+      <button
+        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-share2 w-4 h-4 mr-2"
+        >
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+          <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line></svg>Chia sẻ
+      </button>
+    </div> -->
+  </div>
+  <div class="mb-8">
+    <img
+      alt="FPT ký hợp đồng kỷ lục 256 triệu USD với tập đoàn năng lượng hàng đầu châu Á"
+      loading="lazy"
+      width="800"
+      height="400"
+      decoding="async"
+      data-nimg="1"
+      class="w-full h-96 object-cover rounded-lg shadow-lg"
+      src="https://thongnx.com/cdn/news/1757996301932-avatar1757984361452-1757984361802460770557.webp"
+      style="color: transparent"
+    />
+  </div>
+  <div class="rounded-lg border bg-card text-card-foreground mb-12 shadow-lg">
+    <div class="p-8">
+      <div
+        class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900"
+        style="line-height: 1.8; font-size: 18px"
+      >
+        <div [innerHTML]="data.content"></div>
+        <!-- <p dir="ltr">
+          Ngày 16/9/2025, FPT - Công ty toàn cầu trong lĩnh vực chuyển đổi số
+          vừa công bố trở thành đối tác chiến lược triển khai hợp đồng 5 năm trị
+          giá 256 triệu USD với tập đoàn năng lượng hàng đầu châu Á. Hợp đồng
+          này đánh dấu bước tiến mới của FPT trong lĩnh vực chuyển đổi số toàn
+          diện ứng dụng AI. Đây cũng là hợp đồng có giá trị lớn nhất trong lịch
+          sử 37 năm của FPT.
+        </p>
+        <p dir="ltr">
+          Theo đó, với chuyên môn sâu trong lĩnh vực năng lượng và đội ngũ
+          chuyên gia AI, công nghệ hùng hậu, FPT sẽ cung cấp hệ sinh thái dịch
+          vụ chuyển đổi số toàn diện tích hợp AI cho tập đoàn năng lượng hàng
+          đầu châu Á nhằm thúc đẩy đổi mới sáng tạo và tối ưu vận hành. Các sản
+          phẩm dịch vụ FPT cung cấp cho khách hàng gồm phát triển phần mềm tùy
+          chỉnh, kỹ thuật dữ liệu, di động, điện toán đám mây….
+        </p>
+        <p dir="ltr">
+          Là đối tác chiến lược, FPT sẽ quản lý triển khai, quản lý dự án, sản
+          phẩm, quản lý thay đổi, khoa học dữ liệu và thiết kế cho người dùng
+          cuối, đồng thời đảm nhận trọn vẹn các khâu từ phân tích yêu cầu, thiết
+          kế giải pháp, phát triển, kiểm thử, triển khai, hỗ trợ cho đến tài
+          liệu hóa. Với cam kết cải tiến liên tục, FPT bảo đảm quy trình luôn
+          được tối ưu hóa và tự động hóa, đi kèm hệ thống chỉ số đo lường chặt
+          chẽ, đồng thời tuân thủ nghiêm ngặt các tiêu chuẩn của khách hàng về
+          chất lượng kỹ thuật, quản trị triển khai và khả năng nắm bắt kịp thời
+          các công nghệ mới.
+        </p>
+        <p dir="ltr">
+          Trong hai thập kỷ hợp tác, FPT luôn đồng hành cùng tập đoàn dẫn đầu
+          ngành năng lượng trong hành trình chuyển đổi số, từ việc hiện đại hóa
+          hạ tầng doanh nghiệp cốt lõi, triển khai công nghệ tiên tiến cho đến
+          tinh gọn hóa vận hành số. Thông qua đó, FPT đã không ngừng khẳng định
+          năng lực thích ứng linh hoạt và bền bỉ góp phần thúc đẩy sự phát triển
+          bền vững, đồng thời định hình nên các chuẩn mực mới của ngành năng
+          lượng.
+        </p>
+        <div id="admzone480458" class="pushed">
+          <div id="zone-480458" class="pushed">
+            <div id="share-jtgyri8j">
+              <div id="placement-jzjm4dn1">
+                <div id="banner-480458-jzjm4dna">
+                  <div id="slot-1-480458-jzjm4dna">
+                    <div id="ssppagebid_400">
+                      <div
+                        id="adnzone_516418"
+                        class="banner0"
+                        data-ssp="sspbid_201014"
+                        data-admssprqid="0117arf0ecdsg0a"
+                        data-location="4"
+                        data-width="undefined"
+                        data-height="undefined"
+                      >
+                        <div class="admLogoAdx--516418">
+                          <div>&nbsp;</div>
+                        </div>
+                        <iframe
+                          id="adnzone_sponsor_516418"
+                          width="100%"
+                          scrolling="no"
+                          sandbox=""
+                          data-gtm-yt-inspected-12="true"
+                        ></iframe>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="h-show-pc">
+          <div class="c-banner">
+            <div class="c-banner-item is-custom-size">
+              <div class="c-banner-item__inner">
+                <div class="c-banner-item__box">&nbsp;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="h-show-mobile">
+          <div class="">
+            <div class="c-banner">
+              <div class="c-banner-item is-custom-size">
+                <div class="c-banner-item__inner">
+                  <div class="c-banner-item__box">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- <p dir="ltr">
+          Những năm gần đây, FPT tiếp tục mở rộng phạm vi hỗ trợ khách hàng, đặc
+          biệt tập trung vào các dịch vụ và giải pháp ứng dụng trí tuệ nhân tạo
+          - công nghệ đang dẫn đến những thay đổi mạnh mẽ trên phạm vi toàn cầu.
+          FPT cũng đang hướng tới mục tiêu đưa Đông Nam Á và châu Á trở thành
+          một trong các thị trường nước ngoài chiến lược, ứng dụng AI sâu rộng,
+          thông qua việc phát triển nguồn nhân lực tinh hoa, khuyến khích đổi
+          mới sáng tạo và tạo ra tác động thiết thực cho các tổ chức, doanh
+          nghiệp.
+        </p>
+        <p dir="ltr">
+          Năng lượng là một trong những lĩnh vực mà FPT dày dạn kinh nghiệm,
+          cung cấp dịch vụ, giải pháp công nghệ trong hơn 20 năm qua, với đội
+          ngũ 1.500 kỹ sư có kiến thức và năng lực công nghệ chuyên sâu. Tập
+          đoàn cũng đã triển khai thành công hàng trăm dự án công nghệ, chuyển
+          đổi số cho khách hàng trong lĩnh vực năng lượng trên quy mô toàn cầu.
+        </p> -->
+        <!-- <p dir="ltr">
+          {{data.content}}
+        </p> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,9 @@ import { AboutComponent } from './unauthenticated/about/about.component';
 import { ContactComponent } from './unauthenticated/contact/contact.component';
 import { SupportComponent } from './unauthenticated/support/support.component';
 import { PricingComponent } from './unauthenticated/pricing/pricing.component';
+
 import { NewsComponent } from './unauthenticated/news/news.component';
+import { ItemComponent } from './unauthenticated/news/item/item.component';
 
 import { AdminComponent } from './dashboard/admin/admin.component';
 
@@ -19,6 +21,7 @@ const routes: Routes = [
   { path: 'support', component: SupportComponent },
   { path: 'pricing', component: PricingComponent },
   { path: 'news', component: NewsComponent },
+  { path: 'news/:id', component: ItemComponent },
   // { path: 'auth/login', component: LoginComponent },
   // { path: 'auth/signup', component: SignupComponent },
   // { path: 'auth/forgot-password', component: ForgotPasswordComponent },
