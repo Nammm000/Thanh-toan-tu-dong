@@ -50,8 +50,8 @@ export class RouteGuardService {
       // console.log("this.auth.isAuthenticated(): " + this.auth.isAuthenticated());
       // console.log("tokenPayload.role: " + tokenPayload.role);
       // console.log("expectedRole: " + expectedRole);
-      this.snacBarService.openSnackBar(GlobalConstants.unauthorized, GlobalConstants.error);
-      this.router.navigate(['/admin/dashboard']);
+      // this.snacBarService.openSnackBar(GlobalConstants.unauthorized, GlobalConstants.error);
+      this.router.navigate(['/news']);
       return false;
     } else {
       this.router.navigate(['/']);

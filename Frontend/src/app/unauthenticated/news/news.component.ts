@@ -7,6 +7,7 @@ import { SnackbarService } from 'src/app/service/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Editor } from "ngx-editor";
 import { jwtDecode } from 'jwt-decode';
+import { showImg } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-news',
@@ -16,11 +17,17 @@ import { jwtDecode } from 'jwt-decode';
 export class NewsComponent {
 
   responseMessage: string = "";
-  listNews: any[] = [];
+  
+  listPublicNews: any[] = [];
+  listCanReadNews: any[] = [];
+  listCanNotReadNews: any[] = [];
+
   listHeadNews: any[] = [];
+  listNews: any[] = [];
   tab = "public";
   planName: string = "";
 
+  userPay: any = 0;
   userRole: any;
   token: any = localStorage.getItem('token');
   tokenPaload: any;
@@ -38,18 +45,44 @@ export class NewsComponent {
   ) {}
   
   ngOnInit(): void {
-    this.getPublicNews();
+    this.getAllNews();
     this.tokenPaload = jwtDecode(this.token);
     this.userRole = this.tokenPaload?.role + '';
+    this.newsService.getUserSub().subscribe(
+      (response: any) => {
+        this.userPay = response;
+      },
+      (error: any) => {
+        if (error.error?.text) {
+          this.responseMessage = error.error?.text;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
+      }
+    );
   }
 
-  getPublicNews() {
+  getAllNews() {
     this.ngxService.start();
-    this.newsService.getPublicNews().subscribe(
+    this.newsService.getAllNews().subscribe(
       (response: any) => {
         this.ngxService.stop();
-        this.listNews = response;
-        this.listHeadNews = this.listNews.splice(0, 3);
+        const listNews = response;
+        listNews.forEach((news: any) => {
+          if (news.price==0) {
+            this.listPublicNews.push(news);
+          } else if (this.userPay >= news.price) {
+            this.listCanReadNews.push(news);
+          } else {
+            this.listCanNotReadNews.push(news);
+          }
+        });
+        this.listHeadNews = this.listPublicNews.splice(0, 3); // splice slice(giu nguyen mang goc)
+        this.listNews = this.listPublicNews;
       },
       (error: any) => {
         this.ngxService.stop();
@@ -71,13 +104,14 @@ export class NewsComponent {
     this.newsService.getUserSubNews().subscribe(
       (response: any) => {
         this.ngxService.stop();
-        this.listNews = response;
+        this.listCanReadNews = response;
+        this.listHeadNews = this.listCanReadNews.splice(0, 3);
       },
       (error: any) => {
-        this.listNews = [];
+        this.listCanReadNews = [];
         this.ngxService.stop();
-        if (error.error?.message) {
-          this.responseMessage = error.error?.message;
+        if (error.error?.text) {
+          this.responseMessage = error.error?.text;
         } else {
           this.responseMessage = GlobalConstants.genericError;
         }
@@ -91,11 +125,25 @@ export class NewsComponent {
   
   changeTab(tab: string) {
     this.tab = tab;
+    // if (this.tab == 'public') {
+    //   this.getPublicNews();
+    // } else {
+    //   this.getUserSubNews();
+    // }
     if (this.tab == 'public') {
-      this.getPublicNews();
-    } else {
-      this.getUserSubNews();
+      this.getAllNews();
+    } else if (this.tab == 'premium') {
+      this.listHeadNews = this.listCanReadNews.splice(0, 3);
+      this.listNews = this.listCanReadNews.concat(this.listCanNotReadNews);
+      this.listCanNotReadNews = [];
+      this.listCanReadNews = [];
+      this.listPublicNews = [];
+      this.listNews.sort((a, b) => (b.updatedTime.localeCompare(a.updatedTime)));
     }
+  }
+
+  check(price: any) {
+    return price > this.userPay;
   }
 
 }

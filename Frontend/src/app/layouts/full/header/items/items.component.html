@@ -1,12 +1,23 @@
-<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
-    <mat-icon>account_circle</mat-icon>
+<div class="d-flex align-items-center justify-around gap-2">
+    <p style="margin-bottom: 0;">{{name}}</p>
+    <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
+  <mat-icon>account_circle</mat-icon>
 </button>
+</div>
 <mat-menu #profile="matMenu" class="mymegamenu">
-<button mat-menu-item (click)="changePassword()">
-    <mat-icon>password</mat-icon> Change Password
-</button>
+  <button mat-menu-item [routerLink]="['/dashboard']">
+    <mat-icon>insert_chart_outlined</mat-icon> Dashboard
+  </button>
 
-<button mat-menu-item (click)="logout()">
+  <button mat-menu-item (click)="changePassword()">
+    <mat-icon>password</mat-icon> Change Password
+  </button>
+
+  <button mat-menu-item [routerLink]="['/admin']" *ngIf="userRole=='ADMIN'">
+    <mat-icon>settings</mat-icon> Admin Panel
+  </button>
+
+  <button mat-menu-item (click)="logoutAction()">
     <mat-icon>exit_to_app</mat-icon> Logout
-</button>
+  </button>
 </mat-menu>

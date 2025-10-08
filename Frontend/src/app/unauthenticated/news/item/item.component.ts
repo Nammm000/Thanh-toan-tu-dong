@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, Editor, Toolbar } from "ngx-editor";
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import jsonDoc from 'src/app/model/doc';
+import { DomSanitizer } from '@angular/platform-browser';
+import { showImg } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-item',
@@ -25,7 +27,12 @@ export class ItemComponent {
     content: '',
     createdTime: '',
     view: 0,
+    nameImg: '',
+    typeImg: '',
+    picByteImg: ''
   };
+
+  showImg = showImg;
 
   constructor(
     private planService: PlanService,
@@ -33,6 +40,7 @@ export class ItemComponent {
     private ngxService: NgxUiLoaderService,
     private snackbarService: SnackbarService,
     private router: Router,
+    private sanitizer: DomSanitizer,
     private activatedRoute: ActivatedRoute
   ) {}
   
@@ -55,6 +63,9 @@ export class ItemComponent {
         this.data.plan_code = response.plan_code;
         this.data.createdTime = response.createdTime;
         this.data.view = response.view;
+        this.data.nameImg = response.nameImg;
+        this.data.typeImg = response.typeImg;
+        this.data.picByteImg = response.picByteImg;
         this.newsService.updateViews(id).subscribe((response: any) => {}, (error: any) => {
           console.log(error.error?.message);
         });
@@ -64,6 +75,10 @@ export class ItemComponent {
         console.log(error.error?.message);
       }
     );
+  }
+
+  imgLink(imagePicByte: any, imageType: any, imageName: any) {
+    return this.showImg(this.sanitizer, imagePicByte, imageType, imageName);
   }
 
 }

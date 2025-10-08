@@ -51,7 +51,7 @@
           >
         </div>
         <div class="hidden md:flex items-center space-x-4">
-          <div class="flex items-center space-x-4" *ngIf="!isLoggedIn()">
+          <div class="flex items-center space-x-4" *ngIf="!isLoggedIn(userRole)">
             <a
               class="text-black borderHover inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
               href="/auth/login"
@@ -64,27 +64,9 @@
             >
           </div>
 
-          <div class="flex items-center space-x-4" *ngIf="isLoggedIn()">
-            <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
-              <mat-icon>account_circle</mat-icon>
-            </button>
-            <mat-menu #profile="matMenu" class="mymegamenu">
-              <button mat-menu-item [routerLink]="['/dashboard']">
-                <mat-icon>insert_chart_outlined</mat-icon>  Dashboard
-              </button>
-
-              <button mat-menu-item (click)="changePassword()">
-                <mat-icon>password</mat-icon> Change Password
-              </button>
-
-              <button mat-menu-item [routerLink]="['/admin']" *ngIf="userRole === 'ADMIN'">
-                <mat-icon>settings</mat-icon>  Admin Panel
-              </button>
-
-              <button mat-menu-item (click)="logoutAction()">
-                <mat-icon>exit_to_app</mat-icon> Logout
-              </button>
-            </mat-menu>
+          <div class="flex items-center space-x-4" *ngIf="isLoggedIn(userRole)">
+            <app-items [userRole]="userRole" [name]="tokenPaload.sub"></app-items>
+            
           </div>
         </div>
         <!-- <div class="md:hidden">

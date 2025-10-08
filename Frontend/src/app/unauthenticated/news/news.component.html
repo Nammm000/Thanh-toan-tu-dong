@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container mx-auto px-4 py-8">
   <div class="text-center mb-12">
     <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -89,11 +90,10 @@
         id="radix-:r8:-content-all"
         tabindex="0"
         class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-8"
-        style=""
       >
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div *ngFor="let headNews of listHeadNews">
-            <app-head-news-card [news]="headNews"></app-head-news-card>
+            <app-head-news-card [news]="headNews" [canNotRead]="check(headNews.price)"></app-head-news-card>
           </div>
           <!-- <div *ngFor="let headNews of listHeadNews"
             class="rounded-lg border bg-card col-sm-6 text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"
@@ -174,7 +174,7 @@
             </div>
           </div> -->
           <div *ngFor="let news of listNews">
-            <app-news-card [news]="news"></app-news-card>
+            <app-news-card [news]="news" [canNotRead]="check(news.price)"></app-news-card>
           </div>
           <!-- <div *ngFor="let news of listNews"
             class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"

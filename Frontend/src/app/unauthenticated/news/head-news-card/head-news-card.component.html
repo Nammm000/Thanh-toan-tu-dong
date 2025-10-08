@@ -1,15 +1,16 @@
 <div
   class="rounded-lg border bg-card col-sm-6 text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+  [ngClass]="canNotRead ? 'canNotReadCard': ''"
 >
   <div class="p-0">
-    <div class="relative h-48 w-full" *ngIf="news.imageUrl">
+    <div class="relative h-48 w-full" *ngIf="news.picByteImg">
       <img
         alt="Phân tích chuyên sâu cập nhật cổ phiếu FPT"
         loading="lazy"
         decoding="async"
         data-nimg="fill"
-        class="object-cover"
-        [src]="news.imageUrl"
+        class="object-cover" [ngClass]="canNotRead ? 'canNotReadCardImg': ''"
+        [src]="imgLink(news.picByteImg, news.imageType, news.imageName) "
         style="
           position: absolute;
           height: 100%;
@@ -42,19 +43,19 @@
       </div>
       <div class="absolute top-2 right-2 flex flex-col gap-1"></div>
     </div>
-    <div class="p-6">
+    <div class="p-6 cardBody">
       <h2
         class="font-bold text-lg mb-2 line-clamp-2 hover:text-blue-600 transition-colors"
       >
         <a href="/news/{{ news.id }}">{{ news.title }}</a>
       </h2>
-      <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+      <p class="pCard text-gray-600 text-sm mb-4 line-clamp-3">
         {{ news.description }}
       </p>
       <div class="flex items-center justify-between text-xs text-gray-500 mb-4">
         <div class="flex items-center gap-4">
           <div class="flex items-center gap-1">
-            <i class="icon-12 eye"></i>
+            <i class="icon-12 calendar"></i>
             <span>{{ news.updatedTime }}</span>
           </div>
           <div class="flex items-center gap-1">

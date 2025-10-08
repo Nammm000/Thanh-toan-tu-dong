@@ -100,3 +100,32 @@ Chartistt chart css
 .pr-5 {
 	padding-right: 5px;
 }
+
+.pCard {
+	text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+	filter: blur(0);
+    pointer-events: auto;
+}
+
+.cardBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 248px;
+}
+
+.canNotReadCard {
+    // filter: blur(4px);
+    // pointer-events: none;
+    background-color: lightgray;
+}
+
+.canNotReadCardImg {
+    filter: blur(4px);
+    pointer-events: none;
+}

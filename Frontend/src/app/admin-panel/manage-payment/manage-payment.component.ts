@@ -8,6 +8,8 @@ import { SnackbarService } from 'src/app/service/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { ConfirmationComponent } from 'src/app/material-component/dialog/confirmation/confirmation.component';
 
+import { showImg } from 'src/app/shared/utils';
+
 @Component({
   selector: 'app-manage-payment',
   templateUrl: './manage-payment.component.html',
@@ -18,6 +20,7 @@ export class ManagePaymentComponent {
   imageUrl: any;
   responseMessage: any;
   listImages: any[] = [];
+  showImg = showImg;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -96,21 +99,21 @@ export class ManagePaymentComponent {
     );
   }
 
-  showImg(picBytes: any, imageType: any, imgName: any) {
-    const byteString = window.atob(picBytes);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([int8Array], { type: imageType });
+  // showImg(picBytes: any, imageType: any, imgName: any) {
+  //   const byteString = window.atob(picBytes);
+  //   const arrayBuffer = new ArrayBuffer(byteString.length);
+  //   const int8Array = new Uint8Array(arrayBuffer);
+  //   for (let i = 0; i < byteString.length; i++) {
+  //     int8Array[i] = byteString.charCodeAt(i);
+  //   }
+  //   const blob = new Blob([int8Array], { type: imageType });
     
-    const imgFile = new File([blob], imgName, { type: imageType });
+  //   const imgFile = new File([blob], imgName, { type: imageType });
     
-    return this.sanitizer.bypassSecurityTrustUrl(
-        window.URL.createObjectURL(imgFile)
-      );
-  }
+  //   return this.sanitizer.bypassSecurityTrustUrl(
+  //       window.URL.createObjectURL(imgFile)
+  //     );
+  // }
 
   prepareFormData(imageHandlerList: ImageHandler[]): FormData {
     const formData = new FormData();
@@ -163,5 +166,9 @@ export class ManagePaymentComponent {
         );
       }
     );
+  }
+
+  imgLink(imagePicByte: any, imageType: any, imageName: any) {
+    return this.showImg(this.sanitizer, imagePicByte, imageType, imageName);
   }
 }

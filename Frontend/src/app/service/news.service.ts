@@ -40,6 +40,14 @@ export class NewsService {
     return this.httpClient.get(this.url + '/news/getNewsById/' + id);
   }
 
+  getUserSub(): Observable<any> {
+    return this.httpClient.get(this.url + '/news/getUserSub');
+  }
+
+  getAllNews(): Observable<any> {
+    return this.httpClient.get(this.url + '/news/getAllNews');
+  }
+
   updateViews(id: any) {
     return this.httpClient.get(this.url + '/news/updateViews/' + id);
   }
