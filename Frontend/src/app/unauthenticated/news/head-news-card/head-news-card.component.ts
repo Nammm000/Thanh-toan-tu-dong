@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { showImg } from 'src/app/shared/utils';
+import { showImg, customFormattedDate } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-head-news-card',
@@ -11,9 +11,11 @@ export class HeadNewsCardComponent {
 
   @Input() news: any;
   @Input() canNotRead: boolean = false;
+  @Input() planCode: string = "";
 
   showImg = showImg;
-  
+  customFormattedDate = customFormattedDate;
+
     constructor(
         private sanitizer: DomSanitizer,
       ) {}

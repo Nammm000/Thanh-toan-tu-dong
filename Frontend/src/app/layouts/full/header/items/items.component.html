@@ -1,8 +1,11 @@
-<div class="d-flex align-items-center justify-around gap-2">
-    <p style="margin-bottom: 0;">{{name}}</p>
-    <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
-  <mat-icon>account_circle</mat-icon>
-</button>
+<div
+  class="d-flex align-items-center justify-around gap-2"
+  *ngIf="checkViewWidth(w)==false"
+>
+  <p style="margin-bottom: 0">{{ name }}</p>
+  <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
+    <mat-icon>account_circle</mat-icon>
+  </button>
 </div>
 <mat-menu #profile="matMenu" class="mymegamenu">
   <button mat-menu-item [routerLink]="['/dashboard']">
@@ -13,7 +16,7 @@
     <mat-icon>password</mat-icon> Change Password
   </button>
 
-  <button mat-menu-item [routerLink]="['/admin']" *ngIf="userRole=='ADMIN'">
+  <button mat-menu-item [routerLink]="['/admin']" *ngIf="userRole == 'ADMIN'">
     <mat-icon>settings</mat-icon> Admin Panel
   </button>
 
@@ -21,3 +24,26 @@
     <mat-icon>exit_to_app</mat-icon> Logout
   </button>
 </mat-menu>
+
+<div *ngIf="checkViewWidth(w)==true" class="space-y-2">
+  <a
+    class="block text-gray-600 hover:text-blue-600 transition-colors"
+    href="/dashboard"
+    >Dashboard</a
+  ><a
+    class="block text-gray-600 hover:text-blue-600 transition-colors"
+    (click)="changePassword()"
+    style="cursor: pointer"
+    >Change Password</a
+  ><a
+    class="block text-gray-600 hover:text-blue-600 transition-colors"
+    href="/admin"
+    *ngIf="userRole == 'ADMIN'"
+    >Admin Panel</a
+  ><a
+    class="block text-gray-600 hover:text-blue-600 transition-colors"
+    (click)="logoutAction()"
+    style="cursor: pointer"
+    >Logout</a
+  >
+</div>

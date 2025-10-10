@@ -52,6 +52,7 @@ import { NgxEditorModule } from "ngx-editor";
 import { ItemComponent } from './unauthenticated/news/item/item.component';
 import { NewsCardComponent } from './unauthenticated/news/news-card/news-card.component';
 import { HeadNewsCardComponent } from './unauthenticated/news/head-news-card/head-news-card.component';
+import { PlanCardComponent } from './unauthenticated/pricing/plan-card/plan-card.component';
 
 const ngxUiloaderConfig: NgxUiLoaderConfig = {
   text: "Loading...",
@@ -92,7 +93,7 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     // CustomerComponent, 
     // WarehouseComponent,
     // ProviderComponent, 
-    LocationComponent, FooterComponent, ItemsComponent, AboutComponent, ContactComponent, SupportComponent, PricingComponent, LeftSidebarComponent, NewsComponent, ItemComponent, NewsCardComponent, HeadNewsCardComponent,
+    LocationComponent, FooterComponent, ItemsComponent, AboutComponent, ContactComponent, SupportComponent, PricingComponent, LeftSidebarComponent, NewsComponent, ItemComponent, NewsCardComponent, HeadNewsCardComponent, PlanCardComponent,
    ],
   imports: [
     BrowserModule,

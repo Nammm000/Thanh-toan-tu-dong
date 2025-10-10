@@ -14,11 +14,23 @@ import { UserService } from 'src/app/service/user.service';
 export class ItemsComponent {
   @Input() userRole: any = "";
   @Input() name: any = "";
+  show: boolean = false;
+  w: any = window.innerWidth;
   
     constructor(private router: Router,
         private ngxService: NgxUiLoaderService,
         private userService: UserService,
         private dialog: MatDialog ) {
+          window.addEventListener("resize", () => {
+            this.w = window.innerWidth;
+        });
+    }
+
+    checkViewWidth(www: any) {
+        if (www < 767) {
+            return true;
+        }
+        return false;
     }
   
     logoutAction() {

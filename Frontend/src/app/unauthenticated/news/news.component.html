@@ -49,7 +49,7 @@
           data-radix-collection-item=""
           (click)="changeTab('public')"
         >
-          Tất cả tin tức</button
+          Tin tức công khai</button
         >
         <button [ngClass]="tab === 'premium' ? 'active' : ''"
           type="button"
@@ -93,7 +93,7 @@
       >
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div *ngFor="let headNews of listHeadNews">
-            <app-head-news-card [news]="headNews" [canNotRead]="check(headNews.price)"></app-head-news-card>
+            <app-head-news-card [news]="headNews" [canNotRead]="check(headNews.price)" [planCode]="getPlanCode(headNews.price)"></app-head-news-card>
           </div>
           <!-- <div *ngFor="let headNews of listHeadNews"
             class="rounded-lg border bg-card col-sm-6 text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"
@@ -174,7 +174,7 @@
             </div>
           </div> -->
           <div *ngFor="let news of listNews">
-            <app-news-card [news]="news" [canNotRead]="check(news.price)"></app-news-card>
+            <app-news-card [news]="news" [canNotRead]="check(news.price)" [planCode]="getPlanCode(news.price)"></app-news-card>
           </div>
           <!-- <div *ngFor="let news of listNews"
             class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden"

@@ -5,9 +5,9 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { SnackbarService } from 'src/app/service/snackbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Editor } from "ngx-editor";
+// import { Editor } from "ngx-editor";
 import { jwtDecode } from 'jwt-decode';
-import { showImg } from 'src/app/shared/utils';
+// import { showImg } from 'src/app/shared/utils';
 
 @Component({
   selector: 'app-news',
@@ -27,12 +27,14 @@ export class NewsComponent {
   tab = "public";
   planName: string = "";
 
+  listPlanCode: any[] = [];
+
   userPay: any = 0;
   userRole: any;
   token: any = localStorage.getItem('token');
   tokenPaload: any;
 
-  editor: Editor = new Editor();
+  // editor: Editor = new Editor();
   // html: string = "";
 
   constructor(
@@ -46,11 +48,31 @@ export class NewsComponent {
   
   ngOnInit(): void {
     this.getAllNews();
+    this.planService.getAllPlanCode().subscribe(
+      (response: any) => {
+        this.listPlanCode = response;
+      },
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
+      }
+    );
     this.tokenPaload = jwtDecode(this.token);
     this.userRole = this.tokenPaload?.role + '';
+    
     this.newsService.getUserSub().subscribe(
       (response: any) => {
-        this.userPay = response;
+        if (response.price && response.price>0) {
+          this.userPay = response;
+        }
+        
       },
       (error: any) => {
         if (error.error?.text) {
@@ -143,7 +165,21 @@ export class NewsComponent {
   }
 
   check(price: any) {
+    if (this.userRole=="ADMIN") {
+      return false;
+    }
     return price > this.userPay;
+  }
+
+  getPlanCode(price:any) {
+    if (price==0) {
+      return "";
+    }
+    const plan = this.listPlanCode.filter((plan) => plan.price==price);
+    if (plan.length==1) {
+      return plan[0].code;
+    }
+    return "";
   }
 
 }

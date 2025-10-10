@@ -37,6 +37,10 @@ export class PlanService {
     return this.httpClient.get(this.url + "/plan/getAllPlanCode");
   }
 
+  getAllPlanCodeDescription(): Observable<any> {
+    return this.httpClient.get(this.url + "/plan/getAllPlanCodeDescription");
+  }
+
   getPlanById(id: any): Observable<any> {
     return this.httpClient.get(this.url + "/plan/getPlanById/" + id);
   }

@@ -612,6 +612,10 @@ Background Colors
   background-color: hsl(var(--destructive));
 }
 
+.bg-accent {
+    background-color: hsl(var(--accent))
+}
+
 html body {
   .bg-megna {
     background-color: $megna;

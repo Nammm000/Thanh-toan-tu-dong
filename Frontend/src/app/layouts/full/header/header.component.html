@@ -21,7 +21,7 @@
           ><img
             src="./assets/img/evfp.png"
             class="h-[65px] w-[50px]"
-            style="margin-left: 50px;"
+            style="margin-left: 50px"
         /></a>
         <div class="hidden md:flex items-center space-x-8">
           <a
@@ -51,7 +51,10 @@
           >
         </div>
         <div class="hidden md:flex items-center space-x-4">
-          <div class="flex items-center space-x-4" *ngIf="!isLoggedIn(userRole)">
+          <div
+            class="flex items-center space-x-4"
+            *ngIf="!isLoggedIn(userRole)"
+          >
             <a
               class="text-black borderHover inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
               href="/auth/login"
@@ -65,32 +68,72 @@
           </div>
 
           <div class="flex items-center space-x-4" *ngIf="isLoggedIn(userRole)">
-            <app-items [userRole]="userRole" [name]="tokenPaload.sub"></app-items>
-            
+            <app-items
+              [userRole]="userRole"
+              [name]="tokenPaload.sub"
+            ></app-items>
           </div>
         </div>
-        <!-- <div class="md:hidden">
+        <div class="md:hidden">
           <button
+            (click)="show = !show"
             class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-menu h-6 w-6"
-            >
-              <line x1="4" x2="20" y1="12" y2="12"></line>
-              <line x1="4" x2="20" y1="6" y2="6"></line>
-              <line x1="4" x2="20" y1="18" y2="18"></line>
-            </svg>
+            <i *ngIf="show == false" class="icon-16 menu"></i>
+            <i *ngIf="show == true" class="icon-16 x-icon"></i>
           </button>
-        </div> -->
+        </div>
+      </div>
+      <div *ngIf="show == true" class="md:hidden py-4 border-t">
+        <div class="flex flex-col space-y-4">
+          <a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/"
+            >Trang chủ</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/news"
+            >Tin tức</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/pricing"
+            >Gói dịch vụ</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/about"
+            >Giới thiệu</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/contact"
+            >Liên hệ</a
+          ><a
+            class="text-gray-600 hover:text-blue-600 transition-colors"
+            href="/support"
+            >Hỗ trợ</a
+          >
+          <div class="pt-4 border-t">
+            <div class="space-y-2" *ngIf="!isLoggedIn(userRole)">
+              <a
+                class="block text-gray-600 hover:text-blue-600 transition-colors"
+                href="/auth/login"
+                >Đăng nhập</a
+              ><a
+                class="block text-gray-600 hover:text-blue-600 transition-colors"
+                href="/auth/signup"
+                >Đăng ký</a
+              >
+            </div>
+            <div
+              class="space-y-2"
+              *ngIf="isLoggedIn(userRole)"
+            >
+              <app-items
+                [userRole]="userRole"
+                [name]="tokenPaload.sub"
+              ></app-items>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </nav>

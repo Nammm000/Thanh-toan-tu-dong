@@ -16,6 +16,8 @@ export class AppHeaderComponent {
   userRole: any = "";
   token: any = localStorage.getItem('token') || '';
   tokenPaload: any;
+  show: boolean = false;
+  showAccountCircle: boolean = false;
 
   constructor() {
     this.setUserRole();
