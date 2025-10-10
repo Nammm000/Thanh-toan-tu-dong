@@ -18,6 +18,7 @@ public class NewsImgWrapper {
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
     private Integer view;
+    private Float price;
 
     private Long idImg;
     private String nameImg;
@@ -26,7 +27,7 @@ public class NewsImgWrapper {
 
     public NewsImgWrapper(Long id, String title, String description, String content,
                        String plan_code, String status, LocalDateTime createdTime,
-                       LocalDateTime updatedTime, Integer view, Long idImg,
+                       LocalDateTime updatedTime, Integer view, Float price, Long idImg,
                        String nameImg, String typeImg, byte[] picByteImg) {
         this.id = id;
         this.title = title;
@@ -37,7 +38,26 @@ public class NewsImgWrapper {
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
         this.view = view;
+        this.price = price;
+
         this.idImg = idImg;
+        this.nameImg = nameImg;
+        this.typeImg = typeImg;
+        this.picByteImg = picByteImg;
+    }
+
+    public NewsImgWrapper(Long id, String title, String description,
+                          String status, LocalDateTime updatedTime,
+                          Integer view, Float price,
+                          String nameImg, String typeImg, byte[] picByteImg) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.updatedTime = updatedTime;
+        this.view = view;
+        this.price = price;
+
         this.nameImg = nameImg;
         this.typeImg = typeImg;
         this.picByteImg = picByteImg;

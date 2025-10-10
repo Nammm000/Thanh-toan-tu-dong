@@ -12,7 +12,6 @@ import tech.getarrays.inventorymanager.filters.JwtRequestFilter;
 import tech.getarrays.inventorymanager.models.POJO.Plan;
 import tech.getarrays.inventorymanager.repo.PlanRepo;
 import tech.getarrays.inventorymanager.util.InventoryUtils;
-import tech.getarrays.inventorymanager.wrapper.PlanCodeWrapper;
 import tech.getarrays.inventorymanager.wrapper.PlanWrapper;
 
 import java.time.LocalDateTime;
@@ -106,16 +105,29 @@ public class PlanController {
     }
 
     @GetMapping("/getAllPlanCode")
-    public ResponseEntity<List<PlanCodeWrapper>> getAllPlanCode(@RequestParam(required = false) String Value) {
+    public ResponseEntity<List<PlanWrapper>> getAllPlanCode(@RequestParam(required = false) String Value) {
         try {
             if(!Strings.isNullOrEmpty(Value) && Value.equalsIgnoreCase("true")) {
-                return new ResponseEntity<List<PlanCodeWrapper>>(new ArrayList<>(), HttpStatus.OK);
+                return new ResponseEntity<List<PlanWrapper>>(new ArrayList<>(), HttpStatus.OK);
             }
             return new ResponseEntity<>(planRepo.getAllPlanCode(), HttpStatus.OK);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return new ResponseEntity<List<PlanCodeWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<List<PlanWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping("/getAllPlanCodeDescription")
+    public ResponseEntity<List<PlanWrapper>> getAllPlanCodeDescription(@RequestParam(required = false) String Value) {
+        try {
+            if(!Strings.isNullOrEmpty(Value) && Value.equalsIgnoreCase("true")) {
+                return new ResponseEntity<List<PlanWrapper>>(new ArrayList<>(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(planRepo.getAllPlanCodeDescription(), HttpStatus.OK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<List<PlanWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/getPlanById/{id}")

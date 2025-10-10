@@ -24,6 +24,11 @@ public class InventoryUtils {
         return new ResponseEntity<String>("{\"messag\":\"" + responseMessage+"\"}", httpStatus);
     }
 
+    public static ResponseEntity<Float> getResponseEntity(Float responseMessage , HttpStatus httpStatus) {
+        System.out.println("InventoryUtils getResponseEntity");
+        return new ResponseEntity<Float>(responseMessage, httpStatus);
+    }
+
     public static String getUUID() {
         Date data = new Date();
         long time = data.getTime();

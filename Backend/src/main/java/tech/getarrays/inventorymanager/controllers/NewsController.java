@@ -24,6 +24,7 @@ import tech.getarrays.inventorymanager.util.InventoryUtils;
 import tech.getarrays.inventorymanager.wrapper.NewsImgWrapper;
 import tech.getarrays.inventorymanager.wrapper.NewsWrapper;
 import tech.getarrays.inventorymanager.wrapper.PlanWrapper;
+import tech.getarrays.inventorymanager.wrapper.SubscriptionWrapper;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -145,18 +146,94 @@ public class NewsController {
         return new ResponseEntity<List<NewsWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping("/getNewsById/{id}")
-    public ResponseEntity<NewsImgWrapper> getNewsById(@PathVariable Long id) {
+    @GetMapping("/getAllNews")
+    public ResponseEntity<List<NewsImgWrapper>> getAllNewsImg() {
         try {
-            if (jwtRequestFilter.isAdmin()) {
+            return new ResponseEntity<>(newsRepo.getAllNewsImg(), HttpStatus.OK);
+            // findAll(Sort.by("updatedTime").descending())
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<List<NewsImgWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping("/getNewsById/{id}")
+    public ResponseEntity<?> getNewsById(@PathVariable Long id) {
+        try {
+            Float priNews = newsRepo.getPriceByNewsId(id);
+            if (priNews<=0) {
                 return new ResponseEntity<>(newsRepo.getNewsById(id), HttpStatus.OK);
             }
-            new ResponseEntity<NewsImgWrapper>(new NewsImgWrapper(), HttpStatus.UNAUTHORIZED);
+            if (jwtRequestFilter.isAdmin()) {
+                return new ResponseEntity<>(newsRepo.getNewsById(id), HttpStatus.OK);
+            } else if (jwtRequestFilter.isUser()) {
+//                String email = jwtRequestFilter.getCurrentUsername();
+
+                if (priNews>0) {
+                    List<Subscription> listUserSub = subscriptionRepo.findAllByEmail(jwtRequestFilter.getCurrentUsername());
+                    if (!listUserSub.isEmpty()) {
+                        Subscription subNow = listUserSub.get(0);
+                        LocalDateTime now = LocalDateTime.now();
+                        if ( subNow.getExpirationDate().compareTo(now) > 0 ) {
+                            Float pri = subNow.getPrice();
+
+                            if (pri>=priNews) {
+                                return new ResponseEntity<>(newsRepo.getNewsById(id), HttpStatus.OK);
+                            }
+                        }
+                    }
+                } else {
+                    return new ResponseEntity<>(newsRepo.getNewsById(id), HttpStatus.OK);
+                }
+
+            }
+            return InventoryUtils.getResponseEntity("Người dùng không đăng ký gói này", HttpStatus.OK);
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         return new ResponseEntity<NewsImgWrapper>(new NewsImgWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+//    @GetMapping("/getUserSub")
+//    public ResponseEntity<Float> getUserSub() {
+//        try {
+//            List<Subscription> listUserSub = subscriptionRepo.findAllByEmail(jwtRequestFilter.getCurrentUsername());
+//            if (!listUserSub.isEmpty()) {
+//                Subscription subNow = listUserSub.get(0);
+//                LocalDateTime now = LocalDateTime.now();
+//                if ( subNow.getExpirationDate().compareTo(now) > 0 ) {
+//                    Float pri = subNow.getPrice();
+//                    return InventoryUtils.getResponseEntity(pri, HttpStatus.OK);
+//                }
+//            }
+//            return InventoryUtils.getResponseEntity((float) 0, HttpStatus.OK);
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        return InventoryUtils.getResponseEntity((float) 0, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+
+    @GetMapping("/getUserSub")
+    public ResponseEntity<SubscriptionWrapper> getUserSub() {
+        try {
+            List<Subscription> listUserSub = subscriptionRepo.findAllByEmail(jwtRequestFilter.getCurrentUsername());
+            if (!listUserSub.isEmpty()) {
+                Subscription subNow = listUserSub.get(0);
+                LocalDateTime now = LocalDateTime.now();
+                if ( subNow.getExpirationDate().compareTo(now) > 0 ) {
+                    SubscriptionWrapper sub = new SubscriptionWrapper(subNow.getPrice(), subNow.getExpirationDate());
+//                    Float pri = subNow.getPrice();
+                    return new ResponseEntity<>(sub, HttpStatus.OK);
+                }
+            }
+            return new ResponseEntity<SubscriptionWrapper>(new SubscriptionWrapper(), HttpStatus.OK);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<SubscriptionWrapper>(new SubscriptionWrapper(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/getPublicNews")
@@ -175,7 +252,7 @@ public class NewsController {
         log.info("Inside /news/getUserSubNews()");
         try {
             if (jwtRequestFilter.isAdmin()) {
-                List<NewsImgWrapper> listNews = newsRepo.getNewsAdmin();
+                List<NewsImgWrapper> listNews = newsRepo.getPaidNews();
                 return new ResponseEntity<>(listNews, HttpStatus.OK);
             }
 
@@ -184,8 +261,6 @@ public class NewsController {
             if (!listUserSub.isEmpty()) {
                 Subscription subNow = listUserSub.get(0);
                 LocalDateTime now = LocalDateTime.now();
-                System.out.println("subNow.getExpirationDate().compareTo(now) < 0");
-                System.out.println(subNow.getExpirationDate().compareTo(now) < 0);
                 if ( subNow.getExpirationDate().compareTo(now) > 0 ) {
                     System.out.println("subNow.getPrice()" + subNow.getPrice());
                     List<NewsImgWrapper> listNews = newsRepo.getUserSubNews(subNow.getPrice());

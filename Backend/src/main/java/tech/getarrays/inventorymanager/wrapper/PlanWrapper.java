@@ -26,4 +26,17 @@ public class PlanWrapper {
         this.createdTime = createdTime;
     }
 
+    public PlanWrapper(String name, String code, Float price) {
+        this.name = name;
+        this.code = code;
+        this.price = price;
+    }
+
+    public PlanWrapper(String name, String code, Float price, String description) {
+        this.name = name;
+        this.code = code;
+        this.price = price;
+        this.description = description;
+    }
+
 }

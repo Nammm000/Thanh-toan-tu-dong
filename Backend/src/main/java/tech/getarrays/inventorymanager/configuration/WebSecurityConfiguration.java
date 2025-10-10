@@ -31,7 +31,10 @@ public class WebSecurityConfiguration {
         System.out.println("WebSecurityConfiguration securityFilterChain");
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests( (auth) -> auth
-                        .requestMatchers("/auth/**", "/dashboard/details", "/news/getPublicNews").permitAll()
+                        .requestMatchers("/auth/**", "/dashboard/details",
+                                "/news/getPublicNews", "/news/getAllNews",
+                                "/news/getNewsById/{id}", "/news/updateViews/{id}",
+                                "/plan/getAllPlanCode", "/plan/get", "/plan/getAllPlanCodeDescription").permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().authenticated()
                 )

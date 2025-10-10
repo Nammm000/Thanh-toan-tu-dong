@@ -18,34 +18,44 @@ public interface NewsRepo extends JpaRepository<News, Long> {
     @Query("select new tech.getarrays.inventorymanager.wrapper.NewsWrapper(u.id , u.title , " +
             "u.description , u.content , " +
             "u.plan_code , u.status , u.createdTime , u.updatedTime , u.view) " +
-            "from News u order by u.updatedTime desc")
+            "from News u where u.status='true' order by u.updatedTime desc")
     List<NewsWrapper> getAllNews();
 
     @Query("select new tech.getarrays.inventorymanager.wrapper.NewsImgWrapper(n.id , n.title , " +
+            "n.description , n.status , n.updatedTime , n.view , n.price , " +
+            "n.image.name , n.image.type , n.image.picByte) " +
+            "from News n order by n.updatedTime desc")
+    List<NewsImgWrapper> getAllNewsImg();
+
+    @Query("select new tech.getarrays.inventorymanager.wrapper.NewsImgWrapper(n.id , n.title , " +
             "n.description , n.content , " +
-            "n.plan_code , n.status , n.createdTime , n.updatedTime , n.view , " +
-            "n.image.id , n.image.name , n.image.type , n.image.picByte) from News n where n.price=0 order by n.updatedTime desc")
+            "n.plan_code , n.status , n.createdTime , n.updatedTime , n.view , n.price , " +
+            "n.image.id , n.image.name , n.image.type , n.image.picByte) " +
+            "from News n where (n.price=0 and n.status='true') order by n.updatedTime desc")
     List<NewsImgWrapper> getPublicNews();
 
     @Query("select new tech.getarrays.inventorymanager.wrapper.NewsImgWrapper(n.id , n.title , " +
             "n.description , n.content , " +
-            "n.plan_code , n.status , n.createdTime , n.updatedTime , n.view , " +
+            "n.plan_code , n.status , n.createdTime , n.updatedTime , n.view , n.price , " +
             "n.image.id , n.image.name , n.image.type , n.image.picByte) " +
             "from News n where n.price > 0 order by n.updatedTime desc")
-    List<NewsImgWrapper> getNewsAdmin();
+    List<NewsImgWrapper> getPaidNews();
 
     @Query("select new tech.getarrays.inventorymanager.wrapper.NewsImgWrapper(n.id , n.title , " +
             "n.description , n.content , " +
-            "n.plan_code , n.status , n.createdTime , n.updatedTime , n.view , " +
+            "n.plan_code , n.status , n.createdTime , n.updatedTime , n.view , n.price , " +
             "n.image.id , n.image.name , n.image.type , n.image.picByte) " +
             "from News n where (n.price <= :price and n.price > 0) order by n.updatedTime desc")
     List<NewsImgWrapper> getUserSubNews(@Param("price") Float price);
 
     @Query("select new tech.getarrays.inventorymanager.wrapper.NewsImgWrapper(u.id , u.title , " +
             "u.description , u.content , " +
-            "u.plan_code , u.status , u.createdTime , u.updatedTime , u.view , " +
+            "u.plan_code , u.status , u.createdTime , u.updatedTime , u.view , u.price , " +
             "u.image.id , u.image.name , u.image.type , u.image.picByte) from News u where u.id=:id")
     NewsImgWrapper getNewsById(@Param("id") Long id);
+
+    @Query("select n.price from News n where n.id=:id")
+    Float getPriceByNewsId(@Param("id") Long id);
 
     @Modifying
     @Transactional

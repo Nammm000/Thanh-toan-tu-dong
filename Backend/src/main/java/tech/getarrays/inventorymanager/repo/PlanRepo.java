@@ -1,13 +1,11 @@
 package tech.getarrays.inventorymanager.repo;
 
-import jakarta.persistence.NamedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tech.getarrays.inventorymanager.models.POJO.Plan;
-import tech.getarrays.inventorymanager.wrapper.PlanCodeWrapper;
 import tech.getarrays.inventorymanager.wrapper.PlanWrapper;
 
 import java.util.List;
@@ -27,6 +25,9 @@ public interface PlanRepo extends JpaRepository<Plan, Long> {
     @Query("select new tech.getarrays.inventorymanager.wrapper.PlanWrapper(u.name , u.description , u.code , u.price , u.duration , u.status , u.createdTime) from Plan u where u.id=:id")
     PlanWrapper getPlanById(@Param("id") Long id);
 
-    @Query("select new tech.getarrays.inventorymanager.wrapper.PlanCodeWrapper(u.name , u.code) from Plan u")
-    List<PlanCodeWrapper> getAllPlanCode();
+    @Query("select new tech.getarrays.inventorymanager.wrapper.PlanWrapper(u.name , u.code , u.price) from Plan u")
+    List<PlanWrapper> getAllPlanCode();
+
+    @Query("select new tech.getarrays.inventorymanager.wrapper.PlanWrapper(u.name , u.code , u.price, u.description) from Plan u")
+    List<PlanWrapper> getAllPlanCodeDescription();
 }

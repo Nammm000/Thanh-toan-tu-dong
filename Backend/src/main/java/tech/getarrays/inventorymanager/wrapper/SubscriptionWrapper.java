@@ -27,4 +27,9 @@ public class SubscriptionWrapper {
         this.expirationDate = expirationDate;
         this.status = status;
     }
+
+    public SubscriptionWrapper(Float price, LocalDateTime expirationDate) {
+        this.price = price;
+        this.expirationDate = expirationDate;
+    }
 }

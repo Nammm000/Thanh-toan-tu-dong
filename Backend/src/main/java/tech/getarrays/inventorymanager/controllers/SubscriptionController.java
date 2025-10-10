@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.getarrays.inventorymanager.constents.InventoryConstants;
 import tech.getarrays.inventorymanager.filters.JwtRequestFilter;
-import tech.getarrays.inventorymanager.models.POJO.News;
 import tech.getarrays.inventorymanager.models.POJO.Plan;
 import tech.getarrays.inventorymanager.models.POJO.Subscription;
 import tech.getarrays.inventorymanager.models.User;
@@ -17,7 +16,6 @@ import tech.getarrays.inventorymanager.repo.PlanRepo;
 import tech.getarrays.inventorymanager.repo.SubscriptionRepo;
 import tech.getarrays.inventorymanager.repo.UserRepo;
 import tech.getarrays.inventorymanager.util.InventoryUtils;
-import tech.getarrays.inventorymanager.wrapper.PlanCodeWrapper;
 import tech.getarrays.inventorymanager.wrapper.PlanWrapper;
 
 import java.time.LocalDateTime;
@@ -123,18 +121,18 @@ public class SubscriptionController {
         return new ResponseEntity<List<Subscription>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping("/getAllPlanCode")
-    public ResponseEntity<List<PlanCodeWrapper>> getAllPlanCode(@RequestParam(required = false) String Value) {
-        try {
-            if(!Strings.isNullOrEmpty(Value) && Value.equalsIgnoreCase("true")) {
-                return new ResponseEntity<List<PlanCodeWrapper>>(new ArrayList<>(), HttpStatus.OK);
-            }
-            return new ResponseEntity<>(planRepo.getAllPlanCode(), HttpStatus.OK);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return new ResponseEntity<List<PlanCodeWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @GetMapping("/getAllPlanCode")
+//    public ResponseEntity<List<PlanWrapper>> getAllPlanCode(@RequestParam(required = false) String Value) {
+//        try {
+//            if(!Strings.isNullOrEmpty(Value) && Value.equalsIgnoreCase("true")) {
+//                return new ResponseEntity<List<PlanWrapper>>(new ArrayList<>(), HttpStatus.OK);
+//            }
+//            return new ResponseEntity<>(planRepo.getAllPlanCode(), HttpStatus.OK);
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
+//        return new ResponseEntity<List<PlanWrapper>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
     @GetMapping("/getPlanById/{id}")
     public ResponseEntity<PlanWrapper> getPlanById(@PathVariable Long id) {
