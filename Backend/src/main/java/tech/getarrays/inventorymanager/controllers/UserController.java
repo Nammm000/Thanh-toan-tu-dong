@@ -30,7 +30,7 @@ public class UserController {
     @Autowired
     JwtRequestFilter jwtRequestFilter;
 
-    @GetMapping("/get")
+    @GetMapping("/getAllUser")
     public ResponseEntity<List<UserWrapper>> getAllUser() {
         try {
             if (jwtRequestFilter.isAdmin()) {
@@ -51,6 +51,31 @@ public class UserController {
                 Optional<User> optional = userRepo.findById(Long.parseLong(requestMap.get("id")));
                 if (!optional.isEmpty()) {
                     userRepo.updateStatus(requestMap.get("status"), Long.parseLong(requestMap.get("id")));
+//                    sendEmailToAllAdmin(requestMap.get("status"), optional.get().getEmail(), userRepo.getAllAdmin("admin"));
+                    return InventoryUtils.getResponseEntity("user updated successfully", HttpStatus.OK);
+                } else {
+                    return InventoryUtils.getResponseEntity("User Id doesn't exist ", HttpStatus.OK);
+                }
+            } else {
+                return InventoryUtils.getResponseEntity(InventoryConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return InventoryUtils.getResponseEntity(InventoryConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PostMapping("/updateRole")
+    public ResponseEntity<String> updateRole(@RequestBody(required = true) Map<String, String> requestMap) {
+        try {
+            if (jwtRequestFilter.isAdmin()) {
+                Optional<User> optional = userRepo.findById(Long.parseLong(requestMap.get("id")));
+                if (!optional.isEmpty()) {
+                    String userROLE = requestMap.get("role");
+                    User.Role userRole = User.Role.valueOf(userROLE);
+                    userRepo.updateRole(userRole, Long.parseLong(requestMap.get("id")));
+//                    System.out.println("requestMap.get(\"role\")" + requestMap.get("role"));
+//                    System.out.println("requestMap.get(\"id\")" + requestMap.get("id"));
 //                    sendEmailToAllAdmin(requestMap.get("status"), optional.get().getEmail(), userRepo.getAllAdmin("admin"));
                     return InventoryUtils.getResponseEntity("user updated successfully", HttpStatus.OK);
                 } else {

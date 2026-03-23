@@ -43,15 +43,22 @@ export class UserService {
     });
   }
 
-  getUser() {
-    return this.httpClient.get(this.url + "/user/get");
+  getAllUser() {
+    return this.httpClient.get(this.url + "/user/getAllUser");
   }
 
   updateUser(data: any) {
     return this.httpClient.post(this.url
       + "/user/update", data, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
-    })
+    });
+  }
+
+  updateUserRole(data: any) {
+    return this.httpClient.post(this.url
+      + "/user/updateRole", data, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    });
   }
 
   delete(id: any) {

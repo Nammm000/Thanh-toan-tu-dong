@@ -1,0 +1,36 @@
+.option-card {
+  margin-bottom: 10px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.option-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 25%; /* makes the image perfectly round */
+}
+
+.product-field-form {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 16px;
+}
+
+.product-line {
+  font-weight: bold;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

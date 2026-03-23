@@ -1,0 +1,166 @@
+<div style="background-color: #eee7e7">
+  <div class="flex flex-row justify-between min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900">Thanh toán</h2>
+        </div>
+      </div>
+      <div
+        class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm"
+      >
+        <div class="flex flex-col space-y-1.5 p-6">
+          <div class="text-2xl font-semibold leading-none tracking-tight">
+            Thông tin sản phẩm
+          </div>
+          <div
+            class="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50"
+          >
+            <div class="flex-1">
+              <div class="flex items-start space-x-4">
+                <div class="flex">
+                  <img
+                    width="180px"
+                    height="180px"
+                    src="https://media.geeksforgeeks.org/wp-content/uploads/20251210112320810835/jvm.png"
+                    class="image"
+                  />
+                </div>
+                <div class="flex flex-col justify-between">
+                  <div>
+                    <h3 class="font-medium" *ngIf="type == 'news'">
+                      {{ product.name }}
+                    </h3>
+                    <h3 class="font-medium" *ngIf="type == 'payment'">
+                      {{ product.name }} - {{ product.duration }} ngày
+                    </h3>
+                  </div>
+                  <p class="text-sm text-gray-600 mt-1 line-clamp-2">
+                    {{ product.description }}
+                  </p>
+                  <div class="flex items-center space-x-4 mt-2">
+                    <span class="font-bold text-lg">{{
+                      product.price | currency: "VND"
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm mt-6"
+      >
+        <div class="flex flex-col space-y-3 p-6">
+          <div class="text-2xl font-semibold leading-none tracking-tight">
+            Thông tin nhận hàng
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm max-w-sm"
+              placeholder="Số điện thoại"
+              [(ngModel)]="phoneNumber"
+              value=""
+            />
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              #addressInput
+              type="text"
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm max-w-sm"
+              placeholder="Địa chỉ"
+              [(ngModel)]="address"
+              value=""
+              required
+            />
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <input
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm max-w-sm"
+              placeholder="Ghi chú đơn hàng (tùy chọn)"
+              [(ngModel)]="orderNote"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="bg-white rounded-lg border bg-card text-card-foreground shadow-sm mt-6"
+      >
+        <div class="flex flex-col space-y-3 p-6">
+          <div class="text-2xl font-semibold leading-none tracking-tight">
+            Thanh toán qua:
+          </div>
+          <div *ngFor="let option of options" class="option-card">
+            <label class="option-label">
+              <input
+                type="radio"
+                name="choices"
+                [value]="option.value"
+                [(ngModel)]="selectedPaymentOption"
+              />
+              <img
+                [src]="option.image"
+                alt="{{ option.label }}"
+                class="option-image"
+              />
+              <p>{{ option.label }}</p>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="container px-4 py-8 mt-12 mr-12 bg-white rounded-lg border bg-card text-card-foreground shadow-sm"
+      style="width: 600px; height: 500px"
+    >
+      <div class="flex flex-col space-y-1.5 p-6">
+        <div class="text-2xl font-semibold leading-none tracking-tight">
+          Đơn hàng của bạn {{ phoneNumber }}
+        </div>
+        <div class="text-1xl font-semibold leading-none tracking-tight">
+          Giao hàng đến: {{ address }}
+        </div>
+        <div class="text-1xl font-semibold leading-none tracking-tight">
+          Ghi chú: {{ orderNote }}
+        </div>
+        <div class="text-1xl font-semibold leading-none tracking-tight">
+          Phương thức thanh toán: {{ selectedPaymentOption }}
+        </div>
+
+        <div
+          class="text-1xl font-semibold leading-none tracking-tight product-line"
+        >
+          <div class="product-field-form">
+            <span class="product-name">Tên sản phẩm: </span>
+            <span class="product-price">{{ product.name }}</span>
+          </div>
+
+          <div class="product-field-form">
+            <span class="product-name">Giá: </span>
+            <span class="product-price">{{ product.price }}</span>
+          </div>
+
+          <div class="centered product-field-form mt-4">
+            <button class="text-white inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8" (click)="getPayment()">Thanh toán</button>
+          </div>
+
+          <div id="qr-code">
+            <!-- <img *ngIf="selectedPaymentOption==='Momo'" [src]="result.qrUrl" alt="MoMo QR Code"> -->
+            <qrcode
+              *ngIf="showQRCode && (selectedPaymentOption==='Momo' || selectedPaymentOption==='ZaloPay')"
+              [qrdata]="result.url"
+              [width]="250"
+            ></qrcode>
+            <!-- <QRCode *ngIf="selectedPaymentOption=='ZaloPay'" [value]="result.url" /> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -76,7 +76,7 @@ public class NewsController {
         if (requestMap.containsKey("title")) {
             if (requestMap.containsKey("id") && validateId) {
                 return true;
-            } else if(!validateId) {
+            } else if (!validateId) {
                 return true;
             }
         }
@@ -87,11 +87,19 @@ public class NewsController {
                                 boolean isAdd, MultipartFile[] file,
                                 String attachedTo) throws IOException {
         Image image = new Image();
-        image.setType(file[0].getContentType());
-        image.setName(file[0].getOriginalFilename());
-        image.setPicByte(file[0].getBytes());
-        image.setAttachedTo(attachedTo);
-
+        Boolean noImg = false;
+        if (file == null || file.length == 0) {
+//            image.setType("");
+//            image.setName("");
+//            image.setPicByte(null);
+//            image.setAttachedTo("");
+            noImg = true;
+        } else {
+            image.setType(file[0].getContentType());
+            image.setName(file[0].getOriginalFilename());
+            image.setPicByte(file[0].getBytes());
+            image.setAttachedTo(attachedTo);
+        }
 
         News news = new News();
         LocalDateTime now = LocalDateTime.now();
@@ -99,16 +107,21 @@ public class NewsController {
             Long id = Long.parseLong(requestMap.get("id"));
             news.setId(id);
             news.setCreatedTime(LocalDateTime.parse(requestMap.get("createdTime")));
-            image.setId(Long.parseLong(requestMap.get("idImg")));
+            if (!noImg) {
+                image.setId(Long.parseLong(requestMap.get("idImg")));
+            }
         } else {
             news.setCreatedTime(now);
         }
 
-        Image saved = imageRepo.save(image);
-        Long imgId = saved.getId();
-        Image imageSaved = new Image();
-        imageSaved.setId(imgId);
-        news.setImage(imageSaved);
+        if (!noImg) {
+            Image saved = imageRepo.save(image);
+            Long imgId = saved.getId();
+            Image imageSaved = new Image();
+            imageSaved.setId(imgId);
+            news.setImage(imageSaved);
+        }
+
 
         news.setTitle(requestMap.get("title"));
         news.setDescription(requestMap.get("description"));
@@ -330,14 +343,18 @@ public class NewsController {
     @GetMapping("/updateViews/{id}")
     public ResponseEntity<String> updateViews(@PathVariable Long id) {
         try {
-            Optional<News> optionalNews = newsRepo.findById(id);
-            int views = optionalNews.get().getView() + 1;
-            if (!optionalNews.isEmpty()) {
-                newsRepo.updateNewsViews(views, id);
-                return InventoryUtils.getResponseEntity("News views updated successfully. ", HttpStatus.OK);
-            } else {
-                return InventoryUtils.getResponseEntity("News id doesn't exist", HttpStatus.OK);
+            if (!jwtRequestFilter.isAdmin()) {
+                Optional<News> optionalNews = newsRepo.findById(id);
+                int views = optionalNews.get().getView() + 1;
+                if (!optionalNews.isEmpty()) {
+                    newsRepo.updateNewsViews(views, id);
+                    return InventoryUtils.getResponseEntity("News views updated successfully. ", HttpStatus.OK);
+                } else {
+                    return InventoryUtils.getResponseEntity("News id doesn't exist", HttpStatus.OK);
+                }
             }
+            return InventoryUtils.getResponseEntity("Admin views. ", HttpStatus.OK);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

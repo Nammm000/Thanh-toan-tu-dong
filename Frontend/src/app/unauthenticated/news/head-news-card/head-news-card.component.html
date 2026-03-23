@@ -47,7 +47,7 @@
         class="font-bold text-lg mb-2 line-clamp-2 hover:text-blue-600 transition-colors"
       >
         <a *ngIf="!canNotRead" href="/news/{{ news.id }}">{{ news.title }}</a>
-        <a *ngIf="canNotRead" href="/pricing">{{ news.title }}</a>
+        <a *ngIf="canNotRead" href="/payment/news/{{ news.id }}">{{ news.title }}</a>
       </h2>
       <p class="pCard text-gray-600 text-sm mb-4 line-clamp-3">
         {{ news.description }}

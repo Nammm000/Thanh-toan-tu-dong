@@ -133,10 +133,7 @@ public class PlanController {
     @GetMapping("/getPlanById/{id}")
     public ResponseEntity<PlanWrapper> getPlanById(@PathVariable Long id) {
         try {
-            if (jwtRequestFilter.isAdmin()) {
-                return new ResponseEntity<>(planRepo.getPlanById(id), HttpStatus.OK);
-            }
-            new ResponseEntity<PlanWrapper>(new PlanWrapper(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(planRepo.getPlanById(id), HttpStatus.OK);
 
         } catch (Exception ex) {
             ex.printStackTrace();

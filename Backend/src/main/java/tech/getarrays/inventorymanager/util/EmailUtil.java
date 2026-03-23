@@ -43,7 +43,8 @@ public class EmailUtil {
         helper.setTo(to);
         helper.setSubject(subject);
 
-        String htmlMSG = "<p><b>Your Login details for Cafe Management System</b></p><b>Email:</b>" + to
+        String htmlMSG = "<p><b>Your Login details for Cafe Management System</b></p>"
+                + "<br><b>Email: </b>" + to
                 + "<br><b>Password: </b>" + password
                 + "<br><a href=\"http://localhost:4200/\">Click here to login</a></p>";
         message.setContent(htmlMSG, "text/html");

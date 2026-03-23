@@ -2,6 +2,7 @@ package tech.getarrays.inventorymanager.repo;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import tech.getarrays.inventorymanager.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,9 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Transactional
     @Modifying
     Integer updateStatus(@Param("status") String status, @Param("id") Long id);
+
+    @Transactional
+    @Modifying
+    @Query("update User w set w.role =:role where w.id=:id")
+    Integer updateRole(@Param("role") User.Role role, @Param("id") Long id);
 }

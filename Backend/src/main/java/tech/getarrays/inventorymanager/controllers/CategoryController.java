@@ -5,17 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import tech.getarrays.inventorymanager.constents.InventoryConstants;
 import tech.getarrays.inventorymanager.filters.JwtRequestFilter;
 import tech.getarrays.inventorymanager.models.POJO.Category;
 import tech.getarrays.inventorymanager.repo.CategoryRepo;
-import tech.getarrays.inventorymanager.services.jwt.UserDetailsServiceImpl;
-import tech.getarrays.inventorymanager.util.EmailUtil;
 import tech.getarrays.inventorymanager.util.InventoryUtils;
-import tech.getarrays.inventorymanager.util.JwtUtil;
 
 import java.util.ArrayList;
 import java.util.List;

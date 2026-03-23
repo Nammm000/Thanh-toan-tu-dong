@@ -33,8 +33,8 @@ export class NewsComponent implements OnInit, OnDestroy {
   };
   page = 'add';
 
-  fileToUpload: any;
-  imageUrl: any;
+  fileToUpload: any = null;
+  imageUrl: any = null;
 
   editordoc = jsonDoc;
   editor: Editor = new Editor();
@@ -68,7 +68,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     private ngxService: NgxUiLoaderService,
     private snackbarService: SnackbarService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -85,9 +85,9 @@ export class NewsComponent implements OnInit, OnDestroy {
         }
         this.snackbarService.openSnackBar(
           this.responseMessage,
-          GlobalConstants.error
+          GlobalConstants.error,
         );
-      }
+      },
     );
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
@@ -115,14 +115,14 @@ export class NewsComponent implements OnInit, OnDestroy {
           this.ngxService.stop();
           this.snackbarService.openSnackBar(
             'News added successfully',
-            'success'
+            'success',
           );
           this.router.navigate(['/admin/news']);
         },
         (error: any) => {
           this.ngxService.stop();
           console.log(error.error?.message);
-        }
+        },
       );
     } else if (this.page == 'edit') {
       this.newsService.update(formData).subscribe(
@@ -130,14 +130,14 @@ export class NewsComponent implements OnInit, OnDestroy {
           this.ngxService.stop();
           this.snackbarService.openSnackBar(
             'News updated successfully',
-            'success'
+            'success',
           );
           this.router.navigate(['/admin/news']);
         },
         (error: any) => {
           this.ngxService.stop();
           console.log(error.error?.message);
-        }
+        },
       );
     }
   }
@@ -169,13 +169,13 @@ export class NewsComponent implements OnInit, OnDestroy {
         });
         this.fileToUpload = imgFile;
         this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(
-          window.URL.createObjectURL(imgFile)
+          window.URL.createObjectURL(imgFile),
         );
       },
       (error: any) => {
         this.ngxService.stop();
         console.log(error.error?.message);
-      }
+      },
     );
   }
 
@@ -192,29 +192,33 @@ export class NewsComponent implements OnInit, OnDestroy {
   }
 
   prepareFormData(): FormData {
-    const imageHandler: ImageHandler = {
-      file: this.fileToUpload,
-      url: this.sanitizer.bypassSecurityTrustUrl(
-        window.URL.createObjectURL(this.fileToUpload)
-      ),
-    };
-
-    const imageHandlerList: ImageHandler[] = [];
-    imageHandlerList.push(imageHandler);
-
     const formData = new FormData();
+    if (this.fileToUpload !== null) {
+      const imageHandler: ImageHandler = {
+        file: this.fileToUpload,
+        url: this.sanitizer.bypassSecurityTrustUrl(
+          window.URL.createObjectURL(this.fileToUpload),
+        ),
+      };
 
-    for (var i = 0; i < imageHandlerList.length; i++) {
-      formData.append(
-        'imageFile',
-        imageHandlerList[i].file,
-        imageHandlerList[i].file.name
-      );
+      const imageHandlerList: ImageHandler[] = [];
+      imageHandlerList.push(imageHandler);
+
+      for (var i = 0; i < imageHandlerList.length; i++) {
+        formData.append(
+          'imageFile',
+          imageHandlerList[i].file,
+          imageHandlerList[i].file.name,
+        );
+      }
+    } else {
+      formData.append('imageFile', new Blob(), '');
     }
+
     formData.append('attachedTo', 'news');
     formData.append(
       'data',
-      new Blob([JSON.stringify(this.data)], { type: 'application/json' })
+      new Blob([JSON.stringify(this.data)], { type: 'application/json' }),
     );
     return formData;
   }

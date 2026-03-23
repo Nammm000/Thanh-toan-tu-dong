@@ -13,6 +13,7 @@ import { NewsComponent } from './unauthenticated/news/news.component';
 import { ItemComponent } from './unauthenticated/news/item/item.component';
 
 import { AdminComponent } from './dashboard/admin/admin.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,9 @@ const routes: Routes = [
   { path: 'pricing', component: PricingComponent },
   { path: 'news', component: NewsComponent },
   { path: 'news/:id', component: ItemComponent },
+  
+  { path: 'payment/news/:id', component: PaymentComponent },
+  { path: 'payment/subscription/:id', component: PaymentComponent },
   // { path: 'auth/login', component: LoginComponent },
   // { path: 'auth/signup', component: SignupComponent },
   // { path: 'auth/forgot-password', component: ForgotPasswordComponent },

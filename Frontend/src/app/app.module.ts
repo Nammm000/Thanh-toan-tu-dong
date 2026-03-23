@@ -15,6 +15,7 @@ import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, SPINNER } from 'ngx-ui-loader';
+import { QRCodeModule } from 'angularx-qrcode';
 
 import { SignupComponent } from './login-signup-form/signup/signup.component';
 import { ForgotPasswordComponent } from './login-signup-form/forgot-password/forgot-password.component';
@@ -48,26 +49,26 @@ import { SupportComponent } from './unauthenticated/support/support.component';
 import { PricingComponent } from './unauthenticated/pricing/pricing.component';
 import { LeftSidebarComponent } from './layouts/full/left-sidebar/left-sidebar.component';
 import { NewsComponent } from './unauthenticated/news/news.component';
-import { NgxEditorModule } from "ngx-editor";
+import { NgxEditorModule } from 'ngx-editor';
 import { ItemComponent } from './unauthenticated/news/item/item.component';
 import { NewsCardComponent } from './unauthenticated/news/news-card/news-card.component';
 import { HeadNewsCardComponent } from './unauthenticated/news/head-news-card/head-news-card.component';
 import { PlanCardComponent } from './unauthenticated/pricing/plan-card/plan-card.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const ngxUiloaderConfig: NgxUiLoaderConfig = {
-  text: "Loading...",
-  textColor: "#FFFFFF",
-  textPosition: "center-center",
-  bgsColor: "#7b1fa2",
-  fgsColor: "7b1fa2",
+  text: 'Loading...',
+  textColor: '#FFFFFF',
+  textPosition: 'center-center',
+  bgsColor: '#7b1fa2',
+  fgsColor: '7b1fa2',
   fgsType: SPINNER.squareJellyBox,
   fgsSize: 100,
-  hasProgressBar: false
-
-}
+  hasProgressBar: false,
+};
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     HomeComponent,
     // BestSellerComponent,
@@ -89,13 +90,27 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     ManageLocationComponent,
     ViewBillComponent,
     ManageUserComponent,
-    // ProductComponent, 
-    // CustomerComponent, 
+    // ProductComponent,
+    // CustomerComponent,
     // WarehouseComponent,
-    // ProviderComponent, 
-    LocationComponent, FooterComponent, ItemsComponent, AboutComponent, ContactComponent, SupportComponent, PricingComponent, LeftSidebarComponent, NewsComponent, ItemComponent, NewsCardComponent, HeadNewsCardComponent, PlanCardComponent,
-   ],
+    // ProviderComponent,
+    LocationComponent,
+    FooterComponent,
+    ItemsComponent,
+    AboutComponent,
+    ContactComponent,
+    SupportComponent,
+    PricingComponent,
+    LeftSidebarComponent,
+    NewsComponent,
+    ItemComponent,
+    NewsCardComponent,
+    HeadNewsCardComponent,
+    PlanCardComponent,
+    PaymentComponent,
+  ],
   imports: [
+    QRCodeModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -106,9 +121,16 @@ const ngxUiloaderConfig: NgxUiLoaderConfig = {
     SharedModule,
     HttpClientModule,
     NgxEditorModule,
-    NgxUiLoaderModule.forRoot(ngxUiloaderConfig)
+    NgxUiLoaderModule.forRoot(ngxUiloaderConfig),
   ],
-  providers: [HttpClientModule, {provide:HTTP_INTERCEPTORS, useClass:TokenInterceptorInterceptor, multi:true}],
-  bootstrap: [AppComponent]
+  providers: [
+    HttpClientModule,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

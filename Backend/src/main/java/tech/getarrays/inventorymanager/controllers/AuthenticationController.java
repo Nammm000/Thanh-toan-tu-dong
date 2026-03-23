@@ -55,7 +55,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationDTO authenticationDTO, HttpServletResponse response) throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException {
-        System.out.println("AuthenticationController createAuthenticationToken");
+//        System.out.println("AuthenticationController createAuthenticationToken");
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationDTO.getEmail(), authenticationDTO.getPassword()));
         } catch (BadCredentialsException e) {

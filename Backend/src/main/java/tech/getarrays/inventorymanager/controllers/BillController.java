@@ -15,7 +15,6 @@ import tech.getarrays.inventorymanager.repo.BillRepo;
 import tech.getarrays.inventorymanager.services.jwt.UserDetailsServiceImpl;
 import tech.getarrays.inventorymanager.util.EmailUtil;
 import tech.getarrays.inventorymanager.util.InventoryUtils;
-import tech.getarrays.inventorymanager.util.JwtUtil;
 
 import org.json.JSONArray;
 import org.apache.pdfbox.io.IOUtils;

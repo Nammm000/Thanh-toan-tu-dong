@@ -14,64 +14,78 @@ import { UserComponent } from './user/user.component';
 @Component({
   selector: 'app-manage-user',
   templateUrl: './manage-user.component.html',
-  styleUrls: ['./manage-user.component.scss']
+  styleUrls: ['./manage-user.component.scss'],
 })
-
 export class ManageUserComponent implements OnInit {
-
   // displayedColumns: string[] = ['name', 'email', 'phone', 'status'];
   dataSource: any;
   responseMessage: any;
   listUser: any[] = [];
+  listAdmin: any[] = [];
   listPlanCode: any[] = [];
   data = {
     id: '',
     email: '',
-    plan_code: ''
+    plan_code: '',
   };
 
-  constructor(private userService: UserService,
+  constructor(
+    private userService: UserService,
     private dialog: MatDialog,
     private planService: PlanService,
     private subcriptionService: SubcriptionService,
     private ngxService: NgxUiLoaderService,
     private snackbarService: SnackbarService,
-    private router: Router) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.setListUser();
     this.planService.getAllPlanCode().subscribe(
-        (response: any) => {
-          this.listPlanCode = response;
-        }, (error: any) => {
-          if (error.error?.message) {
-                    this.responseMessage = error.error?.message;
-                  } else {
-                    this.responseMessage = GlobalConstants.genericError;
-                  }
-                  this.snackbarService.openSnackBar(
-                    this.responseMessage,
-                    GlobalConstants.error
-                  );
+      (response: any) => {
+        this.listPlanCode = response;
+      },
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
         }
-      )
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error,
+        );
+      },
+    );
   }
 
   setListUser() {
     this.ngxService.stop();
-    this.userService.getUser().subscribe((response:any) => {
-      // this.dataSource = new MatTableDataSource(response);
-      this.listUser = response;
-      // console.log(this.listUser);
-    }, (error:any) => {
-      console.log(error.error?.message);
-      if (error.error?.message) {
-        this.responseMessage = error.error?.message; 
-      } else {
-        this.responseMessage = GlobalConstants.genericError;
-      }
-      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
-    })
+    this.userService.getAllUser().subscribe(
+      (response: any) => {
+        // this.dataSource = new MatTableDataSource(response);
+        response.forEach((element: any) => {
+          if (element.role == 'ADMIN') {
+            this.listAdmin.push(element);
+          } else {
+            this.listUser.push(element);
+          }
+        });
+        // console.log(this.listUser);
+      },
+      (error: any) => {
+        console.log(error.error?.message);
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error,
+        );
+      },
+    );
   }
 
   applyFilter(event: Event) {
@@ -82,105 +96,147 @@ export class ManageUserComponent implements OnInit {
   onChange(status: any, id: any) {
     var data = {
       status: status.toString(),
-      id: id
-    }
-    this.userService.updateUser(data).subscribe((response: any) => {
-      this.responseMessage = response?.message;
-      this.snackbarService.openSnackBar(this.responseMessage, "Success");
-    }, (error:any) => {
-      //console.log(error.error?.message);
-      if(error.error?.message) {
-        this.responseMessage = error.error?.message; 
-      } else {
-        //alert("status is updated successfully");
-        this.responseMessage = GlobalConstants.genericError;
-      }
-      this.snackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);
-    })
+      id: id,
+    };
+    this.userService.updateUser(data).subscribe(
+      (response: any) => {
+        this.responseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.responseMessage, 'Success');
+      },
+      (error: any) => {
+        //console.log(error.error?.message);
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          //alert("status is updated successfully");
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error,
+        );
+      },
+    );
   }
 
   deleteAction(id: any) {
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.data = {
-        message: 'delete ' + id + ' user',
-        confirmation: true
-      };
-      const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
-      const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe(
-        (response: any) => {
-          this.deleteUser(id);
-          
-          dialogRef.close();
-        }
-      );
-    }
-  
-    deleteUser(id: any) {
-      this.userService.delete(id).subscribe(
-        (response: any) => {
-          
-          this.responseMessage = response?.message;
-          this.snackbarService.openSnackBar(this.responseMessage, 'Success');
-          this.ngxService.start();
-          this.setListUser();
-        },
-        (error: any) => {
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstants.genericError;
-          }
-          this.snackbarService.openSnackBar(
-            this.responseMessage,
-            GlobalConstants.error
-          );
-        }
-      );
-    }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'delete ' + id + ' user',
+      confirmation: true,
+    };
+    const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe(
+      (response: any) => {
+        this.deleteUser(id);
 
-    public handleEditAction(id: any, email: any): void {
-      this.data.email = email;
-      this.data.id = id;
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = "550px";
-        dialogConfig.data = {
-          message: 'cập nhật người dùng ' + id,
-          confirmation: true,
-          listPlanCode: this.listPlanCode
-        };
-        const dialogRef = this.dialog.open(UserComponent, dialogConfig);
-        const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe(
-        (response: any) => {
-          this.ngxService.start();
-          this.updateUserPlan(response);
-          
-          dialogRef.close();
+        dialogRef.close();
+      },
+    );
+  }
+
+  deleteUser(id: any) {
+    this.userService.delete(id).subscribe(
+      (response: any) => {
+        this.responseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.responseMessage, 'Success');
+        this.ngxService.start();
+        this.setListUser();
+      },
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
         }
-      );
-      }
-    
-      updateUserPlan(planCode: any) {
-        this.data.plan_code = planCode;
-        this.subcriptionService.add(this.data).subscribe(
-          (response: any) => {
-            this.ngxService.stop();
-            this.responseMessage = response?.message;
-            this.snackbarService.openSnackBar(this.responseMessage, 'Success');
-            // this.ngxService.start();
-            // this.setListUser();
-          },
-          (error: any) => {
-            this.ngxService.stop();
-            if (error.error?.message) {
-              this.responseMessage = error.error?.message;
-            } else {
-              this.responseMessage = GlobalConstants.genericError;
-            }
-            this.snackbarService.openSnackBar(
-              this.responseMessage,
-              GlobalConstants.error
-            );
-          }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error,
         );
-      }
+      },
+    );
+  }
+
+  public handleEditAction(id: any, email: any): void {
+    this.data.email = email;
+    this.data.id = id;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '550px';
+    dialogConfig.data = {
+      email: email,
+      message: 'cập nhật người dùng ' + id,
+      confirmation: true,
+      listPlanCode: this.listPlanCode,
+    };
+    const dialogRef = this.dialog.open(UserComponent, dialogConfig);
+    const subPlan = dialogRef.componentInstance.onEmitStatusPlanChange.subscribe(
+      (response: any) => {
+        this.ngxService.start();
+        this.updateUserPlan(response);
+
+        dialogRef.close();
+      },
+    );
+    const subRole = dialogRef.componentInstance.onEmitStatusRoleChange.subscribe(
+      (response: any) => {
+        this.ngxService.start();
+        this.updateUserRole(response, id);
+
+        dialogRef.close();
+      },
+    );
+  }
+
+  updateUserPlan(planCode: any) {
+    this.data.plan_code = planCode;
+    this.subcriptionService.add(this.data).subscribe(
+      (response: any) => {
+        this.ngxService.stop();
+        this.responseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.responseMessage, 'Success');
+        // this.ngxService.start();
+        // this.setListUser();
+      },
+      (error: any) => {
+        this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error,
+        );
+      },
+    );
+  }
+
+  updateUserRole(role: any, userid: any) {
+    var dataRole = {
+      role: role,
+      id: userid,
+    };
+    this.userService.updateUserRole(dataRole).subscribe(
+      (response: any) => {
+        this.ngxService.stop();
+        this.responseMessage = response?.message;
+        this.snackbarService.openSnackBar(this.responseMessage, 'Success');
+        // this.ngxService.start();
+        // this.setListUser();
+      },
+      (error: any) => {
+        this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error,
+        );
+      },
+    );
+  }
 }

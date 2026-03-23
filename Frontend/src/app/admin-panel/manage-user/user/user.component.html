@@ -1,24 +1,62 @@
 <div class="bg-card text-card-foreground">
   <div class="flex flex-col space-y-1.5 p-6">
     <div class="text-2xl font-semibold leading-none tracking-tight">
-      Cập nhật gói
+      Cập nhật gói {{ dialogData.email }}
     </div>
   </div>
   <div class="p-6 pt-0 space-y-4">
     <div>
       <label for="plan" class="block text-sm font-medium mb-2">Chọn gói</label
-      ><select id="plan" name="plan" [(ngModel)]="planCode"
-        class="border rounded px-3 py-2 w-full">
+      ><select
+        id="plan"
+        name="plan"
+        [(ngModel)]="planCode"
+        class="border rounded px-3 py-2 w-full"
+      >
         <option value="" disabled selected hidden>Chọn đối tượng đọc</option>
         <option value="ALL">Tất cả người dùng</option>
-        <option *ngFor="let code of listPlanCode;" value="{{code.code}}">{{code.name}}</option>
+        <option *ngFor="let code of listPlanCode" value="{{ code.code }}">
+          {{ code.name }}
+        </option>
       </select>
     </div>
-    <button (click)="handleChangeAction()"
+    <button
+      (click)="handleChangePlanAction()"
       class="text-white float-right mb-10 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-      type="button" style="margin-bottom: 10px;"
+      type="button"
+      style="margin-bottom: 10px"
     >
       Lưu gói
+    </button>
+  </div>
+
+  <div class="flex flex-col space-y-1.5 p-6 mt-4">
+    <div class="text-2xl font-semibold leading-none tracking-tight">
+      Thay đổi quyền người dùng
+    </div>
+  </div>
+  <div class="p-6 pt-0 space-y-4">
+    <div>
+      <label for="plan" class="block text-sm font-medium mb-2">Chọn quyền</label
+      ><select
+        id="plan"
+        name="plan"
+        [(ngModel)]="role"
+        class="border rounded px-3 py-2 w-full"
+      >
+        <option value="" disabled selected hidden>Chọn quyền người dùng</option>
+        <option *ngFor="let code of listRole" value="{{ code }}">
+          {{ code }}
+        </option>
+      </select>
+    </div>
+    <button
+      (click)="handleChangeRoleAction()"
+      class="text-white float-right mb-10 items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+      type="button"
+      style="margin-bottom: 10px"
+    >
+      Lưu quyền người dùng
     </button>
   </div>
 </div>
