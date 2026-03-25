@@ -97,80 +97,115 @@ export class PaymentComponent {
     this.data.orderInfo = this.product.description + ' - ' + this.product.name;
 
     this.ngxService.start();
-
-    if (this.selectedPaymentOption === 'Momo') {
-      this.paymentService.createMomo(this.data).subscribe(
-        (response: any) => {
-          this.ngxService.stop();
-          // console.log(response);
+    this.paymentService.createPayment(this.data, this.selectedPaymentOption).subscribe(
+      (response: any) => {
+        this.ngxService.stop();
+        // console.log(response);
+        if (this.selectedPaymentOption === 'Momo') {
           if (response.resultCode === 0) {
             this.result.url = response.deeplink;
             this.result.qrUrl = response.qrCodeUrl;
             this.showQRCode = true;
           }
-          
+        } else if (this.selectedPaymentOption === 'VNPAY') {
+          // this.result.url = response.payUrl;
           // window.location.href = this.result.url;
-        },
-        (error: any) => {
-          this.ngxService.stop();
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstants.genericError;
-          }
-          this.snackbarService.openSnackBar(
-            this.responseMessage,
-            GlobalConstants.error,
-          );
-        },
-      );
-    } else if (this.selectedPaymentOption === 'VNPAY') {
-      this.paymentService.createVNPay(this.data).subscribe(
-        (response: any) => {
-          this.ngxService.stop();
-          // console.log(response);
-          this.result.url = response.payUrl;
-          // window.location.href = this.result.url;
-        },
-        (error: any) => {
-          this.ngxService.stop();
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstants.genericError;
-          }
-          this.snackbarService.openSnackBar(
-            this.responseMessage,
-            GlobalConstants.error,
-          );
-        },
-      );
-    } else if (this.selectedPaymentOption === 'ZaloPay') {
-      this.paymentService.createZaloPay(this.data).subscribe(
-        (response: any) => {
-          this.ngxService.stop();
-          // console.log(response);
+        } else if (this.selectedPaymentOption === 'ZaloPay') {
           if (response.return_code === 1) {
-            this.result.url = response.orderUrl;
+            this.result.url = response.order_url;
             // this.result.qrUrl = response.qrCodeUrl;
             this.showQRCode = true;
           }
-          // window.location.href = this.result.url;
-        },
-        (error: any) => {
-          this.ngxService.stop();
-          if (error.error?.message) {
-            this.responseMessage = error.error?.message;
-          } else {
-            this.responseMessage = GlobalConstants.genericError;
-          }
-          this.snackbarService.openSnackBar(
-            this.responseMessage,
-            GlobalConstants.error,
-          );
-        },
-      );
-    }
+        }
+        
+      },
+      (error: any) => {
+        this.ngxService.stop();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this.snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error,
+        );
+      }
+    );
+
+    // if (this.selectedPaymentOption === 'Momo') {
+    //   this.paymentService.createMomo(this.data).subscribe(
+    //     (response: any) => {
+    //       this.ngxService.stop();
+    //       // console.log(response);
+    //       if (response.resultCode === 0) {
+    //         this.result.url = response.deeplink;
+    //         this.result.qrUrl = response.qrCodeUrl;
+    //         this.showQRCode = true;
+    //       }
+          
+    //       // window.location.href = this.result.url;
+    //     },
+    //     (error: any) => {
+    //       this.ngxService.stop();
+    //       if (error.error?.message) {
+    //         this.responseMessage = error.error?.message;
+    //       } else {
+    //         this.responseMessage = GlobalConstants.genericError;
+    //       }
+    //       this.snackbarService.openSnackBar(
+    //         this.responseMessage,
+    //         GlobalConstants.error,
+    //       );
+    //     },
+    //   );
+    // } else if (this.selectedPaymentOption === 'VNPAY') {
+    //   this.paymentService.createVNPay(this.data).subscribe(
+    //     (response: any) => {
+    //       this.ngxService.stop();
+    //       // console.log(response);
+    //       this.result.url = response.payUrl;
+    //       // window.location.href = this.result.url;
+    //     },
+    //     (error: any) => {
+    //       this.ngxService.stop();
+    //       if (error.error?.message) {
+    //         this.responseMessage = error.error?.message;
+    //       } else {
+    //         this.responseMessage = GlobalConstants.genericError;
+    //       }
+    //       this.snackbarService.openSnackBar(
+    //         this.responseMessage,
+    //         GlobalConstants.error,
+    //       );
+    //     },
+    //   );
+    // } else if (this.selectedPaymentOption === 'ZaloPay') {
+    //   this.paymentService.createZaloPay(this.data).subscribe(
+    //     (response: any) => {
+    //       this.ngxService.stop();
+    //       // console.log(response);
+    //       if (response.return_code === 1) {
+    //         this.result.url = response.order_url;
+    //         // this.result.qrUrl = response.qrCodeUrl;
+    //         this.showQRCode = true;
+    //       }
+    //       // window.location.href = this.result.url;
+    //     },
+    //     (error: any) => {
+    //       this.ngxService.stop();
+    //       if (error.error?.message) {
+    //         this.responseMessage = error.error?.message;
+    //       } else {
+    //         this.responseMessage = GlobalConstants.genericError;
+    //       }
+    //       this.snackbarService.openSnackBar(
+    //         this.responseMessage,
+    //         GlobalConstants.error,
+    //       );
+    //     },
+    //   );
+    // }
   }
 
   getNewsById(id: any) {

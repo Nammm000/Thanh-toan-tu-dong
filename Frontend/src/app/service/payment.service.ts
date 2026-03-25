@@ -10,6 +10,26 @@ export class PaymentService {
   url = environment.apiUrl + "/api/payment";
   constructor(private httpClient: HttpClient) { }
 
+  createPayment(data: any, type: string) {
+    let endpoint = "";
+    switch (type) {
+      case "Momo":
+        endpoint = "/createMomo";
+        break;
+      case "VNPAY":
+        endpoint = "/createVNPay";
+        break;
+      case "ZaloPay":
+        endpoint = "/createZaloPay";
+        break;
+      default:
+        throw new Error("Unsupported payment type");
+    }
+    return this.httpClient.post(this.url + endpoint, data, {
+       headers: new HttpHeaders().set('content-Type', "application/json")
+    })
+  }
+
   createMomo(data: any) {
     return this.httpClient.post(this.url + "/createMomo", data, {
        headers: new HttpHeaders().set('content-Type', "application/json")
