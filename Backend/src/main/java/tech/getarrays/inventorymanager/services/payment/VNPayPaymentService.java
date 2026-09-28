@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tech.getarrays.inventorymanager.constents.PaymentConstants;
+import tech.getarrays.inventorymanager.dto.PaymentRequestDTO;
+import tech.getarrays.inventorymanager.dto.PaymentResponseDTO;
 import static tech.getarrays.inventorymanager.util.AuthenticationCodeUtil.hmacSHA512;
 
 import java.net.URLEncoder;
@@ -12,9 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class VNPayPaymentService {
+public class VNPayPaymentService implements PaymentStrategy {
 
-    public ResponseEntity<?> createPayment(Map<String, String> req) throws Exception {
+    public ResponseEntity<?> createVNPayPayment(Map<String, String> req) throws Exception {
 
         String orderId = String.valueOf(System.currentTimeMillis());
         String amount = req.get("price"); // VND
@@ -116,5 +118,22 @@ public class VNPayPaymentService {
         } else {
             return ResponseEntity.badRequest().body("Payment Failed ❌");
         }
+    }
+
+    @Override
+    public PaymentRequestDTO.PaymentMethod getMethod() {
+        return PaymentRequestDTO.PaymentMethod.VNPAY;
+    }
+
+    @Override
+    public PaymentResponseDTO createPayment(PaymentRequestDTO request, HttpServletRequest httpRequest) throws Exception {
+        Map<String, String> req = new HashMap<>();
+        req.put("price", request.getAmount().toString());
+        req.put("orderInfo", "Payment for order " + request.getOrderInfo());
+
+        ResponseEntity<?> response = createVNPayPayment(req);
+        String paymentUrl = (String) response.getBody();
+
+        return new PaymentResponseDTO(paymentUrl, null);
     }
 }

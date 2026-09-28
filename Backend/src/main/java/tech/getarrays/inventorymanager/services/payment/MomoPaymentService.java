@@ -1,9 +1,8 @@
 package tech.getarrays.inventorymanager.services.payment;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,13 +12,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import tech.getarrays.inventorymanager.constents.PaymentConstants;
+import tech.getarrays.inventorymanager.dto.PaymentRequestDTO;
+import tech.getarrays.inventorymanager.dto.PaymentResponseDTO;
 
 import static tech.getarrays.inventorymanager.util.AuthenticationCodeUtil.hmacSHA256;
 
 @Service
-public class MomoPaymentService {
+public class MomoPaymentService implements PaymentStrategy {
 
-    public Map<String, Object> createPayment(Map<String, String> request) throws Exception {
+    public Map<String, Object> createMomoPayment(Map<String, String> request) throws Exception {
 
         String orderId = UUID.randomUUID().toString();
         String requestId = UUID.randomUUID().toString();
@@ -72,5 +73,23 @@ public class MomoPaymentService {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public PaymentRequestDTO.PaymentMethod getMethod() {
+        return PaymentRequestDTO.PaymentMethod.MOMO;
+    }
+
+    @Override
+    public PaymentResponseDTO createPayment(PaymentRequestDTO request, HttpServletRequest httpRequest) throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("price", request.getAmount().toString());
+        params.put("orderInfo", "Payment for order " + request.getOrderInfo());
+
+        Map<String, Object> response = createMomoPayment(params);
+        String payUrl = (String) response.get("payUrl");
+        String qrCodeUrl = (String) response.get("qrCodeUrl");
+
+        return new PaymentResponseDTO(payUrl, qrCodeUrl);
     }
 }

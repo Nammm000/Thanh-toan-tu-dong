@@ -1,11 +1,14 @@
 package tech.getarrays.inventorymanager.services.payment;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import tech.getarrays.inventorymanager.constents.PaymentConstants;
+import tech.getarrays.inventorymanager.dto.PaymentRequestDTO;
+import tech.getarrays.inventorymanager.dto.PaymentResponseDTO;
 import tech.getarrays.inventorymanager.util.zalopay.crypto.HMACUtil;
 
 import java.text.SimpleDateFormat;
@@ -14,9 +17,9 @@ import java.util.*;
 import static tech.getarrays.inventorymanager.util.TimeUtil.getCurrentVnTimeString;
 
 @Service
-public class ZaloPayPaymentService {
+public class ZaloPayPaymentService implements PaymentStrategy {
 
-    public Map<String, Object> createOrder(Map<String, String> request) throws Exception {
+    public Map<String, Object> createZaloPayPayment(Map<String, String> request) throws Exception {
 
         final JSONObject embed_data = new JSONObject("{\"preferred_payment_method\": [\"zalopay_wallet\"]}"); // "{\"preferred_payment_method\": [\"vietqr\"]}"
 //        JSONArray jsonArray = new JSONArray();
@@ -69,5 +72,21 @@ public class ZaloPayPaymentService {
 
         // ✅ Payment success → update DB
         return ResponseEntity.ok("success");
+    }
+
+    @Override
+    public PaymentRequestDTO.PaymentMethod getMethod() {
+        return PaymentRequestDTO.PaymentMethod.ZALOPAY;
+    }
+
+    @Override
+    public PaymentResponseDTO createPayment(PaymentRequestDTO request, HttpServletRequest httpRequest) throws Exception {
+        Map<String, String> req = new HashMap<>();
+        req.put("price", request.getAmount().toString());
+
+        Map<String, Object> response = createZaloPayPayment(req);
+        String orderUrl = (String) response.get("order_url");
+
+        return new PaymentResponseDTO(orderUrl, null);
     }
 }

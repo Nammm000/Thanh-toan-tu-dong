@@ -15,7 +15,7 @@ public class PaymentRequestDTO {
 
     private Long amount;
 
-    private String orderId;
+    private String orderInfo;
 
     private PaymentMethod method;
 }

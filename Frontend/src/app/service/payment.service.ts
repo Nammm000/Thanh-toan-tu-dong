@@ -2,6 +2,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
+export interface PaymentRequestDTO {
+  amount: number;
+  orderInfo: string;
+  method: 'VNPAY' | 'MOMO' | 'ZALOPAY';
+}
+
+export interface PaymentResponseDTO {
+  paymentUrl: string;
+  qrCode: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,16 +21,31 @@ export class PaymentService {
   url = environment.apiUrl + "/api/payment";
   constructor(private httpClient: HttpClient) { }
 
+  /**
+   * Create a payment using the new unified endpoint
+   * @param request PaymentRequestDTO containing amount, orderInfo, and payment method
+   * @returns Observable<PaymentResponseDTO> with paymentUrl and qrCode
+   */
+  createPaymentUnified(request: PaymentRequestDTO) {
+    return this.httpClient.post<PaymentResponseDTO>(this.url + "/create", request, {
+       headers: new HttpHeaders().set('content-Type', "application/json")
+    })
+  }
+
+  /**
+   * Legacy method - Create payment using individual endpoints per payment method
+   * @deprecated Use createPaymentUnified instead
+   */
   createPayment(data: any, type: string) {
     let endpoint = "";
     switch (type) {
-      case "Momo":
+      case "MOMO":
         endpoint = "/createMomo";
         break;
       case "VNPAY":
         endpoint = "/createVNPay";
         break;
-      case "ZaloPay":
+      case "ZALOPAY":
         endpoint = "/createZaloPay";
         break;
       default:

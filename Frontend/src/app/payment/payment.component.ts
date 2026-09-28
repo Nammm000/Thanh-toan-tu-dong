@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { PlanService } from 'src/app/service/plan.service';
 import { NewsService } from 'src/app/service/news.service';
-import { PaymentService } from 'src/app/service/payment.service';
+import { PaymentService, PaymentRequestDTO, PaymentResponseDTO } from 'src/app/service/payment.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { SnackbarService } from 'src/app/service/snackbar.service';
@@ -33,12 +33,12 @@ export class PaymentComponent {
     duration: '0',
   };
 
-  data = {
-    price: this.product.price,
-    orderInfo: this.product.description,
-    // redirectUrl: "http://localhost:4200/payment-return",
-    // ipnUrl: "http://localhost:8080/api/payment/momo/ipn",
-  };
+  // data = {
+  //   price: this.product.price,
+  //   orderInfo: this.product.description,
+  //   // redirectUrl: "http://localhost:4200/payment-return",
+  //   // ipnUrl: "http://localhost:8080/api/payment/momo/ipn",
+  // };
   result = {
     payUrl: '',
     qrUrl: '',
@@ -46,9 +46,9 @@ export class PaymentComponent {
   };
 
   options = [
-    { label: 'Momo', value: 'Momo', image: 'assets/payment/momo.png' },
+    { label: 'Momo', value: 'MOMO', image: 'assets/payment/momo.png' },
     { label: 'VNPAY', value: 'VNPAY', image: 'assets/payment/vnpay.png' },
-    { label: 'ZaloPay', value: 'ZaloPay', image: 'assets/payment/zalopay.png' },
+    { label: 'ZaloPay', value: 'ZALOPAY', image: 'assets/payment/zalopay.png' },
   ];
   selectedPaymentOption: string = '';
 
@@ -87,37 +87,49 @@ export class PaymentComponent {
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
       console.log(place.formatted_address);
-      // console.log(place.geometry.location.lat());
-      // console.log(place.geometry.location.lng());
+      // console.log(place.geometry.location.lat(), place.geometry.location.lng());
+
     });
   }
 
   getPayment() {
-    this.data.price = this.product.price;
-    this.data.orderInfo = this.product.description + ' - ' + this.product.name;
+    if (!this.selectedPaymentOption) {
+      this.snackbarService.openSnackBar(
+        'Please select a payment method',
+        GlobalConstants.error,
+      );
+      return;
+    }
+
+    // Prepare the payment request using the new unified API
+    const paymentRequest: PaymentRequestDTO = {
+      amount: this.product.price,
+      orderInfo: this.product.description + ' - ' + this.product.name,
+      method: this.selectedPaymentOption as 'VNPAY' | 'MOMO' | 'ZALOPAY',
+    };
 
     this.ngxService.start();
-    this.paymentService.createPayment(this.data, this.selectedPaymentOption).subscribe(
-      (response: any) => {
+    this.paymentService.createPaymentUnified(paymentRequest).subscribe(
+      (response: PaymentResponseDTO) => {
         this.ngxService.stop();
-        // console.log(response);
-        if (this.selectedPaymentOption === 'Momo') {
-          if (response.resultCode === 0) {
-            this.result.url = response.deeplink;
-            this.result.qrUrl = response.qrCodeUrl;
-            this.showQRCode = true;
-          }
-        } else if (this.selectedPaymentOption === 'VNPAY') {
-          // this.result.url = response.payUrl;
-          // window.location.href = this.result.url;
-        } else if (this.selectedPaymentOption === 'ZaloPay') {
-          if (response.return_code === 1) {
-            this.result.url = response.order_url;
-            // this.result.qrUrl = response.qrCodeUrl;
-            this.showQRCode = true;
-          }
+        console.log('Payment response:', response);
+
+        // Handle the payment URL
+        if (response.paymentUrl) {
+          this.result.url = response.paymentUrl;
         }
-        
+
+        // Handle the QR code if available
+        if (response.qrCode) {
+          this.result.qrUrl = response.qrCode;
+          this.showQRCode = true;
+        }
+
+        // Show success message
+        this.snackbarService.openSnackBar(
+          'Payment method initiated successfully',
+          GlobalConstants.success,
+        );
       },
       (error: any) => {
         this.ngxService.stop();
@@ -132,80 +144,6 @@ export class PaymentComponent {
         );
       }
     );
-
-    // if (this.selectedPaymentOption === 'Momo') {
-    //   this.paymentService.createMomo(this.data).subscribe(
-    //     (response: any) => {
-    //       this.ngxService.stop();
-    //       // console.log(response);
-    //       if (response.resultCode === 0) {
-    //         this.result.url = response.deeplink;
-    //         this.result.qrUrl = response.qrCodeUrl;
-    //         this.showQRCode = true;
-    //       }
-          
-    //       // window.location.href = this.result.url;
-    //     },
-    //     (error: any) => {
-    //       this.ngxService.stop();
-    //       if (error.error?.message) {
-    //         this.responseMessage = error.error?.message;
-    //       } else {
-    //         this.responseMessage = GlobalConstants.genericError;
-    //       }
-    //       this.snackbarService.openSnackBar(
-    //         this.responseMessage,
-    //         GlobalConstants.error,
-    //       );
-    //     },
-    //   );
-    // } else if (this.selectedPaymentOption === 'VNPAY') {
-    //   this.paymentService.createVNPay(this.data).subscribe(
-    //     (response: any) => {
-    //       this.ngxService.stop();
-    //       // console.log(response);
-    //       this.result.url = response.payUrl;
-    //       // window.location.href = this.result.url;
-    //     },
-    //     (error: any) => {
-    //       this.ngxService.stop();
-    //       if (error.error?.message) {
-    //         this.responseMessage = error.error?.message;
-    //       } else {
-    //         this.responseMessage = GlobalConstants.genericError;
-    //       }
-    //       this.snackbarService.openSnackBar(
-    //         this.responseMessage,
-    //         GlobalConstants.error,
-    //       );
-    //     },
-    //   );
-    // } else if (this.selectedPaymentOption === 'ZaloPay') {
-    //   this.paymentService.createZaloPay(this.data).subscribe(
-    //     (response: any) => {
-    //       this.ngxService.stop();
-    //       // console.log(response);
-    //       if (response.return_code === 1) {
-    //         this.result.url = response.order_url;
-    //         // this.result.qrUrl = response.qrCodeUrl;
-    //         this.showQRCode = true;
-    //       }
-    //       // window.location.href = this.result.url;
-    //     },
-    //     (error: any) => {
-    //       this.ngxService.stop();
-    //       if (error.error?.message) {
-    //         this.responseMessage = error.error?.message;
-    //       } else {
-    //         this.responseMessage = GlobalConstants.genericError;
-    //       }
-    //       this.snackbarService.openSnackBar(
-    //         this.responseMessage,
-    //         GlobalConstants.error,
-    //       );
-    //     },
-    //   );
-    // }
   }
 
   getNewsById(id: any) {
